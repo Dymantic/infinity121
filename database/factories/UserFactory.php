@@ -22,6 +22,23 @@ $factory->define(User::class, function (Faker $faker) {
         'email' => $faker->unique()->safeEmail,
         'email_verified_at' => now(),
         'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+        'is_teacher' => false,
+        'is_admin' => true,
         'remember_token' => Str::random(10),
     ];
 });
+
+$factory->state(User::class, 'admin-only', [
+    'is_admin' => true,
+    'is_teacher' => false,
+]);
+
+$factory->state(User::class, 'teacher-only', [
+    'is_admin' => false,
+    'is_teacher' => true,
+]);
+
+$factory->state(User::class, 'admin-teacher', [
+    'is_admin' => true,
+    'is_teacher' => true,
+]);

@@ -19,5 +19,8 @@
         "resolve-url-loader": "^2.3.1",
         "tailwindcss": "^1.0.5",
         "vue": "^2.5.17"
+    },
+    "dependencies": {
+        "@dymantic/vuetilities": "^0.3.4"
     }
 }
