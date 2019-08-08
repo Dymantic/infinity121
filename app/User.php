@@ -30,24 +30,44 @@ class User extends Authenticatable
 
     public static function addAdmin($attributes)
     {
-        return static::create([
+        $admin = static::create([
             'name' => $attributes['name'],
             'email' => $attributes['email'],
             'is_admin' => true,
             'is_teacher' => $attributes['is_teacher'] ?? false,
             'password' => Hash::make($attributes['password']),
         ]);
+
+        $admin->makeProfile();
+
+        return $admin;
     }
 
     public static function addTeacher($attributes)
     {
-        return static::create([
+        $teacher = static::create([
             'name' => $attributes['name'],
             'email' => $attributes['email'],
             'is_admin' => false,
             'is_teacher' => true,
             'password' => Hash::make($attributes['password']),
         ]);
+
+        $teacher->makeProfile();
+
+        return $teacher;
+    }
+
+    public function profile()
+    {
+        return $this->hasOne(Profile::class);
+    }
+
+    public function makeProfile()
+    {
+        if(!$this->profile) {
+            $this->profile()->create(['name' => $this->name]);
+        }
     }
 
     public function updatePassword($password)

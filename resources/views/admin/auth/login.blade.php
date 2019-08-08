@@ -6,15 +6,15 @@
     <form action="/admin/login" method="POST">
         {!! csrf_field() !!}
         <div class="my-4">
-            <label for="email" class="uppercase text-sm tracking-wide">email</label>
-            <input class="block h-8 pl-2 border w-full mt-2" type="text" name="email" id="email">
+            <label for="email" class="form-label">email</label>
+            <input class="input-text" type="text" name="email" id="email">
         </div>
         <div class="my-4">
-            <label class="uppercase text-sm tracking-wide" for="password">Password</label>
-            <input class="block h-8 pl-2 border w-full mt-2" type="password" name="password" id="password">
+            <label class="form-label" for="password">Password</label>
+            <input class="input-text" type="password" name="password" id="password">
         </div>
         <div class="my-4">
-            <label class="uppercase text-sm tracking-wide" for="remember">Remember me: </label>
+            <label class="form-label" for="remember">Remember me: </label>
             <input type="checkbox" name="remember" id="remember">
         </div>
         <div>

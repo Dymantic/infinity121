@@ -21,6 +21,8 @@
         "vue": "^2.5.17"
     },
     "dependencies": {
+        "@dymantic/modal": "^0.1.0",
+        "@dymantic/vue-forms": "^1.1.0",
         "@dymantic/vuetilities": "^0.3.4"
     }
 }

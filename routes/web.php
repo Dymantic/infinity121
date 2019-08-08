@@ -32,3 +32,12 @@ Route::post('admin/me/password', 'Admin\UsersPasswordController@update');
 
 Route::post('admin/users/admins', 'Admin\AdminUsersController@store')->middleware('admin');
 Route::post('admin/users/teachers', 'Admin\TeachersController@store')->middleware('admin');
+
+Route::get('/admin/pages/users', 'Admin\UserPagesController@index');
+Route::get('/admin/pages/users/{user}', 'Admin\UserPagesController@show');
+
+Route::get('admin/pages/me/profile', 'Admin\ProfilePagesController@show');
+
+Route::get('/admin/users', 'Admin\UsersController@index')->middleware('admin');
+
+Route::post('admin/profiles/{profile}', 'Admin\ProfilesController@update');

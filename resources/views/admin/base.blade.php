@@ -26,7 +26,7 @@
     <div class="container">
         @yield('content')
     </div>
-{{--    <notification-hub></notification-hub>--}}
+    <notification-hub></notification-hub>
 </div>
 
 {{--<div class="main-footer"></div>--}}

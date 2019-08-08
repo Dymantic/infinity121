@@ -1,7 +1,5 @@
 @extends('admin.base')
 
 @section('content')
-<div class="p-20">
-
-</div>
+<users-page></users-page>
 @endsection

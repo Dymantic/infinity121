@@ -11,8 +11,8 @@
 
         {!! csrf_field() !!}
         <div class="my-4">
-            <label for="email" class="uppercase text-sm tracking-wide" >email</label>
-            <input class="block h-8 pl-2 border w-full mt-2" type="text" value="{{ old('email') }}" name="email" id="email">
+            <label for="email" class="form-label" >email</label>
+            <input class="input-text" type="text" value="{{ old('email') }}" name="email" id="email">
         </div>
         <div>
             <button type="submit" class="btn btn-indigo">Send request</button>

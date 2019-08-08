@@ -14,11 +14,11 @@
 
             <div class="my-4">
                 <label for="email"
-                       class="uppercase tracking-wide text-sm">Email</label>
+                       class="form-label">Email</label>
 
                 <input id="email"
                        type="email"
-                       class="border h-8 pl-2 block w-full @error('email') border-red-400 @enderror"
+                       class="input-text @error('email') border-red-400 @enderror"
                        name="email"
                        value="{{ $email ?? old('email') }}"
                        required
@@ -35,11 +35,11 @@
 
             <div class="my-4">
                 <label for="password"
-                       class="uppercase tracking-wide text-sm">Password</label>
+                       class="form-label">Password</label>
 
                 <input id="password"
                        type="password"
-                       class="border h-8 pl-2 block w-full  @error('password') border-red-400 @enderror"
+                       class="input-text  @error('password') border-red-400 @enderror"
                        name="password"
                        required
                        autocomplete="new-password">
@@ -54,11 +54,11 @@
 
             <div class="my-4">
                 <label for="password-confirm"
-                       class="uppercase tracking-wide text-sm">Confirm password</label>
+                       class="form-label">Confirm password</label>
 
                 <input id="password-confirm"
                        type="password"
-                       class="border h-8 pl-2 block w-full"
+                       class="input-text"
                        name="password_confirmation"
                        required
                        autocomplete="new-password">
