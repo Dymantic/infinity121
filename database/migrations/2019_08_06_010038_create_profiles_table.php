@@ -19,7 +19,7 @@ class CreateProfilesTable extends Migration
             $table->string('name');
             $table->json('bio')->nullable();
             $table->string('nationality')->nullable();
-            $table->integer('years_experience')->nullable();
+            $table->integer('teaching_since')->nullable();
             $table->integer('chinese_ability')->nullable();
             $table->string('qualifications')->nullable();
             $table->string('teaching_specialties')->nullable();

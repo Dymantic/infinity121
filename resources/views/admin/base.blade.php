@@ -15,7 +15,7 @@
           CONTENT="NOINDEX, NOFOLLOW">
     @yield('head')
 </head>
-<body class="{{ $pageClasses ?? '' }} text-black font-sans">
+<body class="{{ $pageClasses ?? '' }} text-black font-sans bg-gray-100">
 <div id="app">
     @auth
         @include('admin.partials.navbar')

@@ -66,7 +66,7 @@ class User extends Authenticatable
     public function makeProfile()
     {
         if(!$this->profile) {
-            $this->profile()->create(['name' => $this->name]);
+            $this->profile()->create(['name' => $this->name, 'bio' => ['en' => '']]);
         }
     }
 

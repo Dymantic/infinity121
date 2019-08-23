@@ -4,14 +4,16 @@
     </div>
 
     <div class="flex justify-end items-center">
+        <a href="/admin/pages/users" class="text-white px-4 mx-4 no-underline hover:underline">Users</a>
     <dropdown-menu v-cloak
                    name="{{ auth()->user()->name }}"
                    class="text-white h-12 flex items-center h-16">
         <div slot="dropdown_content"
              class="pt-3">
+            <a href="/admin/pages/me/profile#/show"
+               class="text-black no-underline hover:text-indigo-500 pb-3 block">My Profile</a>
             @include('admin.auth.logout-form')
-{{--            <a href=""--}}
-{{--               class="text-black no-underline hover:text-indigo-500 pb-3 block">Logout</a>--}}
+
         </div>
     </dropdown-menu>
     </div>

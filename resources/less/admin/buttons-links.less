@@ -2,10 +2,22 @@
   @apply .shadow .rounded .font-bold .px-4 .py-1;
 }
 
+.sm-btn {
+  @apply .shadow .rounded .font-bold .px-2 .py-1 .text-xs;
+}
+
 .btn-indigo {
   @apply .bg-indigo-500 .text-white;
 }
 
 .btn-indigo:hover {
   @apply  .bg-indigo-700;
+}
+
+.nav-link {
+  @apply .text-lg .uppercase .tracking-wide .mx-4 .text-gray-600 .border-b-4 .border-gray-100;
+}
+
+.nav-link.router-link-active {
+  @apply .text-black border-indigo-500;
 }

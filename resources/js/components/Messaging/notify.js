@@ -7,6 +7,10 @@ const notify = {
 
     error(alert) {
         EventBus.$emit("notify:error", alert);
+    },
+
+    warn(alert) {
+        EventBus.$emit("notify:warning", alert);
     }
 };
 

@@ -13,8 +13,7 @@ $factory->define(\App\Profile::class, function (Faker $faker) {
         'nationality' => $faker->countryCode,
         'qualifications' => 'BFake',
         'teaching_specialties' => 'ESL',
-        'years_experience' => $faker->numberBetween(1,10),
+        'teaching_since' => $faker->numberBetween(2010,2019),
         'chinese_ability' => $faker->numberBetween(1,5),
-
     ];
 });

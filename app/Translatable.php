@@ -6,6 +6,17 @@ namespace App;
 
 trait Translatable
 {
+    public function translated($attribute, $lang)
+    {
+        if(!in_array($attribute, $this->translatable)) {
+            return $this->{$attribute};
+        }
+
+        $translations = $this->{$attribute};
+
+        return $translations[$lang] ?? null;
+    }
+
     public function updateWithTranslations($data)
     {
         $default_lang = config('app.lang', 'en');

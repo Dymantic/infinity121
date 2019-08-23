@@ -41,6 +41,7 @@
             EventBus.$on('notify', this.handleNotification);
             EventBus.$on('notify:error', this.handleErrorNotification);
             EventBus.$on('notify:success', this.handleSuccessNotification);
+            EventBus.$on('notify:warning', this.handleWarningNotification);
 
             window.addEventListener('keyup', ({key}) => {
                 if (key === 'Escape') {
@@ -69,6 +70,13 @@
 
             handleSuccessNotification({title = 'Success!', message, clear = true}) {
                 this.status = 'success';
+                this.title = title;
+                this.message = message;
+                this.showNotification(clear);
+            },
+
+            handleWarningNotification({title = 'Hold on!', message, clear = true}) {
+                this.status = 'warning';
                 this.title = title;
                 this.message = message;
                 this.showNotification(clear);
@@ -123,11 +131,19 @@
         @apply .border-green-400;
     }
 
+    .alert-box.warning {
+        @apply .border-orange-600;
+    }
+
     .alert-box.error header {
         @apply .bg-red-400;
     }
 
     .alert-box.success header {
         @apply .bg-green-400;
+    }
+
+    .alert-box.warning header {
+        @apply .bg-orange-600;
     }
 </style>

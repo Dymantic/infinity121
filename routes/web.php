@@ -15,29 +15,54 @@ Route::get('/', function () {
     return view('front.home.page');
 });
 
-Route::view('/admin', 'admin.dashboard')->middleware('auth');
+Route::group(['namespace' => 'Auth'], function() {
+    Route::view('admin/login', 'admin.auth.login')->name('login');
+    Route::post('admin/login', 'LoginController@login');
+    Route::post('admin/logout', 'LoginController@logout');
 
-Route::view('admin/login', 'admin.auth.login')->name('login');
+    Route::get('password/reset', 'ForgotPasswordController@showLinkRequestForm')
+         ->name('password.request');
+    Route::post('password/email', 'ForgotPasswordController@sendResetLinkEmail')
+         ->name('password.email');
+    Route::get('password/reset/{token}', 'ResetPasswordController@showResetForm')
+         ->name('password.reset');
+    Route::post('password/reset', 'ResetPasswordController@reset')
+         ->name('password.update');
+});
 
-Route::post('admin/login', 'Auth\LoginController@login');
-Route::post('admin/logout', 'Auth\LoginController@logout');
 
-Route::get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('password.request');
-Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('password.email');
-Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('password.reset');
-Route::post('password/reset', 'Auth\ResetPasswordController@reset')->name('password.update');
 
-Route::post('admin/me', 'Admin\UsersController@update');
-Route::post('admin/me/password', 'Admin\UsersPasswordController@update');
+Route::group(['prefix' => 'admin', 'middleware' => ['auth'], 'namespace' => 'Admin'], function() {
+    Route::view('/admin', 'admin.dashboard');
 
-Route::post('admin/users/admins', 'Admin\AdminUsersController@store')->middleware('admin');
-Route::post('admin/users/teachers', 'Admin\TeachersController@store')->middleware('admin');
+    Route::get('users', 'UsersController@index')->middleware('admin');
+    Route::post('me', 'UsersController@update');
+    Route::post('users/admins', 'AdminUsersController@store')->middleware('admin');
+    Route::post('users/teachers', 'TeachersController@store')->middleware('admin');
+    Route::post('me/password', 'UsersPasswordController@update');
 
-Route::get('/admin/pages/users', 'Admin\UserPagesController@index');
-Route::get('/admin/pages/users/{user}', 'Admin\UserPagesController@show');
+    Route::get('me/profile', 'ProfilesController@show');
+    Route::post('profiles/{profile}', 'ProfilesController@update');
+    Route::post('me/profile/image', 'ProfileImageController@update');
 
-Route::get('admin/pages/me/profile', 'Admin\ProfilePagesController@show');
+    Route::get('subjects', 'SubjectsController@index')->middleware('admin');
+    Route::post('subjects', 'SubjectsController@store')->middleware('admin');
+    Route::post('subjects/{subject}', 'SubjectsController@update')->middleware('admin');
+    Route::post('subjects/{subject}/image', 'SubjectTitleImageController@store');
+});
 
-Route::get('/admin/users', 'Admin\UsersController@index')->middleware('admin');
+Route::group(['prefix' => 'admin/pages', 'middleware' => ['auth'], 'namespace' => 'Admin\Pages'], function() {
+    Route::get('users', 'UsersController@index');
+    Route::get('users/{user}', 'UsersController@show');
+    Route::get('me/profile', 'ProfilesController@show');
+    Route::view('subjects', 'admin.subjects.index');
+});
 
-Route::post('admin/profiles/{profile}', 'Admin\ProfilesController@update');
+
+
+
+
+
+
+
+
