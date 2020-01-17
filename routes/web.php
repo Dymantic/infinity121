@@ -10,9 +10,28 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['localize', 'localizationRedirect', 'localeSessionRedirect'] ], function()
+{
+    Route::get('/', 'HomepageController@show');
+    Route::get('about-us', 'AboutPageController@show');
 
-Route::get('/', function () {
-    return view('front.home.page');
+    Route::get('courses', 'CoursesController@index');
+    Route::get('courses/{slug}', 'CoursesController@show');
+
+    Route::get('teachers', 'TeachersController@index');
+    Route::get('teachers/{slug}', 'TeachersController@show');
+
+    Route::get('students/sign-up', 'StudentsInquiryController@show');
+    Route::get('teachers/sign-up', 'TeachersInquiryController@show');
+
+});
+
+Route::post('students/sign-up', 'StudentsInquiryController@store');
+Route::post('teachers/sign-up', 'TeachersInquiryController@store');
+
+
+Route::get('style-guide', function () {
+    return view('front.style-guide', ['light' => true]);
 });
 
 Route::group(['namespace' => 'Auth'], function() {
@@ -32,10 +51,9 @@ Route::group(['namespace' => 'Auth'], function() {
 
 
 
-Route::group(['prefix' => 'admin', 'middleware' => ['auth'], 'namespace' => 'Admin'], function() {
-    Route::view('/admin', 'admin.dashboard');
-
+Route::group(['prefix' => 'admin/api', 'middleware' => ['auth'], 'namespace' => 'Admin'], function() {
     Route::get('users', 'UsersController@index')->middleware('admin');
+    Route::get('me', 'UsersController@show');
     Route::post('me', 'UsersController@update');
     Route::post('users/admins', 'AdminUsersController@store')->middleware('admin');
     Route::post('users/teachers', 'TeachersController@store')->middleware('admin');
@@ -45,18 +63,26 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth'], 'namespace' => 'Adm
     Route::post('profiles/{profile}', 'ProfilesController@update');
     Route::post('me/profile/image', 'ProfileImageController@update');
 
+    Route::get('profiles', 'TeacherProfilesController@index');
+
+    Route::post('published-profiles', 'PublishedProfilesController@store')->middleware('admin');
+    Route::delete('published-profiles/{profile}', 'PublishedProfilesController@destroy')->middleware('admin');
+
+    Route::post('profiles/{profile}/subjects', 'ProfileSubjectsController@update');
+
     Route::get('subjects', 'SubjectsController@index')->middleware('admin');
     Route::post('subjects', 'SubjectsController@store')->middleware('admin');
     Route::post('subjects/{subject}', 'SubjectsController@update')->middleware('admin');
     Route::post('subjects/{subject}/image', 'SubjectTitleImageController@store');
+
+    Route::get('nationalities', 'NationalitiesController@index');
 });
 
-Route::group(['prefix' => 'admin/pages', 'middleware' => ['auth'], 'namespace' => 'Admin\Pages'], function() {
-    Route::get('users', 'UsersController@index');
-    Route::get('users/{user}', 'UsersController@show');
-    Route::get('me/profile', 'ProfilesController@show');
-    Route::view('subjects', 'admin.subjects.index');
-});
+Route::get('admin/dashboard', 'Admin\Pages\DashboardController')->middleware('auth');
+
+
+
+
 
 
 

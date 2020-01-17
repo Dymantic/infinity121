@@ -23,6 +23,12 @@ abstract class TestCase extends BaseTestCase
         return $this->actingAs($teacher);
     }
 
+    public function asGuest()
+    {
+        $this->assertGuest();
+        return $this;
+    }
+
     public function assertDatabaseHasWithTranslations($lang, $table, $data, $untranslated = [])
     {
         $translatables = collect($data)->flatMap(function($value, $key) use ($lang) {

@@ -1,3 +1,40 @@
 @tailwind base;
 
 @tailwind utilities;
+
+@import "front/type";
+@import "front/navbar";
+@import "front/buttons-links";
+@import "front/waves";
+@import "front/grids";
+@import "front/forms";
+
+@import "front/home";
+@import "front/teachers";
+
+
+.center-x {
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.top-8 {
+    top: 2rem;
+}
+
+.top-16 {
+    top: 4rem;
+}
+
+.up-pointer:before {
+    content: '';
+    background: inherit;
+    width: 1.75rem;
+    height: 1.75rem;
+    position: absolute;
+    top: -.75rem;
+    left: 50%;
+    transform: translateX(-50%) rotate(45deg);
+    transform-origin: center;
+    z-index: -1;
+}

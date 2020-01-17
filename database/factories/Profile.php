@@ -14,6 +14,16 @@ $factory->define(\App\Profile::class, function (Faker $faker) {
         'qualifications' => 'BFake',
         'teaching_specialties' => 'ESL',
         'teaching_since' => $faker->numberBetween(2010,2019),
-        'chinese_ability' => $faker->numberBetween(1,5),
+        'chinese_ability' => $faker->numberBetween(1,4),
+        'is_public' => false,
+        'spoken_languages' => ['en', 'fr'],
     ];
 });
+
+$factory->state(\App\Profile::class, 'public', [
+    'is_public' => true,
+]);
+
+$factory->state(\App\Profile::class, 'private', [
+    'is_public' => false,
+]);

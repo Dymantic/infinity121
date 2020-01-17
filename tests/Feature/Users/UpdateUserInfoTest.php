@@ -24,7 +24,7 @@ class UpdateUserInfoTest extends TestCase
             'email' => 'old@test.test',
         ]);
 
-        $response = $this->actingAs($user)->postJson("/admin/me", [
+        $response = $this->actingAs($user)->postJson("/admin/api/me", [
             'name' => 'new name',
             'email' => 'new@test.test',
         ]);
@@ -53,7 +53,7 @@ class UpdateUserInfoTest extends TestCase
             'email' => 'old@test.test',
         ]);
 
-        $response = $this->actingAs($user)->postJson("/admin/me", [
+        $response = $this->actingAs($user)->postJson("/admin/api/me", [
             'name' => '',
             'email' => 'new@test.test',
         ]);
@@ -77,7 +77,7 @@ class UpdateUserInfoTest extends TestCase
             'email' => 'old@test.test',
         ]);
 
-        $response = $this->actingAs($user)->postJson("/admin/me", [
+        $response = $this->actingAs($user)->postJson("/admin/api/me", [
             'name' => 'new name',
             'email' => '',
         ]);
@@ -101,7 +101,7 @@ class UpdateUserInfoTest extends TestCase
             'email' => 'old@test.test',
         ]);
 
-        $response = $this->actingAs($user)->postJson("/admin/me", [
+        $response = $this->actingAs($user)->postJson("/admin/api/me", [
             'name' => 'new name',
             'email' => 'not-a-real-email-address',
         ]);
@@ -126,7 +126,7 @@ class UpdateUserInfoTest extends TestCase
             'email' => 'old@test.test',
         ]);
 
-        $response = $this->actingAs($user)->postJson("/admin/me", [
+        $response = $this->actingAs($user)->postJson("/admin/api/me", [
             'name' => 'new name',
             'email' => 'used@test.test',
         ]);
@@ -152,7 +152,7 @@ class UpdateUserInfoTest extends TestCase
             'email' => 'old@test.test',
         ]);
 
-        $response = $this->actingAs($user)->postJson("/admin/me", [
+        $response = $this->actingAs($user)->postJson("/admin/api/me", [
             'name' => 'new name',
             'email' => 'old@test.test',
         ]);

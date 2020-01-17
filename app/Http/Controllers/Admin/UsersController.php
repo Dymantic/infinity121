@@ -12,7 +12,12 @@ class UsersController extends Controller
 
     public function index()
     {
-        return User::all();
+        return User::with('profile')->get();
+    }
+
+    public function show()
+    {
+        return request()->user()->toArray();
     }
 
     public function update()

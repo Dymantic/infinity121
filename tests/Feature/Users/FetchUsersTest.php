@@ -23,16 +23,16 @@ class FetchUsersTest extends TestCase
 
         $this->withoutExceptionHandling();
 
-        $response = $this->actingAs($mike)->getJson("/admin/users");
+        $response = $this->actingAs($mike)->getJson("/admin/api/users");
         $response->assertStatus(200);
 
         $fetched_users = $response->decodeResponseJson();
 
         $this->assertCount(3, $fetched_users);
 
-        $this->assertContains($bob->toArray(), $fetched_users);
-        $this->assertContains($alice->toArray(), $fetched_users);
-        $this->assertContains($mike->toArray(), $fetched_users);
+        $this->assertContains(array_merge($bob->toArray(), ['profile' => null]), $fetched_users);
+        $this->assertContains(array_merge($alice->toArray(), ['profile' => null]), $fetched_users);
+        $this->assertContains(array_merge($mike->toArray(), ['profile' => null]), $fetched_users);
     }
 
     /**
@@ -43,7 +43,7 @@ class FetchUsersTest extends TestCase
         $bob = factory(User::class)->state('teacher-only')->create();
         factory(User::class)->state('admin-teacher')->create();
 
-        $response = $this->actingAs($bob)->getJson("/admin/users");
+        $response = $this->actingAs($bob)->getJson("/admin/api/users");
         $response->assertStatus(403);
     }
 }

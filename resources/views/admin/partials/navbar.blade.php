@@ -4,7 +4,8 @@
     </div>
 
     <div class="flex justify-end items-center">
-        <a href="/admin/pages/users" class="text-white px-4 mx-4 no-underline hover:underline">Users</a>
+        <a href="/admin/pages/subjects" class="text-white px-4 mr-4 no-underline hover:underline">Subjects</a>
+        <a href="/admin/pages/users" class="text-white px-4 mr-4 no-underline hover:underline">Users</a>
     <dropdown-menu v-cloak
                    name="{{ auth()->user()->name }}"
                    class="text-white h-12 flex items-center h-16">

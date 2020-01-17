@@ -32,11 +32,12 @@ class UpdateProfileTest extends TestCase
             'qualifications' => 'test qualification',
             'teaching_since' => 1999,
             'chinese_ability' => 4,
+            'spoken_languages' => ['en', 'sp'],
         ];
 
         $response = $this
             ->actingAs($teacher)
-            ->postJson("/admin/profiles/{$profile_id}", $profile_data);
+            ->postJson("/admin/api/profiles/{$profile_id}", $profile_data);
 
         $response->assertStatus(200);
 
@@ -46,6 +47,7 @@ class UpdateProfileTest extends TestCase
             'qualifications' => 'test qualification',
             'teaching_since' => 1999,
             'chinese_ability' => 4,
+            'spoken_languages' => json_encode(['en', 'sp']),
         ]);
 
         $this->assertDatabaseHasWithTranslations('en', 'profiles', [
@@ -96,7 +98,23 @@ class UpdateProfileTest extends TestCase
         $this->assertFieldIsInvalid(['chinese_ability' => 5]);
     }
 
-    private function assertFieldIsInvalid($field)
+    /**
+     *@test
+     */
+    public function spoken_languages_must_be_an_array()
+    {
+        $this->assertFieldIsInvalid(['spoken_languages' => 'en']);
+    }
+
+    /**
+     *@test
+     */
+    public function all_spoken_language_codes_must_be_recognised()
+    {
+        $this->assertFieldIsInvalid(['spoken_languages' => ['en', 'qq']], "spoken_languages.1");
+    }
+
+    private function assertFieldIsInvalid($field, $expected_error_key = null)
     {
         $valid_data = [
             'name' => 'Test Profile Name',
@@ -114,9 +132,10 @@ class UpdateProfileTest extends TestCase
 
         $response = $this
             ->actingAs($teacher)
-            ->postJson("/admin/profiles/{$profile_id}", array_merge($valid_data, $field));
+            ->postJson("/admin/api/profiles/{$profile_id}", array_merge($valid_data, $field));
 
         $response->assertStatus(422);
-        $response->assertJsonValidationErrors(array_keys($field)[0]);
+        $error_key = $expected_error_key ?? array_keys($field)[0];
+        $response->assertJsonValidationErrors($error_key);
     }
 }

@@ -1,0 +1,28 @@
+.grid-3x {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(256px, 1fr));
+    grid-column-gap: 3rem;
+    grid-row-gap: 3rem;
+}
+
+.grid-4x {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(256px, 1fr));
+    grid-column-gap: 0.5rem;
+    grid-row-gap: 3rem;
+}
+
+.grid-2x {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-column-gap: 3rem;
+    grid-row-gap: 5rem;
+}
+
+@media screen and (max-width: 640px) {
+    .grid-2x {
+        grid-template-columns: repeat(1, 1fr);
+    }
+}
+
+

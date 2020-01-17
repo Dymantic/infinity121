@@ -28,6 +28,11 @@ class User extends Authenticatable
         'is_teacher' => 'boolean'
     ];
 
+    public function scopeAdmins($query)
+    {
+        return $query->where('is_admin', true);
+    }
+
     public static function addAdmin($attributes)
     {
         $admin = static::create([
@@ -66,8 +71,14 @@ class User extends Authenticatable
     public function makeProfile()
     {
         if(!$this->profile) {
-            $this->profile()->create(['name' => $this->name, 'bio' => ['en' => '']]);
+            $this->profile()->create([
+                'name' => $this->name,
+                'bio' => ['en' => ''],
+                'spoken_languages' => ['en']
+            ]);
         }
+
+        return $this->fresh()->profile;
     }
 
     public function updatePassword($password)

@@ -20,7 +20,7 @@ class FetchCurrentUserProfileTest extends TestCase
         $teacher = factory(User::class)->state('teacher-only')->create();
         $teacher->makeProfile();
 
-        $response = $this->actingAs($teacher)->getJson("/admin/me/profile");
+        $response = $this->actingAs($teacher)->getJson("/admin/api/me/profile");
         $response->assertStatus(200);
 
         $fetched_profile = $response->decodeResponseJson();

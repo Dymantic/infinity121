@@ -25,7 +25,7 @@ class UploadSubjectTitleImageTest extends TestCase
 
         $subject = factory(Subject::class)->create();
 
-        $response = $this->asAdmin()->postJson("/admin/subjects/{$subject->id}/image", [
+        $response = $this->asAdmin()->postJson("/admin/api/subjects/{$subject->id}/image", [
             'image' => UploadedFile::fake()->image('testpic.jpg'),
         ]);
         $response->assertStatus(200);
@@ -44,7 +44,7 @@ class UploadSubjectTitleImageTest extends TestCase
 
         $subject = factory(Subject::class)->create();
 
-        $response = $this->asAdmin()->postJson("/admin/subjects/{$subject->id}/image", [
+        $response = $this->asAdmin()->postJson("/admin/api/subjects/{$subject->id}/image", [
             'image' => null,
         ]);
         $response->assertStatus(422);
@@ -60,7 +60,7 @@ class UploadSubjectTitleImageTest extends TestCase
 
         $subject = factory(Subject::class)->create();
 
-        $response = $this->asAdmin()->postJson("/admin/subjects/{$subject->id}/image", [
+        $response = $this->asAdmin()->postJson("/admin/api/subjects/{$subject->id}/image", [
             'image' => UploadedFile::fake()->create('not-an-image.docx'),
         ]);
         $response->assertStatus(422);

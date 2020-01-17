@@ -1,15 +1,7 @@
 <template>
     <div>
-        <div v-if="fetched_subject">
-            <section class="flex justify-between items-center py-8">
-                <h1 class="flex-1 text-5xl font-bold">Edit: {{ fetched_subject.title['en'] }}</h1>
-                <div class="flex justify-end items-center">
-                    <router-link class="btn mr-4"
-                                 :to="`/show/${fetched_subject.id}`">Cancel
-                    </router-link>
+        <div v-if="subject">
 
-                </div>
-            </section>
             <div class="my-8 flex justify-between">
                 <div>
                     <button v-for="lang in languages"
@@ -34,7 +26,7 @@
                 </div>
             </div>
             <div class="max-w-4xl mx-auto p-4 shadow-lg bg-white">
-                <form @submit.prevent="submit">
+                <form v-if="form_ready" @submit.prevent="submit">
                     <div class="my-4 max-w-md"
                          :class="{'border-b border-red-400': formErrors.title}">
                         <label class="form-label"
@@ -89,6 +81,7 @@
 
 <script type="text/babel">
     import TrixVue from "@dymantic/vue-trix-editor";
+    import {notify} from "../Messaging/notify";
 
     export default {
         components: {
@@ -97,26 +90,10 @@
 
         data() {
             return {
-                fetched_subject: null,
                 show_translation: 'en',
                 languages: [],
-                formData: {
-                    title: {
-                        en: '',
-                        zh: '',
-                        jp: '',
-                    },
-                    description: {
-                        en: '',
-                        zh: '',
-                        jp: '',
-                    },
-                    writeup: {
-                        en: '',
-                        zh: '',
-                        jp: '',
-                    }
-                },
+                form_ready: false,
+                formData: {},
                 formErrors: {
                     title: '',
                     description: '',
@@ -125,34 +102,45 @@
             };
         },
 
-        computed: {},
-
-        mounted() {
-            this.setForm();
-        },
-
         computed: {
+            subject_id() {
+                return parseInt(this.$route.params.id);
+            },
+
+            subject() {
+                return this.$store.getters['subjects/byId'](this.subject_id);
+            },
+
             unused_languages() {
                 return ['en', 'zh', 'jp'].filter(lang => !this.languages.includes(lang));
             }
         },
 
+        mounted() {
+            if (!this.subject) {
+                return this.$store.dispatch('subjects/fetchSubjects')
+                           .then(() => this.setForm())
+                           .catch(notify.error);
+            }
+
+            this.setForm();
+        },
+
+
         methods: {
             setForm() {
-                this.$store.dispatch('subjects/getSubject', this.$route.params.id)
-                    .then(subject => {
-                        this.formData = {...subject};
-                        this.fetched_subject = subject;
-                        this.setLanguages();
-                    })
-                    .catch(console.log);
+                if (this.subject) {
+                    this.formData = {...this.subject};
+                    this.setLanguages();
+                    this.form_ready = true;
+                }
             },
 
             setLanguages() {
                 const all_langs = [
-                    ...Object.keys(this.fetched_subject.title),
-                    ...Object.keys(this.fetched_subject.description),
-                    ...Object.keys(this.fetched_subject.writeup),
+                    ...Object.keys(this.subject.title),
+                    ...Object.keys(this.subject.description),
+                    ...Object.keys(this.subject.writeup),
                 ];
 
                 this.languages = [...new Set(all_langs)];
@@ -168,11 +156,16 @@
 
             submit() {
                 this.$store.dispatch('subjects/saveSubject', {
-                    id: this.fetched_subject.id,
+                    id: this.subject.id,
                     formData: this.formData
                 })
-                    .then(() => this.$router.push(`/show/${this.fetched_subject.id}`))
+                    .then(() => this.onSaved())
                     .catch(this.onSaveError)
+            },
+
+            onSaved() {
+                notify.success({message: 'This subject has been updated'});
+                this.$router.push(`/subjects/${this.subject.id}/show`);
             },
 
             onSaveError({status, data}) {

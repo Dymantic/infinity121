@@ -12,7 +12,7 @@ class ProfilesController extends Controller
 
     public function show()
     {
-        return request()->user()->fresh()->profile;
+        return request()->user()->fresh()->profile->toArray();
     }
 
     public function update(Profile $profile)
@@ -20,7 +20,9 @@ class ProfilesController extends Controller
         request()->validate([
             'name'            => ['required'],
             'teaching_since'  => ['integer', new ReasonableStartingYear()],
-            'chinese_ability' => ['integer', 'min:1', 'max:4']
+            'chinese_ability' => ['integer', 'min:1', 'max:4'],
+            'spoken_languages' => ['array'],
+            'spoken_languages.*' => ['in:en,sp,jp,zh,fr,ge']
         ]);
 
         $profile->updateWithTranslations(request()->only([
@@ -30,6 +32,7 @@ class ProfilesController extends Controller
             'teaching_since',
             'chinese_ability',
             'qualifications',
+            'spoken_languages',
         ]));
     }
 }

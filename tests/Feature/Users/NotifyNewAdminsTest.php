@@ -23,7 +23,7 @@ class NotifyNewAdminsTest extends TestCase
 
         $this->withoutExceptionHandling();
 
-        $response = $this->asAdmin()->postJson("/admin/users/admins", [
+        $response = $this->asAdmin()->postJson("/admin/api/users/admins", [
             'name' => 'test admin',
             'email' => 'admin@test.test',
             'password' => 'secret',

@@ -63,4 +63,21 @@ class UsersTest extends TestCase
 
         $this->assertTrue(Hash::check('new_password', $user->fresh()->password));
     }
+
+    /**
+     *@test
+     */
+    public function has_a_admin_scope()
+    {
+        $adminA = factory(User::class)->state('admin-only')->create();
+        $adminB = factory(User::class)->state('admin-only')->create();
+        $teacher = factory(User::class)->state('teacher-only')->create();
+
+        $admins = User::admins()->get();
+
+        $this->assertCount(2, $admins);
+        $this->assertTrue($admins->contains($adminA));
+        $this->assertTrue($admins->contains($adminB));
+        $this->assertFalse($admins->contains($teacher));
+    }
 }

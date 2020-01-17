@@ -16,7 +16,7 @@ class CreateSubjectTest extends TestCase
     {
         $this->withoutExceptionHandling();
 
-        $response = $this->asAdmin()->postJson("/admin/subjects", [
+        $response = $this->asAdmin()->postJson("/admin/api/subjects", [
             'title' => 'Test subject',
         ]);
         $response->assertStatus(201);
@@ -33,7 +33,7 @@ class CreateSubjectTest extends TestCase
      */
     public function the_title_is_required()
     {
-        $response = $this->asAdmin()->postJson("/admin/subjects", [
+        $response = $this->asAdmin()->postJson("/admin/api/subjects", [
             'title' => '',
         ]);
         $response->assertStatus(422);
@@ -45,7 +45,7 @@ class CreateSubjectTest extends TestCase
      */
     public function subject_can_only_be_added_by_admin()
     {
-        $response = $this->asTeacher()->postJson("/admin/subjects", [
+        $response = $this->asTeacher()->postJson("/admin/api/subjects", [
             'title' => 'test title',
         ]);
         $response->assertStatus(403);

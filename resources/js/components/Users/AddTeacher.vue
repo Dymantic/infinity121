@@ -3,7 +3,7 @@
            @close="$emit('close')">
         <div class="p-8">
             <p class="text-3xl mb-8">Add a New Teacher</p>
-            <vue-form url="/admin/users/teachers"
+            <vue-form url="/admin/api/users/teachers"
                       :form-model="form"
                       @submission-failed="failedToSubmit"
                       @submission-okay="teacherAdded">

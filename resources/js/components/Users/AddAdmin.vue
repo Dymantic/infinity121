@@ -3,7 +3,7 @@
            @close="$emit('close')">
         <div class="p-8">
             <p class="text-3xl mb-8">Add a New Admin User</p>
-            <vue-form url="/admin/users/admins"
+            <vue-form url="/admin/api/users/admins"
                       :form-model="form"
                       @submission-failed="failedToSubmit"
                       @submission-okay="adminAdded">

@@ -25,7 +25,7 @@ class UpdateSubjectTest extends TestCase
             'writeup' => ['en' => ''],
         ]);
 
-        $response = $this->asAdmin()->postJson("/admin/subjects/{$subject->id}", [
+        $response = $this->asAdmin()->postJson("/admin/api/subjects/{$subject->id}", [
             'title' => ['en' => 'new title', 'zh' => 'xinde mingze'],
             'description' => ['en' => 'new description', 'zh' => 'xinde description'],
             'writeup' => ['en' => 'new writeup', 'zh' => 'xinde writeup'],
@@ -60,7 +60,7 @@ class UpdateSubjectTest extends TestCase
             'writeup' => ['en' => ''],
         ]);
 
-        $response = $this->asTeacher()->postJson("/admin/subjects/{$subject->id}", [
+        $response = $this->asTeacher()->postJson("/admin/api/subjects/{$subject->id}", [
             'title' => ['en' => 'new title', 'zh' => 'xinde mingze'],
         ]);
         $response->assertStatus(403);

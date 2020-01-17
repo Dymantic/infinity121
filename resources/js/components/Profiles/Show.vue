@@ -3,7 +3,7 @@
         <div class="p-4 bg-white shadow flex justify-between">
             <div class="w-1/2">
                 <p class="text-xl">{{ profile.name }}</p>
-                <p class="text-gray-600">{{ profile.nationality }}</p>
+                <p class="text-gray-600">{{ profile.nationality.en }}</p>
                 <p class="text-gray-600">{{ profile.qualifications }}</p>
                 <div class="my-8">
                     <p class="form-label">Teaching since</p>
@@ -11,7 +11,7 @@
                 </div>
                 <div class="my-8">
                     <p class="form-label">Chinese ability</p>
-                    <p>{{ chinese_level }}</p>
+                    <p class="capitalize">{{ profile.chinese_ability_full }}</p>
                 </div>
 
                 <div>
@@ -31,7 +31,7 @@
                 </div>
             </div>
             <div class="w-1/2 text-center">
-                <image-upload upload-url="/admin/me/profile/image"
+                <image-upload upload-url="/admin/api/me/profile/image"
                               :initial-src="avatar"
                               :preview-width="256"
                               :aspect-x="1"
@@ -42,7 +42,7 @@
                               @image-uploaded="uploadedImage"
                               class="w-64 mx-auto"
                               v-if="profile_loaded"
-                ></image-upload>
+                />
                 <p class="w-64 text-sm text-gray-600 mt-4 mx-auto text-left">Click to upload your avatar. The image will be cropped to a square, and you should use an image bigger than 400 x 400px.</p>
             </div>
 
@@ -69,7 +69,7 @@
 
         computed: {
             profile() {
-                return this.$store.state.profiles.profile;
+                return this.$store.state.me.profile;
             },
 
             profile_loaded() {
@@ -83,10 +83,6 @@
             bio_text() {
                 return this.profile.bio[this.bio_lang];
             },
-
-            chinese_level() {
-                return this.$store.getters['profiles/chineseLevel'](this.profile.chinese_ability);
-            }
         },
 
         methods: {

@@ -22,7 +22,7 @@ class UpdatePasswordTest extends TestCase
 
         $user = factory(User::class)->create(['password' => Hash::make('password')]);
 
-        $response = $this->actingAs($user)->postJson("/admin/me/password", [
+        $response = $this->actingAs($user)->postJson("/admin/api/me/password", [
             'old_password' => 'password',
             'new_password' => 'secret',
             'new_password_confirmation' => 'secret',
@@ -39,7 +39,7 @@ class UpdatePasswordTest extends TestCase
     {
         $user = factory(User::class)->create(['password' => Hash::make('password')]);
 
-        $response = $this->actingAs($user)->postJson("/admin/me/password", [
+        $response = $this->actingAs($user)->postJson("/admin/api/me/password", [
             'old_password' => '',
             'new_password' => 'secret',
             'new_password_confirmation' => 'secret',
@@ -55,7 +55,7 @@ class UpdatePasswordTest extends TestCase
     {
         $user = factory(User::class)->create(['password' => Hash::make('password')]);
 
-        $response = $this->actingAs($user)->postJson("/admin/me/password", [
+        $response = $this->actingAs($user)->postJson("/admin/api/me/password", [
             'old_password' => 'NONSENSE',
             'new_password' => 'secret',
             'new_password_confirmation' => 'secret',
@@ -71,7 +71,7 @@ class UpdatePasswordTest extends TestCase
     {
         $user = factory(User::class)->create(['password' => Hash::make('password')]);
 
-        $response = $this->actingAs($user)->postJson("/admin/me/password", [
+        $response = $this->actingAs($user)->postJson("/admin/api/me/password", [
             'old_password' => 'password',
             'new_password' => '',
             'new_password_confirmation' => 'secret',
@@ -87,7 +87,7 @@ class UpdatePasswordTest extends TestCase
     {
         $user = factory(User::class)->create(['password' => Hash::make('password')]);
 
-        $response = $this->actingAs($user)->postJson("/admin/me/password", [
+        $response = $this->actingAs($user)->postJson("/admin/api/me/password", [
             'old_password' => 'password',
             'new_password' => 'short',
             'new_password_confirmation' => 'short',
@@ -103,7 +103,7 @@ class UpdatePasswordTest extends TestCase
     {
         $user = factory(User::class)->create(['password' => Hash::make('password')]);
 
-        $response = $this->actingAs($user)->postJson("/admin/me/password", [
+        $response = $this->actingAs($user)->postJson("/admin/api/me/password", [
             'old_password' => 'password',
             'new_password' => 'secret',
             'new_password_confirmation' => 'does-not-match',

@@ -1,0 +1,28 @@
+.dropdown-btn:focus + .nav-more {
+    display: block;
+}
+
+.main-nav {
+    transition: .2s ease-in-out;
+}
+
+.main-nav.scrolled {
+    @apply bg-hms-navy text-white;
+}
+
+@media screen and (max-width: 700px) {
+    .nav-drawer {
+        transition: transform .3s ease-in-out;
+        transform: translate3d(-100%,0,0);
+        @apply bg-hms-navy text-white;
+    }
+
+    .show-nav .nav-drawer {
+        transform: translate3d(0,0,0);
+    }
+
+    .show-nav {
+        overflow: hidden;
+    }
+}
+

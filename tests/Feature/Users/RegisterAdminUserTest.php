@@ -19,7 +19,7 @@ class RegisterAdminUserTest extends TestCase
         $userData = $this->validAttributes();
         $this->withoutExceptionHandling();
 
-        $response = $this->asAdmin()->postJson("/admin/users/admins", $userData);
+        $response = $this->asAdmin()->postJson("/admin/api/users/admins", $userData);
         $response->assertStatus(201);
 
         $this->assertDatabaseHas('users', [
@@ -42,7 +42,7 @@ class RegisterAdminUserTest extends TestCase
         $teacher = factory(User::class)->states('teacher-only')->create();
         $response = $this
             ->actingAs($teacher)
-            ->postJson("/admin/users/admins", $this->validAttributes());
+            ->postJson("/admin/api/users/admins", $this->validAttributes());
         $response->assertStatus(403);
     }
 
@@ -116,7 +116,7 @@ class RegisterAdminUserTest extends TestCase
     {
         $response = $this
             ->asAdmin()
-            ->postJson("/admin/users/admins", array_merge($this->validAttributes(), $field));
+            ->postJson("/admin/api/users/admins", array_merge($this->validAttributes(), $field));
         $response->assertStatus(422);
         $response->assertJsonValidationErrors(array_keys($field)[0]);
     }

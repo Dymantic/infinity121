@@ -25,7 +25,7 @@ class UploadProfileImageTest extends TestCase
         $teacher = factory(User::class)->state('teacher-only')->create();
         $teacher->makeProfile();
 
-        $response = $this->actingAs($teacher)->postJson("/admin/me/profile/image", [
+        $response = $this->actingAs($teacher)->postJson("/admin/api/me/profile/image", [
             'image' => UploadedFile::fake()->image('test-image.png')
         ]);
         $response->assertStatus(200);
@@ -47,7 +47,7 @@ class UploadProfileImageTest extends TestCase
         $teacher = factory(User::class)->state('teacher-only')->create();
         $teacher->makeProfile();
 
-        $response = $this->actingAs($teacher)->postJson("/admin/me/profile/image", [
+        $response = $this->actingAs($teacher)->postJson("/admin/api/me/profile/image", [
             'image' => UploadedFile::fake()->create('not-image.txt')
         ]);
 

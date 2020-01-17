@@ -1,17 +1,6 @@
 <template>
     <div>
-        <div v-if="fetched_subject">
-            <section class="flex justify-between items-center py-8">
-                <h1 class="flex-1 text-5xl font-bold">{{ fetched_subject.title['en'] }}</h1>
-                <div class="flex justify-end items-center">
-                    <router-link class="font-bold text-gray-600 hover:text-indigo-500 mr-4"
-                                 to="/">All Subjects
-                    </router-link>
-                    <router-link class="btn btn-indigo"
-                                 :to="`/edit/${subject_id}`">Edit
-                    </router-link>
-                </div>
-            </section>
+        <div v-if="subject">
             <div class="my-8">
                 <button v-for="lang in translations"
                         @click="show_translation = lang"
@@ -26,10 +15,10 @@
                 <div class="p-8 bg-blue-100 flex justify-between">
                     <div class="w-1/2 mr-4">
                         <p class="text-xl text-gray-800 font-bold">
-                            {{ fetched_subject.title[show_translation] }}
+                            {{ subject.title[show_translation] }}
                         </p>
                         <p class="mt-4 mb-12 text-gray-600">
-                            {{ fetched_subject.description[show_translation] }}
+                            {{ subject.description[show_translation] }}
                         </p>
                     </div>
                     <div class="w-1/2 text-center">
@@ -43,7 +32,7 @@
                                       @image-upload-failed="uploadError"
                                       @image-uploaded="uploadedImage"
                                       class="w-64 mx-auto"
-                                      v-if="fetched_subject"
+                                      v-if="subject"
                         ></image-upload>
                         <p class="w-64 text-sm text-gray-600 mt-4 mx-auto text-left">Click to upload an image for this
                                                                                      subject. The image will be cropped
@@ -54,7 +43,7 @@
                 </div>
 
                 <div class="p-8"
-                     v-html="fetched_subject.writeup[show_translation]"></div>
+                     v-html="subject.writeup[show_translation]"></div>
             </div>
         </div>
         <div v-else
@@ -66,6 +55,7 @@
 
 <script type="text/babel">
     import {ImageUpload} from "@dymantic/imagineer";
+    import {notify} from "../Messaging/notify";
 
     export default {
 
@@ -75,7 +65,6 @@
 
         data() {
             return {
-                fetched_subject: null,
                 show_translation: 'en',
             };
         },
@@ -84,52 +73,57 @@
 
             translations() {
                 const all = [
-                    ...Object.keys(this.fetched_subject.title),
-                    ...Object.keys(this.fetched_subject.description),
-                    ...Object.keys(this.fetched_subject.writeup),
+                    ...Object.keys(this.subject.title),
+                    ...Object.keys(this.subject.description),
+                    ...Object.keys(this.subject.writeup),
                 ];
 
                 return [...new Set(all)];
             },
 
             subject_id() {
-                return this.$route.params.id;
+                return parseInt(this.$route.params.id);
+            },
+
+            subject() {
+                return this.$store.getters['subjects/byId'](this.subject_id);
             },
 
             title_image() {
-                if (!this.fetched_subject) {
+                if (!this.subject) {
                     return '';
                 }
 
-                return this.fetched_subject.title_image.thumb;
+                return this.subject.title_image.thumb;
             },
 
             image_upload_url() {
-                if (!this.fetched_subject) {
+                if (!this.subject) {
                     return '';
                 }
 
-                return `/admin/subjects/${this.fetched_subject.id}/image`;
+                return `/admin/api/subjects/${this.subject.id}/image`;
             }
         },
 
         mounted() {
-            this.$store.dispatch('subjects/getSubject', this.subject_id)
-                .then(subject => this.fetched_subject = subject)
-                .catch(console.log);
+            if(!this.subject) {
+                this.$store.dispatch('subjects/fetchSubjects');
+            }
         },
 
         methods: {
-            invalidFileError() {
-
+            invalidFileError(message) {
+                notify.warn({message});
             },
 
             uploadError() {
-
+                notify.error({message: 'There was a problem uploading your image'});
             },
 
             uploadedImage() {
-
+                this.$store.dispatch('subjects/fetchSubjects')
+                    .catch(notify.error);
             }
         }
     }

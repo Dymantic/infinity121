@@ -21,12 +21,14 @@ export default {
                 return 0;
             });
         },
+
+        byId: state => id => state.subjects.find(subject => subject.id === id),
     },
 
     actions: {
         fetchSubjects({state}) {
             return new Promise((resolve, reject) => {
-                axios.get("/admin/subjects")
+                axios.get("/admin/api/subjects")
                      .then(({data}) => {
                          state.subjects = data;
                          resolve();
@@ -57,7 +59,7 @@ export default {
 
         addSubject({state}, title) {
             return new Promise((resolve, reject) => {
-                axios.post("/admin/subjects", {title})
+                axios.post("/admin/api/subjects", {title})
                     .then(({data}) => resolve(data))
                     .catch(({response}) => reject(response));
             });
@@ -65,7 +67,7 @@ export default {
 
         saveSubject({state, dispatch}, {id, formData}) {
             return new Promise((resolve, reject) => {
-                axios.post(`/admin/subjects/${id}`, formData)
+                axios.post(`/admin/api/subjects/${id}`, formData)
                     .then(() => {
                         dispatch('fetchSubjects');
                         resolve();

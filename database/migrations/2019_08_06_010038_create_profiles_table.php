@@ -17,12 +17,15 @@ class CreateProfilesTable extends Migration
             $table->bigIncrements('id');
             $table->integer('user_id')->unsigned();
             $table->string('name');
+            $table->string('slug')->unique();
             $table->json('bio')->nullable();
             $table->string('nationality')->nullable();
             $table->integer('teaching_since')->nullable();
             $table->integer('chinese_ability')->nullable();
             $table->string('qualifications')->nullable();
             $table->string('teaching_specialties')->nullable();
+            $table->boolean('is_public')->default(0);
+            $table->json('spoken_languages')->nullable();
             $table->timestamps();
         });
     }

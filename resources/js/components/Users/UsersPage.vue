@@ -13,21 +13,18 @@
             </div>
         </section>
         <section class="my-12">
-            <user-list :users="admin_users" title="Admin"></user-list>
+            <user-list :users="users" title="Users"></user-list>
 
         </section>
-        <section class="my-12">
-            <user-list :users="teachers" title="Teachers"></user-list>
 
-        </section>
         <add-admin :show-form="showAdminForm"
                    @close="showAdminForm = false"
                    @failed-add-admin="addAdminError"
-                   @added-admin-user="adminUserAdded"></add-admin>
+                   @added-admin-user="adminUserAdded"/>
         <add-teacher :show-form="showTeacherForm"
                      @added-teacher-user="teacherUserAdded"
                      @failed-add-teacher="addTeacherError"
-                     @close="showTeacherForm = false"></add-teacher>
+                     @close="showTeacherForm = false"/>
     </div>
 </template>
 
@@ -36,59 +33,52 @@
     import AddAdmin from "./AddAdmin";
     import AddTeacher from "./AddTeacher";
     import {notify} from "../Messaging/notify";
+    import MultiButton from "../UI/MultiButton";
+
 
     export default {
         components: {
             AddAdmin,
             AddTeacher,
             UserList,
+            MultiButton,
         },
 
         data() {
             return {
                 showAdminForm: false,
                 showTeacherForm: false,
-                users: [],
             };
         },
 
         computed: {
             admin_users() {
-                return this.users.filter(f => f.is_admin);
+                return this.$store.getters['users/admins'];
             },
 
             teachers() {
-                return this.users.filter(f => f.is_teacher && !f.is_admin);
+                return this.$store.getters['users/teachers'];
+            },
+
+            users() {
+                return this.$store.state.users.users;
             }
 
         },
 
         mounted() {
-            this.refreshUserList();
+            this.$store.dispatch('users/fetchAllUsers').catch(notify.error);
         },
 
         methods: {
 
-            fetchUsers() {
-                return new Promise((resolve, reject) => {
-                    axios.get("/admin/users")
-                         .then(({data}) => {
-                             this.users = data;
-                             resolve();
-                         })
-                         .catch(() => resolve({message: "Failed to fetch list of users."}));
-                });
-            },
-
-            refreshUserList() {
-                this.fetchUsers().catch(notify.error);
-            },
-
             adminUserAdded() {
+                this.$store.dispatch('users/fetchAllUsers').catch(notify.error);
                 notify.success({message: "The admin user has been added and will be notified."})
             },
 
             teacherUserAdded() {
+                this.$store.dispatch('users/fetchAllUsers').catch(notify.error);
                 notify.success({message: "The teacher has been added and will be notified."})
             },
 
@@ -103,9 +93,3 @@
         }
     }
 </script>
-
-<style scoped
-       lang="scss"
-       type="text/scss">
-
-</style>

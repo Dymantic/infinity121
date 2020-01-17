@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="max-w-4xl mx-auto">
         <section class="flex justify-between items-center py-8">
             <h1 class="flex-1 text-5xl font-bold">Subjects</h1>
             <div class="flex justify-end items-center">
@@ -8,9 +8,17 @@
                 ></add-subject-button>
             </div>
         </section>
-        <div class="max-w-xl mx-auto p-8 bg-white shadow">
-            <div v-for="subject in subjects" :key="subject.id" class="mb-1">
-                <router-link class="font-semibold hover:text-indigo-500" :to="`/show/${subject.id}`">{{ subject.title['en'] }}</router-link>
+        <div class="max-w-4xl mx-auto three-grid">
+            <div v-for="subject in subjects" :key="subject.id" class="mb-8 w-64 mx-auto bg-white shadow-lg">
+                <router-link class="font-semibold hover:text-indigo-500" :to="`/subjects/${subject.id}/show`">
+                    <div class="pb-3/4 grad-bg-indigo relative w-full">
+                        <img v-if="subject.title_image.thumb" :src="subject.title_image.thumb"
+                             class="w-full h-full object-cover absolute"
+                             alt="">
+                    </div>
+
+                    <p class="px-4 pb-4 pt-2">{{ subject.title.en }}</p>
+                </router-link>
             </div>
         </div>
     </div>
@@ -26,9 +34,13 @@
         },
 
         computed: {
-          subjects() {
-              return this.$store.getters['subjects/sorted_subjects'];
-          }
+            subjects() {
+                return this.$store.getters['subjects/sorted_subjects'];
+            }
+        },
+
+        mounted() {
+            this.$store.dispatch('subjects/fetchSubjects').catch(notify.error);
         },
 
         methods: {
@@ -38,7 +50,7 @@
                 this.$store.dispatch('subjects/fetchSubjects')
                     .catch(notify.error);
 
-                this.$router.push(`/edit/${id}`)
+                this.$router.push(`/subjects/${id}/edit`)
             },
 
             addSubjectError(message) {

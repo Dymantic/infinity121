@@ -23,20 +23,33 @@
                                for="nationality">Nationality</label>
                         <span class="text-xs text-red-400"
                               v-show="formErrors.nationality">{{ formErrors.nationality }}</span>
-                        <input type="text"
-                               name="nationality"
-                               v-model="formData.nationality"
-                               class="input-text"
-                               id="nationality">
+                        <select id="nationality" v-model="formData.nationality" class="input-text">
+                            <option v-for="nationality in nationalities"
+                                    :key="nationality.code"
+                                    :value="nationality.code">{{ nationality.name }}</option>
+                        </select>
+
                     </div>
                 </div>
-
+                <div class="mt-8">
+                    <p class="form-label">Spoken languages</p>
+                    <div class="flex flex-wrap">
+                        <div v-for="language in available_languages" :key="language.code" class="m-6">
+                            <input type="checkbox"
+                                   :value="language.code"
+                                   v-model="formData.spoken_languages"
+                                   :id="`lang_${language.code}`">
+                            <label :for="`lang_${language.code}`">{{ language.name }}</label>
+                        </div>
+                    </div>
+                </div>
 
             </div>
 
             <div class="p-8 bg-white my-12 shadow">
                 <p class="font-bold text-lg mb-4">About you</p>
-                <p class="text-gray-600 my-4">Describe yourself in around 180 characters. Keep it brief and interesting.</p>
+                <p class="text-gray-600 my-4">Describe yourself in around 180 characters. Keep it brief and
+                    interesting.</p>
                 <div class="">
                     <div class="three-grid">
                         <div v-for="(text, lang) in formData.bio"
@@ -49,7 +62,7 @@
                             <textarea name="bio"
                                       v-model="formData.bio[lang]"
                                       class="input-text h-24"
-                                      :id="`bio_${lang}`"></textarea>
+                                      :id="`bio_${lang}`"/>
                         </div>
                     </div>
 
@@ -74,19 +87,20 @@
                     <span class="text-xs text-red-400"
                           v-show="formErrors.teaching_since">{{ formErrors.teaching_since }}</span>
                     <input type="text"
-                           class="input-text" v-model="formData.teaching_since" id="teaching_since" placeholder="e.g. 2012">
+                           class="input-text" v-model="formData.teaching_since" id="teaching_since"
+                           placeholder="e.g. 2012">
                 </div>
                 <div class="my-8"
                      :class="{'border-b border-red-400': formErrors.chinese_ability}">
                     <p class="form-label mb-4">Chinese ability</p>
                     <span class="text-xs text-red-400"
                           v-show="formErrors.chinese_ability">{{ formErrors.chinese_ability }}</span>
-                    <div v-for="level in chinese_abilities">
+                    <div v-for="level in chinese_abilities" :key="level.value">
                         <input type="radio"
                                :value="level.value"
                                v-model="formData.chinese_ability"
-                               :id="level.key">
-                        <label :for="level.key"
+                               :id="`zh_level_${level.value}`">
+                        <label :for="`zh_level_${level.value}`"
                                class="pl-4">{{ level.description }}</label>
                     </div>
                 </div>
@@ -109,7 +123,6 @@
             </div>
 
 
-
         </form>
     </div>
 </template>
@@ -130,7 +143,8 @@
                     teaching_since: 2019,
                     chinese_ability: 1,
                     teaching_specialities: '',
-                    qualifications: ''
+                    qualifications: '',
+                    spoken_languages: [],
                 },
                 formErrors: {
                     name: '',
@@ -139,7 +153,8 @@
                     teaching_since: '',
                     chinese_ability: '',
                     teaching_specialities: '',
-                    qualifications: ''
+                    qualifications: '',
+                    spoken_languages: '',
                 }
             };
         },
@@ -151,12 +166,21 @@
             },
 
             chinese_abilities() {
-                return this.$store.state.profiles.chinese_abilities;
+                return this.$store.state.me.chinese_abilities;
+            },
+
+            available_languages() {
+                return this.$store.state.me.languages;
+            },
+
+            nationalities() {
+                return this.$store.getters['me/sortedNationalities'];
             }
+
         },
 
         mounted() {
-            this.$store.dispatch('profiles/fetchProfile')
+            this.$store.dispatch('me/fetchProfile')
                 .then(() => this.resetFormData())
                 .catch(console.log);
             this.resetFormData();
@@ -164,14 +188,18 @@
 
         methods: {
             resetFormData() {
-                this.formData = {...this.$store.state.profiles.profile}
+                this.formData = {
+                    ...this.$store.state.me.profile,
+                    spoken_languages: this.$store.state.me.profile.spoken_language_codes,
+                    nationality: this.$store.state.me.profile.country_code,
+                }
             },
 
             submitForm() {
-                this.$store.dispatch('profiles/saveProfile', this.formData)
-                    .then(() => this.$router.push('/show'))
+                this.$store.dispatch('me/saveProfile', this.formData)
+                    .then(() => this.$router.push('/me/show'))
                     .catch(({status, data}) => {
-                        if(status === 422) {
+                        if (status === 422) {
                             this.setFormErrors(data.errors);
                             return notify.warn({message: 'Some of your input is not valid'});
                         }

@@ -102,4 +102,15 @@ class Subject extends Model implements HasMedia
             ]
         ];
     }
+
+    public function forCurrentLang()
+    {
+        $lang = app()->getLocale();
+
+        return array_merge($this->toArray(), [
+            'title' => $this->title[$lang] ?? '',
+            'description' => $this->description[$lang] ?? '',
+            'writeup' => $this->writeup[$lang] ?? '',
+        ]);
+    }
 }
