@@ -40,6 +40,8 @@ class CreateSubjectTest extends TestCase
         $response->assertJsonValidationErrors('title');
     }
 
+
+
     /**
      *@test
      */

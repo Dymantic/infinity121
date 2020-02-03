@@ -9,11 +9,12 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Tests\AssertsMediaModels;
 use Tests\TestCase;
 
 class SubjectTitleImageTest extends TestCase
 {
-    use RefreshDatabase;
+    use RefreshDatabase, AssertsMediaModels;
 
     /**
      *@test
@@ -91,17 +92,7 @@ class SubjectTitleImageTest extends TestCase
         $this->assertCount(1, $subject->getMedia(Subject::TITLE_IMAGES));
     }
 
-    private function getImageDiskPath($image)
-    {
-        return Str::replaceFirst("/media/", "", $image->getUrl());
-    }
 
-    private function getImageConversionDiskPaths($image, $conversions)
-    {
-        return collect($conversions)->map(function($conversion) use ($image) {
-            return Str::replaceFirst("/media/", "", $image->getUrl($conversion));
-        })->all();
-    }
 
 
 }

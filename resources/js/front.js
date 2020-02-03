@@ -23,9 +23,11 @@ import Modal from "@dymantic/modal";
 
 import StudentSignup from "./front/Components/StudentSignup";
 import TeacherSignup from "./front/Components/TeacherSignup";
+import ContactForm from "./front/Components/ContactForm";
 
 Vue.component('student-signup', StudentSignup);
 Vue.component('teacher-signup', TeacherSignup);
+Vue.component('contact-form', ContactForm);
 Vue.component('modal', Modal);
 new Vue({el: "#app"});
 window.addEventListener('load', () => {

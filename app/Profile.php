@@ -140,6 +140,9 @@ class Profile extends Model implements HasMedia
 
     public function forCurrentLang()
     {
-        return array_merge($this->toArray(), ['bio' => $this->bio[app()->getLocale()] ?? '']);
+        return array_merge($this->toArray(), [
+            'bio' => $this->bio[app()->getLocale()] ?? '',
+            'nationality' => Nationalities::byCode($this->nationality)[app()->getLocale()],
+        ]);
     }
 }

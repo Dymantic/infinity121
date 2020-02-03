@@ -24,10 +24,16 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
     Route::get('students/sign-up', 'StudentsInquiryController@show');
     Route::get('teachers/sign-up', 'TeachersInquiryController@show');
 
+    Route::get('contact-us', 'ContactMessageController@create');
+
+    Route::get('affiliates', 'AffiliatesController@index');
+
 });
 
 Route::post('students/sign-up', 'StudentsInquiryController@store');
 Route::post('teachers/sign-up', 'TeachersInquiryController@store');
+
+Route::post('contact', 'ContactMessageController@store');
 
 
 Route::get('style-guide', function () {
@@ -76,6 +82,17 @@ Route::group(['prefix' => 'admin/api', 'middleware' => ['auth'], 'namespace' => 
     Route::post('subjects/{subject}/image', 'SubjectTitleImageController@store');
 
     Route::get('nationalities', 'NationalitiesController@index');
+
+    Route::get('affiliates', 'AffiliatesController@index');
+    Route::get('affiliates/{affiliate}', 'AffiliatesController@show');
+    Route::post('affiliates', 'AffiliatesController@store')->middleware('admin');
+    Route::post('affiliates/{affiliate}', 'AffiliatesController@update')->middleware('admin');
+    Route::delete('affiliates/{affiliate}', 'AffiliatesController@delete')->middleware('admin');
+
+    Route::post('affiliates/{affiliate}/image', 'AffiliateImagesController@store');
+
+    Route::post('published-affiliates', 'PublishedAffiliatesController@store');
+    Route::delete('published-affiliates/{affiliate}', 'PublishedAffiliatesController@destroy');
 });
 
 Route::get('admin/dashboard', 'Admin\Pages\DashboardController')->middleware('auth');

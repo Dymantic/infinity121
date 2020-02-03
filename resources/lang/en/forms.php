@@ -12,4 +12,5 @@ return [
     'years-in-taiwan' => 'Years in Taiwan',
     'available-hours' => 'Available hours per week',
     'teaching-experience' => 'A little about your teaching experience',
+    'send' => 'Send',
 ];

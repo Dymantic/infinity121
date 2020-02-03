@@ -3,11 +3,11 @@
 return [
     'location' => [
         'heading' => 'Location, location, location',
-        'text' => 'Our specialists come to you, either to your workplace or to your home.'
+        'text' => 'It’s all up to you. Our specialists can come to you, either to your workplace or to your home, but we do have classrooms available near Ikea if you prefer.'
     ],
     'personalised' => [
-        'heading' => 'Personalised Courses',
-        'text' => 'Each course is tailored to your exact level and needs. There is no “one-size-fits-all” at iTc.'
+        'heading' => 'Customised courses',
+        'text' => 'Each course is personalised to your exact level and learning preferences. No “one-size-fits-all” at iTc.'
     ],
     'quality' => [
         'heading' => 'Quality Guaranteed',
@@ -15,14 +15,14 @@ return [
     ],
     'one-stop' => [
         'heading' => 'One-Stop Shop',
-        'text' => 'Customers often run TOEIC and Business English courses simultaneously using 2 qualified teachers to maximise benefits.'
+        'text' => 'Customers often run TOEIC and Business English courses simultaneously using 2 or more qualified teachers to maximise benefits. '
     ],
     'business' => [
-        'heading' => 'Business Support Operation',
-        'text' => 'We offer a support option where your emails, marketing materials, etc. are vetted before being sent out to customers.'
+        'heading' => 'Business Support Option',
+        'text' => 'Client/Students may sign up for the support option where emails, marketing materials etc... are vetted before sending out to customers.'
     ],
     'specialised' => [
         'heading' => 'Specialised Business Options',
-        'text' => 'AQL, DFM, Quality Systems Design and Implementation, Supplier Audits, ISO9001 preparation or audit; all available.'
+        'text' => 'AQL, DFM, Quality Systems Design and Implementation, Supplier Audits, ISO9001 preparation or audited; all available. Classes are available for business training.'
     ],
 ];

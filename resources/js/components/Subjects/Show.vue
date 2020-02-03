@@ -33,7 +33,7 @@
                                       @image-uploaded="uploadedImage"
                                       class="w-64 mx-auto"
                                       v-if="subject"
-                        ></image-upload>
+                        />
                         <p class="w-64 text-sm text-gray-600 mt-4 mx-auto text-left">Click to upload an image for this
                                                                                      subject. The image will be cropped
                                                                                      to a 4:3 ratio, and you should use

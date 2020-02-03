@@ -5,6 +5,7 @@
         </div>
 
         <div class="flex justify-end items-center">
+            <router-link v-if="is_admin" to="/affiliates" class="text-white px-4 mr-4 no-underline hover:underline">Affiliates</router-link>
             <router-link v-if="is_admin" to="/teachers" class="text-white px-4 mr-4 no-underline hover:underline">Teachers</router-link>
             <router-link v-if="is_admin" to="/subjects" class="text-white px-4 mr-4 no-underline hover:underline">Subjects</router-link>
             <router-link v-if="is_admin" to="/users" class="text-white px-4 mr-4 no-underline hover:underline">Users</router-link>

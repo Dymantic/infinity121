@@ -1,5 +1,6 @@
 import axios from "axios";
 import {notify} from "../components/Messaging/notify";
+import {azByPropetryName} from "../libs/sorting";
 
 export default {
     namespaced: true,
@@ -54,15 +55,7 @@ export default {
         sortedNationalities: state => {
             return Object.keys(state.nationalities)
                          .map(code => ({code, name: state.nationalities[code]}))
-                         .sort((a,b) => {
-                             if(a.name < b.name) {
-                                 return -1;
-                             }
-                             if(a.name > b.name) {
-                                 return 1;
-                             }
-                             return 0;
-                         });
+                         .sort(azByPropetryName('name'));
         }
     },
 

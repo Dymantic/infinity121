@@ -13,6 +13,7 @@ import subjects from "./stores/subjects";
 import users from "./stores/users";
 import me from "./stores/me";
 import teachers from "./stores/teachers";
+import affiliates from "./stores/affiliates";
 
 const store = new Vuex.Store({
     modules: {
@@ -20,6 +21,7 @@ const store = new Vuex.Store({
         users,
         me,
         teachers,
+        affiliates,
     }
 });
 
@@ -27,12 +29,14 @@ import profileRoutes from "./routes/profile";
 import userRoutes from "./routes/users";
 import subjectRoutes from "./routes/subjects";
 import teacherRoutes from "./routes/teachers";
+import affiliateRoutes from "./routes/affiliates";
 
 const routes = [
     ...profileRoutes,
     ...userRoutes,
     ...subjectRoutes,
     ...teacherRoutes,
+    ...affiliateRoutes,
 ];
 const router = new VueRouter({routes});
 
@@ -73,5 +77,6 @@ const app = new Vue({
         this.$store.dispatch('me/fetchNationalities');
         this.$store.dispatch('subjects/fetchSubjects');
         this.$store.dispatch('teachers/fetchTeachers');
+        this.$store.dispatch('affiliates/fetchAffiliates');
     }
 });

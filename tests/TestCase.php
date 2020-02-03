@@ -35,10 +35,7 @@ abstract class TestCase extends BaseTestCase
             return ["{$key}->{$lang}" => $value];
         })->all();
 
-        $this->assertDatabaseHas($table, $translatables);
+        $this->assertDatabaseHas($table, array_merge($translatables, $untranslated));
 
-        if(count($untranslated) > 0) {
-            $this->assertDatabaseHas($table, $untranslated);
-        }
     }
 }
