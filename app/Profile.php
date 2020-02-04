@@ -142,7 +142,7 @@ class Profile extends Model implements HasMedia
     {
         return array_merge($this->toArray(), [
             'bio' => $this->bio[app()->getLocale()] ?? '',
-            'nationality' => Nationalities::byCode($this->nationality)[app()->getLocale()],
+            'nationality' => Nationalities::byCode($this->nationality)[app()->getLocale()] ?? '',
         ]);
     }
 }
