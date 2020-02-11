@@ -1,7 +1,7 @@
 <div class="wave-blue-top bg-white">
     <div class="max-w-3xl mx-auto pt-48">
-        <h1 class="type-h1 text-hms-navy my-20 text-center">{{ trans('about.team.heading') }}</h1>
-        <p class="text-hms-navy type-b1 my-8 text-center">{{ trans('about.team.paragraph_one') }}</p>
+        <h1 class="type-h1 my-20 text-center">{{ trans('about.team.heading') }}</h1>
+        <p class="type-b1 my-8 text-center">{{ trans('about.team.paragraph_one') }}</p>
         <div class="grid-2x py-20">
             @foreach($team as $member)
                 <div class="w-48 mx-auto">

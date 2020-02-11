@@ -6,7 +6,7 @@
         <div>
             <div v-for="affiliate in affiliates" :key="affiliate.id" class="my-6 shadow">
                 <router-link :to="`/affiliates/${affiliate.id}`">
-                    <div class="flex">
+                    <div class="flex items-start">
                         <img :src="affiliate.logo_thumb" class="w-48" alt="">
                         <div class="p-4 flex-1">
                             <p class="text-lg mb-6">{{ affiliate.name.en }}</p>

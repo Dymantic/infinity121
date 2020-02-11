@@ -20,7 +20,8 @@ module.exports = {
                 '5xl': '3.25rem',
             },
             boxShadow: {
-                md: '5px 5px 7px rgba(0,0,0,.2)'
+                card: '5px 5px 9px rgba(0,0,0,.1)',
+                button: '5px 5px 8px rgba(0,0,0,.2)',
             },
             inset: {
               20: '5rem',
@@ -29,6 +30,7 @@ module.exports = {
             colors: {
                 black: '#232a34',
                 'hms-navy': '#354066',
+                'deep-navy': '#1a2547',
                 'shady-blue': '#F1F8FF',
                 'mild-yellow': '#FFF9E0',
                 'cardy-blue': '#f5f9fa',
@@ -39,7 +41,7 @@ module.exports = {
                 'sunny-yellow': '#ffdf56',
                 'teesav-blue': '#5a6282',
                 'mustard': '#ffb40a',
-                'opaque': 'rgba(255,255,255,.7)'
+                'opaque': 'rgba(255,255,255,.8)'
 
             }
         }

@@ -19,6 +19,14 @@ if (token) {
 import {initNavbar} from "./front/navbar";
 import Vue from "vue";
 
+import Usher from "./libs/Usher";
+
+
+import Flickity from "flickity";
+window.Flickity = Flickity;
+
+import jump from "jump.js";
+
 import Modal from "@dymantic/modal";
 
 import StudentSignup from "./front/Components/StudentSignup";
@@ -32,6 +40,18 @@ Vue.component('modal', Modal);
 new Vue({el: "#app"});
 window.addEventListener('load', () => {
     initNavbar();
+    const usher = new Usher();
+
+    document.querySelectorAll('[data-jump]').forEach(link => {
+
+        link.addEventListener('click', (ev) => {
+            ev.preventDefault();
+            const target = link.getAttribute('data-jump-target') || 'body';
+            const offset = link.getAttribute('data-jump-offset') || 0;
+
+            jump(target, {offset});
+        });
+    })
 });
 
 

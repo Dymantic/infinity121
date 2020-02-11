@@ -4,9 +4,9 @@ return [
     'meta' => [],
 
     'banner' => [
-        'heading' => 'Tomorrow\'s training. Today',
+        'heading' => 'Tomorrow\'s training, today.',
         'text' => 'Professional English teachers to meet your specific needs.',
-        'button' => 'Enrol now'
+        'button' => 'Enrol now &gt;'
     ],
 
     'about'         => [
@@ -14,16 +14,16 @@ return [
         'text' => [
             'one' => 'All students are different. Different strengths, different weaknesses, different needs.
 For business, for school, or just for fun; we have the right course for you to succeed.',
-            'two' => 'When you harness the power of English, you open the door to the rest of the world. Go on…. Open the door!'
+            'two' => 'When you harness the power of English, you open the door to the rest of the world. Go on… Open the door!'
         ],
-        'link' => 'About iTC &gt;'
+        'link' => 'About iTC'
     ],
 
     'courses'       => [
         'heading' => 'Courses for everyone, and every level.',
         'intro' => 'Whether TOEIC, TOEFL, IELT’s, Business English or just conversation, your tutor and course coordinator will make use of the best methods, utilise the latest books, videos, online exercises and practice exams; to improve your performance. With iTc as your educational partner, improvement is guaranteed.',
         'button' => 'See All Courses &gt;',
-        'card-link' => 'See course &gt;'
+        'card-link' => 'See course'
     ],
 
     'selling-points'       => [
@@ -31,14 +31,28 @@ For business, for school, or just for fun; we have the right course for you to s
     ],
 
     'teachers'      => [
-        'heading' => 'Friendly, professional tutors at your service….',
+        'heading' => 'Friendly, professional tutors at your service.',
         'intro' => 'All iTc’s tutors have a proven track record of improving students English, a passion for teaching and at least one speciality. Every student is carefully assessed then aligned with the best teacher to meet his or her needs.'
     ],
 
     'testimonials'  => [
         'heading' => 'What people are saying about us.',
-        'testimonial_content' => '“Over 4 years, Tr. Keith has helped me to get a TOEFL score of 101, IELT’s 7.5 and SAT 1390.  He’s the best.”',
-        'testimonial_author' => 'Chun-Tao Tsao - University of Texas at Austin'
+        'all' => [
+            [
+                'testimonial_content' => '“Over 4 years, Tr. Keith has helped me to get a TOEFL score of 101, IELT’s 7.5 and SAT 1390.  He’s the best.”',
+                'testimonial_author' => 'Chun-Tao Tsao - University of Texas at Austin',
+            ],
+            [
+                'testimonial_content' => '“iTc has helped me for over 4 years now, way beyond just English tuition, helping with emails, presentation materials and speeches. I can highly recommend iTc…”',
+                'testimonial_author' => 'Jackie Lee - FD Johnson Fitness',
+            ],
+            [
+                'testimonial_content' => '“iTc has helped me for 3 years with English tuition and technical accounting wording. Keith is one of very few native English speaking CPA’s here in Taichung. First class!”',
+                'testimonial_author' => 'Tino Chen - Founder - Chia-Chung CPA',
+            ],
+
+        ],
+
     ],
 
     'sign-up' => [

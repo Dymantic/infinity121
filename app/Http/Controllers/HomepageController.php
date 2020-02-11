@@ -13,12 +13,14 @@ class HomepageController extends Controller
         $subjects = Subject::latest()->take(4)->get()->map->forCurrentLang();
         $selling_points = ['location', 'personalised', 'quality', 'one-stop', 'business', 'specialised'];
         $teachers = Profile::teachers()->latest()->take(3)->get()->map->forCurrentLang();
+        $testimonials = trans('home.testimonials.all');
 
         return view('front.home.page', [
             'light' => true,
             'subjects' => $subjects,
             'selling_points' => $selling_points,
-            'teachers' => $teachers
+            'teachers' => $teachers,
+            'testimonials' => $testimonials,
         ]);
     }
 }

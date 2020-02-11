@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="max-w-5xl mx-auto pt-16">
-    <h1 class="type-h1 text-hms-navy my-20 text-center">{{ $teacher['name'] }}</h1>
+    <h1 class="type-h1 my-20 text-center">{{ $teacher['name'] }}</h1>
     <div class="flex flex-col md:flex-row">
         <div class="w-0 md:w-2/5"></div>
         <div class="md:w-3/5">
@@ -16,27 +16,27 @@
         <div class="md:w-3/5 order-2">
             <div>
                 <p>
-                    <span class="text-hms-navy type-h2">{{ trans('teachers.show.nationality') }}: </span>
+                    <span class="type-h2">{{ trans('teachers.show.nationality') }}: </span>
                     <span>{{ $teacher['nationality'] }}</span>
                 </p>
                 <p>
-                    <span class="text-hms-navy type-h2">{{ trans('teachers.show.qualifications') }}: </span>
+                    <span class="type-h2">{{ trans('teachers.show.qualifications') }}: </span>
                     <span>{{ $teacher['qualifications'] }}</span>
                 </p>
                 <p>
-                    <span class="text-hms-navy type-h2">{{ trans('teachers.show.courses') }}: </span>
-                    <span>{{ $teacher['nationality'] }}</span>
+                    <span class="type-h2">{{ trans('teachers.show.courses') }}: </span>
+                    <span>{{ implode(", ", $teacher['subject_names']) }}</span>
                 </p>
                 <p>
-                    <span class="text-hms-navy type-h2">{{ trans('teachers.show.experience') }}: </span>
+                    <span class="type-h2">{{ trans('teachers.show.experience') }}: </span>
                     <span>{{ $teacher['teaching_since'] }}</span>
                 </p>
                 <p>
-                    <span class="text-hms-navy type-h2">{{ trans('teachers.show.chinese-level') }}: </span>
+                    <span class="type-h2">{{ trans('teachers.show.chinese-level') }}: </span>
                     <span>{{ $teacher['chinese_ability'] }}</span>
                 </p>
                 <p>
-                    <span class="text-hms-navy type-h2">{{ trans('teachers.show.nationality') }}: </span>
+                    <span class="type-h2">{{ trans('teachers.show.nationality') }}: </span>
                     <span>{{ $teacher['nationality'] }}</span>
                 </p>
             </div>

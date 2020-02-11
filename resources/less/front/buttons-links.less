@@ -1,5 +1,5 @@
 .btn {
-    @apply type-a1 py-4 px-12 rounded-lg shadow-md;
+    @apply type-a1 py-2 px-12 rounded-lg shadow-button;
 }
 
 .btn-dark {
@@ -11,11 +11,39 @@
 }
 
 .btn-bright {
-@apply text-hms-navy bg-mustard;
+@apply text-white bg-mustard;
 }
 
 .btn-bright:hover {
-@apply bg-hms-navy text-mustard;
+@apply bg-hms-navy text-white;
+}
+
+.arrow-link-left {
+
+}
+
+.arrow-link-left::after {
+    content: '>';
+    transition: .3s;
+    transform: translate3d(0,0,0);
+    display: inline-block;
+    margin-left: 4px;
+}
+
+.arrow-link-left:hover::after {
+    transform: translate3d(5px,0,0);
+}
+
+.arrow-link-right::before {
+    content: '<';
+    transition: .3s;
+    transform: translate3d(0,0,0);
+    display: inline-block;
+    margin-right: 4px;
+}
+
+.arrow-link-right:hover::before {
+    transform: translate3d(-5px,0,0);
 }
 
 

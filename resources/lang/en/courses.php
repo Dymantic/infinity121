@@ -10,6 +10,6 @@ return [
 
     'show' => [
         'course_link' => 'Enrol now &gt;',
-        'back_link' => '&lt; Back to courses'
+        'back_link' => 'Back to courses'
     ]
 ];
