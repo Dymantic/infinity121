@@ -15,7 +15,7 @@
             <input class="input-text" type="text" value="{{ old('email') }}" name="email" id="email">
         </div>
         <div>
-            <button type="submit" class="btn btn-indigo">Send request</button>
+            <button type="submit" class="btn btn-navy">Send request</button>
         </div>
     </form>
     @if (session('status'))

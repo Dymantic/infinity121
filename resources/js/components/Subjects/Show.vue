@@ -1,13 +1,37 @@
 <template>
     <div>
         <div v-if="subject">
+            <div class="my-8 p-4 shadow flex justify-between items-center">
+                <div>
+                    <div v-if="subject.is_public">
+                        <div class="flex items-center text-lg font-bold text-hms-navy">
+                            <div class="bg-green-500 w-4 h-4 rounded-full mr-2"></div>
+                            <p>Public</p>
+                        </div>
+                        <p class="mt-6">This subject is marked as public and will be visible on the website.</p>
+                    </div>
+                    <div v-else>
+                        <div class="flex items-center text-lg font-bold text-hms-navy">
+                            <div class="bg-red-500 w-4 h-4 rounded-full mr-2"></div>
+                            <p>Private</p>
+                        </div>
+                        <p class="mt-6">This subject is marked as private and can not be viewed by the public.</p>
+                    </div>
+                </div>
+                <div>
+                    <button :disabled="waiting" @click="togglePublicStatus" class="btn btn-navy">
+                        <span v-if="subject.is_public">Retract</span>
+                        <span v-else>Publish</span>
+                    </button>
+                </div>
+            </div>
             <div class="my-8">
                 <button v-for="lang in translations"
                         @click="show_translation = lang"
                         :key="lang"
                         type="button"
-                        class="uppercase font-bold text-xl hover:text-indigo-500 mx-3"
-                        :class="{'text-black border-b-2 border-indigo-500': show_translation == lang, 'text-gray-600': show_translation != lang}"
+                        class="uppercase font-bold text-xl hover:text-hms-navy mx-3"
+                        :class="{'text-black border-b-2 border-hms-navy': show_translation == lang, 'text-gray-600': show_translation != lang}"
                 >{{ lang }}
                 </button>
             </div>
@@ -34,11 +58,7 @@
                                       class="w-64 mx-auto"
                                       v-if="subject"
                         />
-                        <p class="w-64 text-sm text-gray-600 mt-4 mx-auto text-left">Click to upload an image for this
-                                                                                     subject. The image will be cropped
-                                                                                     to a 4:3 ratio, and you should use
-                                                                                     an image bigger than 400 x
-                                                                                     300px.</p>
+                        <p class="w-64 text-sm text-gray-600 mt-4 mx-auto text-left">Click to upload an image for this subject. The image will be cropped to a 4:3 ratio, and you should use an image bigger than 400 x 300px.</p>
                     </div>
                 </div>
 
@@ -65,6 +85,7 @@
 
         data() {
             return {
+                waiting: false,
                 show_translation: 'en',
             };
         },
@@ -124,6 +145,25 @@
             uploadedImage() {
                 this.$store.dispatch('subjects/fetchSubjects')
                     .catch(notify.error);
+            },
+
+            togglePublicStatus() {
+                this.waiting = true;
+                this.subject.is_public ? this.retract() : this.publish();
+            },
+
+            publish() {
+                this.$store.dispatch('subjects/publishSubject', this.subject.id)
+                .then(notify.success)
+                .catch(notify.error)
+                .then(() => this.waiting = false);
+            },
+
+            retract() {
+                this.$store.dispatch('subjects/retractSubject', this.subject.id)
+                    .then(notify.success)
+                    .catch(notify.error)
+                    .then(() => this.waiting = false);
             }
         }
     }

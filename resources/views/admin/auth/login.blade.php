@@ -18,10 +18,10 @@
             <input type="checkbox" name="remember" id="remember">
         </div>
         <div>
-            <button type="submit" class="btn btn-indigo">Login</button>
+            <button type="submit" class="btn btn-navy">Login</button>
         </div>
         <p class="mt-4 text-right">
-            <a class="no-underline hover:underline text-indigo-500" href="/password/reset">
+            <a class="no-underline hover:underline text-hms-navy" href="/password/reset">
                 I forgot my password
             </a>
         </p>

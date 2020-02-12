@@ -25,4 +25,9 @@ class SubjectsController extends Controller
     {
         $subject->updateWithTranslations(request()->only(['title', 'description', 'writeup']));
     }
+
+    public function delete(Subject $subject)
+    {
+        $subject->safeDelete();
+    }
 }

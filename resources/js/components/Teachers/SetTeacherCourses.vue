@@ -1,6 +1,6 @@
 <template>
     <span>
-        <button type="button" @click="openForm" class="underline font-bold text-gray-600 hover:text-indigo-500">Assign courses</button>
+        <button type="button" @click="openForm" class="underline font-bold text-gray-600 hover:text-hms-navy">Assign courses</button>
         <modal :show="showForm" @close="closeForm">
             <div class="max-w-lg w-full p-8">
                 <p class="uppercase tracking-wide font-bold text-sm">Eligible courses</p>
@@ -11,7 +11,7 @@
                         <label :for="`subject_${subject.id}`">{{ subject.title.en }}</label>
                     </div>
                     <div class="mt-6 flex justify-end">
-                        <button :disabled="waiting" type="submit" class="btn btn-indigo">Assign Courses</button>
+                        <button :disabled="waiting" type="submit" class="btn btn-navy">Assign Courses</button>
                     </div>
                 </form>
             </div>

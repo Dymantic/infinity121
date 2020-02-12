@@ -3,11 +3,11 @@
         <section class="flex justify-between items-center py-8">
             <h1 class="flex-1 text-5xl font-bold">Users</h1>
             <div class="flex justify-end items-center">
-                <multi-button class="btn btn-indigo"
+                <multi-button class="btn btn-navy"
                               text="Add User">
-                    <span class="text-black hover:text-indigo-500"
+                    <span class="text-black hover:text-hms-navy"
                           @click="showAdminForm = true">Admin</span>
-                    <span class="text-black hover:text-indigo-500"
+                    <span class="text-black hover:text-hms-navy"
                           @click="showTeacherForm = true">Teacher</span>
                 </multi-button>
             </div>

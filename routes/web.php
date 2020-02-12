@@ -79,7 +79,11 @@ Route::group(['prefix' => 'admin/api', 'middleware' => ['auth'], 'namespace' => 
     Route::get('subjects', 'SubjectsController@index')->middleware('admin');
     Route::post('subjects', 'SubjectsController@store')->middleware('admin');
     Route::post('subjects/{subject}', 'SubjectsController@update')->middleware('admin');
+    Route::delete('subjects/{subject}', 'SubjectsController@delete')->middleware('admin');
     Route::post('subjects/{subject}/image', 'SubjectTitleImageController@store');
+
+    Route::post('public-subjects', 'PublicSubjectsController@store');
+    Route::delete('public-subjects/{subject}', 'PublicSubjectsController@destroy');
 
     Route::get('nationalities', 'NationalitiesController@index');
 

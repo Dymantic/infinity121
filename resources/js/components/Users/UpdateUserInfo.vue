@@ -7,8 +7,8 @@
             </div>
         </section>
         <div class="p-8 max-w-lg shadow-lg">
-            <p><strong>Note: </strong>This is just your private user info, and not shared publicly on the site. If you want to change your public info, you can <router-link to="/me/show" class="hover:underline text-indigo-500">edit your profile</router-link>.</p>
-            <p class="mt-4">If you need to reset your password, you can <router-link class="hover:underline text-indigo-500" to="/me/password/edit">do that here.</router-link></p>
+            <p><strong>Note: </strong>This is just your private user info, and not shared publicly on the site. If you want to change your public info, you can <router-link to="/me/show" class="hover:underline text-hms-navy">edit your profile</router-link>.</p>
+            <p class="mt-4">If you need to reset your password, you can <router-link class="hover:underline text-hms-navy" to="/me/password/edit">do that here.</router-link></p>
         </div>
         <form v-if="form_ready" @submit.prevent="submit" class="p-8 max-w-lg shadow-lg">
             <div class="my-4" :class="{'border-b border-red-400': formErrors.name}">
@@ -21,7 +21,7 @@
                 <span class="text-xs text-red-400" v-show="formErrors.email">{{ formErrors.email }}</span>
                 <input type="email" name="email" v-model="formData.email" class="input-text" id="email">
             </div>
-            <button :disbaled="waiting" type="submit" class="btn btn-indigo mt-6">Update your details</button>
+            <button :disbaled="waiting" type="submit" class="btn btn-navy mt-6">Update your details</button>
         </form>
     </div>
 </template>

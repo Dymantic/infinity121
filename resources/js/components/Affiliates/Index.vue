@@ -1,7 +1,7 @@
 <template>
     <div class="max-w-4xl mx-auto">
         <page-header title="Affiliates">
-            <router-link to="/affiliates/create" class="btn btn-indigo">Add new</router-link>
+            <router-link to="/affiliates/create" class="btn btn-navy">Add new</router-link>
         </page-header>
         <div>
             <div v-for="affiliate in affiliates" :key="affiliate.id" class="my-6 shadow">

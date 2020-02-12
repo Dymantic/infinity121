@@ -1,6 +1,6 @@
-<div class="flex justify-between items-center bg-indigo-500 px-4 h-16">
+<div class="flex justify-between items-center bg-hms-navy px-4 h-16">
     <div class="flex-1 flex items-center">
-        <p class="font-black text-white">Infinity121</p>
+        @include('svg.logos.logo_full_white', ['classes' => 'h-6 text-mustard'])
     </div>
 
     <div class="flex justify-end items-center">

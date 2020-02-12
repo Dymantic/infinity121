@@ -14,14 +14,14 @@
         computed: {
             knob_classes() {
                 if(this.state === 'on') {
-                    return 'knob-on bg-indigo-500';
+                    return 'knob-on bg-hms-navy';
                 }
 
                 if(this.state === 'off') {
                     return 'knob-off bg-gray-500';
                 }
 
-                return 'knob-unset bg-indigo-200';
+                return 'knob-unset bg-hard-ass-grey';
             }
         }
     }

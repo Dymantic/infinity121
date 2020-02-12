@@ -19,5 +19,14 @@ $factory->define(\App\Teaching\Subject::class, function (Faker $faker) {
             'en' => $faker->paragraphs(3, true),
             'zh' => $faker->paragraphs(3, true),
         ],
+        'is_public' => $faker->boolean
     ];
 });
+
+$factory->state(\App\Teaching\Subject::class, 'private', [
+    'is_public' => false,
+]);
+
+$factory->state(\App\Teaching\Subject::class, 'public', [
+    'is_public' => true,
+]);

@@ -1,4 +1,5 @@
 import axios from "axios";
+import {notify} from "../components/Messaging/notify";
 
 export default {
     namespaced: true,
@@ -73,6 +74,39 @@ export default {
                         resolve();
                     })
                     .catch(({response}) => reject(response))
+            });
+        },
+
+        deleteSubject({dispatch}, subject_id) {
+            return new Promise((resolve, reject) => {
+               axios.delete(`/admin/api/subjects/${subject_id}`)
+                   .then(() => {
+                       dispatch('fetchSubjects').catch(notify.error);
+                       resolve();
+                   })
+                   .catch(() => reject({message: 'Failed to delete course.'}));
+            });
+        },
+
+        publishSubject({dispatch}, subject_id) {
+            return new Promise((resolve, reject) => {
+               axios.post("/admin/api/public-subjects", {subject_id})
+                   .then(() => {
+                       dispatch('fetchSubjects').catch(notify.error);
+                       resolve({message: 'Subject has been updated'});
+                   })
+                   .catch(() => reject({message: 'Unable to publish subject.'}))
+            });
+        },
+
+        retractSubject({dispatch}, subject_id) {
+            return new Promise((resolve, reject) => {
+                axios.delete(`/admin/api/public-subjects/${subject_id}`)
+                     .then(() => {
+                         dispatch('fetchSubjects').catch(notify.error);
+                         resolve({message: 'Subject has been retracted'});
+                     })
+                     .catch(() => reject({message: 'Unable to retract subject.'}))
             });
         }
 

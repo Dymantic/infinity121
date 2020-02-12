@@ -1,7 +1,7 @@
 <template>
     <div v-if="teacher" class="max-w-4xl mx-auto">
         <page-header :title="teacher.name">
-            <router-link to="/teachers" class="btn btn-indigo">Back to teachers</router-link>
+            <router-link to="/teachers" class="btn btn-navy">Back to teachers</router-link>
         </page-header>
 
         <profile-card :profile="teacher"/>

@@ -13,7 +13,7 @@
                 </thead>
                 <tbody>
                 <tr class="hover:bg-gray-200" v-for="teacher in teachers" :key="teacher.id">
-                    <td class="py-2 pl-4 hover:text-indigo-500"><router-link :to="`/teachers/${teacher.id}`">{{ teacher.name }}</router-link></td>
+                    <td class="py-2 pl-4 hover:text-hms-navy"><router-link :to="`/teachers/${teacher.id}`">{{ teacher.name }}</router-link></td>
                     <td>
                         <active-status :active="teacher.is_public" />
                     </td>

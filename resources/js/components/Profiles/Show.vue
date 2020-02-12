@@ -20,7 +20,7 @@
                         <button v-for="(text, lang) in profile.bio"
                                 @click="bio_lang = lang"
                                 class="uppercase tracking-wide border-b-2 border-white text-sm mx-4"
-                                :class="{'border-indigo-500': bio_lang === lang}"
+                                :class="{'border-hms-navy': bio_lang === lang}"
                         >{{ lang }}
                         </button>
                     </div>

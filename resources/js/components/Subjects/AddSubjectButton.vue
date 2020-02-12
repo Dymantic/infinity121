@@ -1,6 +1,6 @@
 <template>
     <span>
-        <button class="btn btn-indigo" @click="showAddForm = true">Add Subject</button>
+        <button class="btn btn-navy" @click="showAddForm = true">Add Subject</button>
         <modal :show="showAddForm">
             <div class="max-w-lg p-8">
                 <form action="" @submit.prevent="submitForm">
@@ -13,7 +13,7 @@
                     </div>
                     <div class="flex justify-end items-center mt-8">
                         <button type="button" @click="showAddForm = false">Cancel</button>
-                        <button class="btn btn-indigo ml-4" type="submit">Submit</button>
+                        <button class="btn btn-navy ml-4" type="submit">Submit</button>
                     </div>
                 </form>
             </div>

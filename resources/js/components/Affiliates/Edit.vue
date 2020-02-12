@@ -1,7 +1,7 @@
 <template>
     <div class="max-w-4xl mx-auto" v-if="ready">
         <page-header :title="affiliate.name.en">
-            <router-link class="btn btn-indigo" :to="`/affiliates/${affiliate.id}`">Back</router-link>
+            <router-link class="btn btn-navy" :to="`/affiliates/${affiliate.id}`">Back</router-link>
         </page-header>
         <affiliate-form :affiliate="affiliate"
                         :key="affiliate.id"

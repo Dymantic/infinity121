@@ -2,6 +2,7 @@
 
 namespace App\Teaching;
 
+use App\Profile;
 use App\Translatable;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Model;
@@ -22,10 +23,11 @@ class Subject extends Model implements HasMedia
     protected $guarded = [];
 
     protected $casts = [
-        'title' => 'array',
+        'title'       => 'array',
         'description' => 'array',
-        'writeup' => 'array',
-        ];
+        'writeup'     => 'array',
+        'is_public'   => 'boolean',
+    ];
 
     public function sluggable()
     {
@@ -36,6 +38,12 @@ class Subject extends Model implements HasMedia
         ];
     }
 
+    public function profiles()
+    {
+        return $this->belongsToMany(Profile::class);
+    }
+
+
     public function getSlugtitleAttribute()
     {
         return $this->translated('title', 'en');
@@ -44,12 +52,30 @@ class Subject extends Model implements HasMedia
     public static function createNew($english_title)
     {
         $subject_data = [
-            'title' => ['en' => $english_title],
+            'title'       => ['en' => $english_title],
             'description' => ['en' => ''],
-            'writeup' => ['en' => ''],
+            'writeup'     => ['en' => ''],
         ];
 
         return static::create($subject_data);
+    }
+
+    public function safeDelete()
+    {
+        $this->profiles()->sync([]);
+        $this->delete();
+    }
+
+    public function publish()
+    {
+        $this->is_public = true;
+        $this->save();
+    }
+
+    public function retract()
+    {
+        $this->is_public = false;
+        $this->save();
     }
 
     public function setTitleImage($file)
@@ -57,15 +83,15 @@ class Subject extends Model implements HasMedia
         $this->clearMediaCollection(static::TITLE_IMAGES);
 
         return $this->addMedia($file)
-            ->preservingOriginal()
-            ->toMediaCollection(static::TITLE_IMAGES);
+                    ->preservingOriginal()
+                    ->toMediaCollection(static::TITLE_IMAGES);
     }
 
     public function titleImage($conversion = '')
     {
         $title_image = $this->getFirstMedia(static::TITLE_IMAGES);
 
-        if(!$title_image) {
+        if (!$title_image) {
             return null;
         }
 
@@ -90,14 +116,15 @@ class Subject extends Model implements HasMedia
     public function toArray()
     {
         return [
-            'id' => $this->id,
-            'slug' => $this->slug,
-            'title' => $this->title,
+            'id'          => $this->id,
+            'slug'        => $this->slug,
+            'title'       => $this->title,
             'description' => $this->description,
-            'writeup' => $this->writeup,
+            'writeup'     => $this->writeup,
+            'is_public'   => $this->is_public,
             'title_image' => [
-                'thumb' => $this->titleImage('thumb'),
-                'web' => $this->titleImage('web'),
+                'thumb'    => $this->titleImage('thumb'),
+                'web'      => $this->titleImage('web'),
                 'original' => $this->titleImage(),
             ]
         ];
@@ -108,9 +135,9 @@ class Subject extends Model implements HasMedia
         $lang = app()->getLocale();
 
         return array_merge($this->toArray(), [
-            'title' => $this->title[$lang] ?? '',
+            'title'       => $this->title[$lang] ?? '',
             'description' => $this->description[$lang] ?? '',
-            'writeup' => $this->writeup[$lang] ?? '',
+            'writeup'     => $this->writeup[$lang] ?? '',
         ]);
     }
 }

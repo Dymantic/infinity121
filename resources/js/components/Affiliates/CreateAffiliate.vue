@@ -1,7 +1,7 @@
 <template>
     <div class="max-w-4xl mx-auto">
         <page-header title="Add New Affiliate">
-            <router-link to="/affiliates" class="btn btn-indigo">Back</router-link>
+            <router-link to="/affiliates" class="btn btn-navy">Back</router-link>
         </page-header>
 
         <affiliate-form @affiliate-created="onCreated"></affiliate-form>

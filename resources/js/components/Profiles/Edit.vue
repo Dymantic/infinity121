@@ -68,7 +68,7 @@
 
                     <div v-if="missing_translations.length" class="mt-4">
                         <p class="form-label mb-2">add translation:</p>
-                        <button class="sm-btn btn-indigo uppercase mr-4"
+                        <button class="sm-btn btn-navy uppercase mr-4"
                                 v-for="language in missing_translations"
                                 type="button"
                                 @click="addBioTranslation(language)">{{ language }}
@@ -119,7 +119,7 @@
 
             </div>
             <div class="flex justify-end my-12">
-                <button type="submit" class="btn-indigo btn">Save changes</button>
+                <button type="submit" class="btn-navy btn">Save changes</button>
             </div>
 
 

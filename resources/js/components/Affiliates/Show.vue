@@ -6,11 +6,11 @@
                               @cannot-delete="deleteError"
                               :affiliate-id="affiliate.id"
             />
-            <router-link class="btn btn-indigo" :to="`/affiliates/${affiliate.id}/edit`">Edit</router-link>
+            <router-link class="btn btn-navy" :to="`/affiliates/${affiliate.id}/edit`">Edit</router-link>
         </page-header>
         <div class="my-12 p-4 shadow">
             <p class="uppercase tracking-wide text-gray-600 font-bold">Link</p>
-            <p class="hover:text-indigo-500"><a target="_blank" :href="affiliate.link">{{ affiliate.link }}</a></p>
+            <p class="hover:text-hms-navy"><a target="_blank" :href="affiliate.link">{{ affiliate.link }}</a></p>
         </div>
         <div class="flex justify-between p-4 shadow">
             <div>
@@ -22,7 +22,7 @@
                     <span v-if="affiliate.is_public">This affiliate will appear on the public website. If you would like to remove it from the site, but not completely delete it, you may retract it.</span>
                     <span v-else>This affiliate will not appear on the site. When you are ready to let it be pubic, you may publish it.</span>
                 </p>
-                <button :disabled="waiting" class="btn btn-indigo" @click="togglePublish">
+                <button :disabled="waiting" class="btn btn-navy" @click="togglePublish">
                     <span v-if="affiliate.is_public">Retract</span>
                     <span v-else>Publish</span>
                 </button>

@@ -63,7 +63,7 @@
                                 type="button"
                                 @click="$emit('close')">Cancel
                         </button>
-                        <button class="btn btn-indigo"
+                        <button class="btn btn-navy"
                                 type="submit"
                                 :disabled="waiting"
                                 :class="{'opacity-50': waiting}">Add

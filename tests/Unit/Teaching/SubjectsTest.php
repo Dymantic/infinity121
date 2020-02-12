@@ -28,13 +28,37 @@ class SubjectsTest extends TestCase
     }
 
     /**
+     *@test
+     */
+    public function can_be_published()
+    {
+        $subject = factory(Subject::class)->state('private')->create();
+
+        $subject->publish();
+
+        $this->assertTrue($subject->fresh()->is_public);
+    }
+
+    /**
+     *@test
+     */
+    public function can_be_retracted()
+    {
+        $subject = factory(Subject::class)->state('public')->create();
+
+        $subject->retract();
+
+        $this->assertFalse($subject->fresh()->is_public);
+    }
+
+    /**
      * @test
      */
     public function to_array_has_correct_attributes()
     {
         Storage::fake('media');
 
-        $subject = factory(Subject::class)->create([
+        $subject = factory(Subject::class)->state('public')->create([
             'title'       => ['en' => 'test title', 'zh' => 'zh test title'],
             'description' => ['en' => 'test description', 'zh' => 'zh test description'],
             'writeup'     => ['en' => 'test writeup', 'zh' => 'zh test writeup'],
@@ -48,6 +72,7 @@ class SubjectsTest extends TestCase
             'description' => ['en' => 'test description', 'zh' => 'zh test description'],
             'writeup'     => ['en' => 'test writeup', 'zh' => 'zh test writeup'],
             'slug'        => 'test-title',
+            'is_public' => true,
             'title_image' => [
                 'thumb'    => $image->getUrl('thumb'),
                 'web'      => $image->getUrl('web'),

@@ -55,7 +55,7 @@
             </div>
 
             <div class="my-6">
-                <button :disabled="waiting" type="submit" class="btn btn-indigo">Submit</button>
+                <button :disabled="waiting" type="submit" class="btn btn-navy">Submit</button>
             </div>
         </form>
     </div>

@@ -8,8 +8,8 @@
                             @click="show_translation = lang"
                             :key="lang"
                             type="button"
-                            class="uppercase font-bold text-xl hover:text-indigo-500 mx-3"
-                            :class="{'text-black border-b-2 border-indigo-500': show_translation == lang, 'text-gray-600': show_translation != lang}"
+                            class="uppercase font-bold text-xl hover:text-hms-navy mx-3"
+                            :class="{'text-black border-b-2 border-hms-navy': show_translation == lang, 'text-gray-600': show_translation != lang}"
                     >{{ lang }}
                     </button>
                 </div>
@@ -19,7 +19,7 @@
                     <button v-for="lang in unused_languages"
                             :key="lang"
                             type="button"
-                            class="text-xl font-bold text-indigo-500 mx-4 uppercase"
+                            class="text-xl font-bold text-hms-navy mx-4 uppercase"
                             @click="addTranslation(lang)"
                     >&plus; {{ lang }}
                     </button>
@@ -49,7 +49,7 @@
                                   id="description"
                                   v-model="formData.description[show_translation]"
                                   class="input-text h-32"
-                        ></textarea>
+                        />
 
                     </div>
                     <div class="my-4"
@@ -68,7 +68,7 @@
                     </div>
                     <div class="mt-12 flex justify-end">
                         <button type="submit"
-                                class="btn btn-indigo">Save Changes
+                                class="btn btn-navy">Save Changes
                         </button>
                     </div>
                 </form>

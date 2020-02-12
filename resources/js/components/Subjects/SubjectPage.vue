@@ -5,6 +5,7 @@
             <div class="flex justify-end items-center">
                 <router-link class="nav-link active" :to="`/subjects/${subject_id}/show`">View</router-link>
                 <router-link class="nav-link" :to="`/subjects/${subject_id}/edit`">Edit</router-link>
+                <router-link class="nav-link" :key="$route.fullPath" :to="`/subjects/${subject_id}/delete`">Delete</router-link>
             </div>
         </section>
         <router-view></router-view>

@@ -13,14 +13,14 @@
                 <tbody class="">
                 <tr v-for="user in users" :key="user.id">
                     <td class="py-2">
-                        <router-link :to="`/users/${user.id}`" class="text-black hover:text-indigo-500">{{ user.name }}</router-link>
+                        <router-link :to="`/users/${user.id}`" class="text-black hover:text-hms-navy">{{ user.name }}</router-link>
                     </td>
                     <td class="py-2">
                         <span v-if="user.is_admin" class="mr-4 uppercase text-sm tracking-wide">Admin</span>
                         <span v-if="user.is_teacher" class="mr-4 uppercase text-sm tracking-wide">Teacher</span>
                     </td>
                     <td class="py-2">
-                        <a target="_blank" :href="`mailto:${user.email}`" class="no-underline text-gray-500 hover:text-indigo-500">{{ user.email }}</a>
+                        <a target="_blank" :href="`mailto:${user.email}`" class="no-underline text-gray-500 hover:text-hms-navy">{{ user.email }}</a>
                     </td>
                 </tr>
                 </tbody>

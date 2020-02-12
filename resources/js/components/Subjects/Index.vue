@@ -10,7 +10,7 @@
         </section>
         <div class="max-w-4xl mx-auto three-grid">
             <div v-for="subject in subjects" :key="subject.id" class="mb-8 w-64 mx-auto bg-white shadow-lg">
-                <router-link class="font-semibold hover:text-indigo-500" :to="`/subjects/${subject.id}/show`">
+                <router-link class="font-semibold hover:text-hms-navy" :to="`/subjects/${subject.id}/show`">
                     <div class="pb-3/4 grad-bg-indigo relative w-full">
                         <img v-if="subject.title_image.thumb" :src="subject.title_image.thumb"
                              class="w-full h-full object-cover absolute"

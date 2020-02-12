@@ -66,7 +66,7 @@
 
             <div class="my-4">
                 <button type="submit"
-                        class="btn btn-indigo">
+                        class="btn btn-navy">
                     Reset Password
                 </button>
             </div>
