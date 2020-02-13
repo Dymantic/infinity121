@@ -25,11 +25,11 @@
                 </p>
                 <p>
                     <span class="type-h2">{{ trans('teachers.show.experience') }}: </span>
-                    <span>{{ $teacher['teaching_since'] }}</span>
+                    <span>{{ $teacher['years_experience'] }}</span>
                 </p>
                 <p>
                     <span class="type-h2">{{ trans('teachers.show.chinese-level') }}: </span>
-                    <span>{{ $teacher['chinese_ability_full'] }}</span>
+                    <span class="capitalize">{{ $teacher['chinese_ability_full'] }}</span>
                 </p>
                 <p>
                     <span class="type-h2">{{ trans('teachers.show.courses') }}: </span>
