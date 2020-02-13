@@ -14,7 +14,8 @@ return [
         'qualifications' => 'Certifications/Degrees',
         'courses' => 'Courses I teach',
         'experience' => 'Years Experience',
-        'chinese-level' => 'Chinese Level'
+        'chinese-level' => 'Chinese Level',
+        'languages' => 'Spoken Languages',
     ],
 
     'back-link' => 'Back to teachers',
