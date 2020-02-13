@@ -2,7 +2,7 @@
     <div class="pt-80">
         <div class="max-w-5xl mx-auto">
             <p data-usher class="type-h1 max-w-2xl mb-20">{{ trans('home.testimonials.heading') }}</p>
-            <div data-flickity='{"cellAlign": "left", "contain": true, "prevNextButtons": false}'>
+            <div data-flickity='{"cellAlign": "left", "contain": true, "prevNextButtons": false, "autoPlay": 5000, "wrapAround": true}'>
                 @foreach($testimonials as $testimonial)
                     <div class="w-full py-4">
                         <div class="max-w-xl mx-auto p-8 bg-opaque quote-box relative">

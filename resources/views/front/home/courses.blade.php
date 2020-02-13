@@ -8,7 +8,7 @@
             @endforeach
         </div>
         <div class="text-center">
-            <a href="" class="btn btn-dark">{!! trans('home.courses.button') !!}</a>
+            <a href="{{ localUrl('/courses') }}" class="btn btn-dark">{!! trans('home.courses.button') !!}</a>
         </div>
     </div>
 </div>

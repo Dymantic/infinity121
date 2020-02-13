@@ -10,9 +10,9 @@ class HomepageController extends Controller
 {
     public function show()
     {
-        $subjects = Subject::latest()->take(4)->get()->map->forCurrentLang();
+        $subjects = Subject::public()->latest()->take(4)->get()->map->forCurrentLang();
         $selling_points = ['location', 'personalised', 'quality', 'one-stop', 'business', 'specialised'];
-        $teachers = Profile::teachers()->latest()->take(3)->get()->map->forCurrentLang();
+        $teachers = Profile::teachers()->active()->latest()->take(3)->get()->map->forCurrentLang();
         $testimonials = trans('home.testimonials.all');
 
         return view('front.home.page', [

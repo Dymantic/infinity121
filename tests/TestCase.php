@@ -4,6 +4,7 @@ namespace Tests;
 
 use App\User;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
+use Mcamara\LaravelLocalization\LaravelLocalization;
 
 abstract class TestCase extends BaseTestCase
 {
@@ -37,5 +38,18 @@ abstract class TestCase extends BaseTestCase
 
         $this->assertDatabaseHas($table, array_merge($translatables, $untranslated));
 
+    }
+
+    protected function refreshApplicationWithLocale($locale)
+    {
+        self::tearDown();
+        putenv(LaravelLocalization::ENV_ROUTE_KEY . '=' . $locale);
+        self::setUp();
+    }
+
+    protected function tearDown(): void
+    {
+        putenv(LaravelLocalization::ENV_ROUTE_KEY);
+        parent::tearDown();
     }
 }

@@ -15,5 +15,7 @@ return [
         'courses' => 'Courses I teach',
         'experience' => 'Years Experience',
         'chinese-level' => 'Chinese Level'
-    ]
+    ],
+
+    'back-link' => 'Back to teachers',
 ];

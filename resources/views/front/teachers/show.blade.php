@@ -9,7 +9,7 @@
             <img src="{{ $teacher['avatar_thumb'] }}" alt="{{ $teacher['name'] }}" class="block w-32 h-32 mx-auto md:mx-0 rounded-full mb-12">
         </div>
     </div>
-    <div class="flex flex-col md:flex-row px-6">
+    <div class="flex flex-col md:flex-row px-6 pb-32">
         <div class="md:w-2/5 order-3 md:order-1 my-6 md:my-0">
             <p class="w-64">{!! $teacher['bio'] !!}</p>
         </div>
@@ -41,6 +41,9 @@
                 </p>
             </div>
         </div>
+    </div>
+    <div class="text-center my-20">
+        <a href="{{ localUrl('/teachers') }}" class="hover:text-hms-navy type-a2 arrow-link-right">{!! trans('teachers.back-link') !!}</a>
     </div>
 </div>
 @endsection

@@ -6,7 +6,7 @@
         @endforeach
     </div>
     <div class="text-center my-20">
-        <a href="" class="type-a2 arrow-link-left">{!! trans('home.about.link') !!}</a>
+        <a href="{{ localUrl('/about-us') }}" class="hover:text-hms-navy type-a2 arrow-link-left">{!! trans('home.about.link') !!}</a>
     </div>
     <div class="h-32"></div>
 </div>

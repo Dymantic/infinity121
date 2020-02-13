@@ -24,19 +24,25 @@
             <div class="my-4" :class="{'border-b border-red-400': formErrors.english_ability}">
                 <label class="form-label" for="english_ability">{{ labels.english_ability }}</label>
                 <span class="text-xs text-red-400" v-show="formErrors.english_ability">{{ formErrors.english_ability }}</span>
-                <select v-model="formData.english_ability" id="english_ability" class="input-text">
-                    <option value="none">None</option>
-                    <option value="little">Very little</option>
-                    <option value="some">Some</option>
-                    <option value="strong">Strong</option>
-                </select>
+                <div class="select-container">
+                    <select v-model="formData.english_ability" id="english_ability" class="input-text">
+                        <option value="none">None</option>
+                        <option value="little">Very little</option>
+                        <option value="some">Some</option>
+                        <option value="strong">Strong</option>
+                    </select>
+                </div>
+
             </div>
             <div class="my-4" :class="{'border-b border-red-400': formErrors.subject_id}">
                 <label class="form-label" for="subject_id">{{ labels.course }}</label>
                 <span class="text-xs text-red-400" v-show="formErrors.subject_id">{{ formErrors.subject_id }}</span>
-                <select v-model="formData.subject_id" id="subject_id" class="input-text">
-                    <option v-for="subject in subjects" :key="subject.id" :value="subject.id">{{ subject.title }}</option>
-                </select>
+                <div class="select-container">
+                    <select v-model="formData.subject_id" id="subject_id" class="input-text">
+                        <option v-for="subject in subjects" :key="subject.id" :value="subject.id">{{ subject.title }}</option>
+                    </select>
+                </div>
+
             </div>
             <div class="my-4" :class="{'border-b border-red-400': formErrors.address}">
                 <label class="form-label" for="address">{{ labels.address }}</label>

@@ -4,7 +4,7 @@
             <p class="type-h1 mb-20" data-usher>{{ trans('home.selling-points.heading') }}</p>
             <div class="grid-3x">
                 @foreach($selling_points as $point)
-                <div class="w-68 mx-auto" data-usher data-usher-delay="{{ $loop->index * .125 }}">
+                <div class="w-68 mx-auto" data-usher>
                     <p>@include("svg.icons.homepage.{$point}")</p>
                     <p class="type-h2">{!! trans("selling-points.{$point}.heading") !!}</p>
                     <p class="type-b2">{!! trans("selling-points.{$point}.text") !!}</p>

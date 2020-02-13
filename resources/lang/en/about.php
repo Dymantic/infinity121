@@ -18,4 +18,6 @@ return [
         'paragraph_one' => 'Her at iTc we believe in cooperation. Affiliates benefit from being part of a larger group with inter-affiliate recommendations and leads . Contact us for more information on how your business can benefit by joining the group - at no extra cost!',
         'link' => 'Contact us &gt;'
     ],
+
+    'back-link' => 'Back'
 ];

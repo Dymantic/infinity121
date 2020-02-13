@@ -38,6 +38,11 @@ class Subject extends Model implements HasMedia
         ];
     }
 
+    public function scopePublic($query)
+    {
+        return $query->where('is_public', true);
+    }
+
     public function profiles()
     {
         return $this->belongsToMany(Profile::class);

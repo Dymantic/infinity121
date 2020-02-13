@@ -10,7 +10,7 @@
     </div>
     <div class="grid-4x max-w-5xl mx-auto pb-20">
     @foreach($courses as $course)
-            <div class="flex flex-col justify-between card w-64 mx-auto">
+            <div class="flex flex-col justify-between card w-64 mx-auto" data-usher>
                 <div>
                     <img class="max-w-full" src="{{ $course['title_image']['thumb'] }}" alt="">
                     <p class="type-h2 mt-4 border-b border-hms-navy">{{ $course['title'] }}</p>
@@ -18,7 +18,7 @@
                 </div>
                 <div>
                     <div class="text-center mb-4">
-                        <a class="type-a2 arrow-link-left" href="{{ localUrl("courses/{$course['slug']}") }}">{!! trans('home.courses.card-link') !!}</a>
+                        <a class="hover:text-hms-navy type-a2 arrow-link-left" href="{{ localUrl("courses/{$course['slug']}") }}">{!! trans('home.courses.card-link') !!}</a>
                     </div>
                 </div>
             </div>

@@ -14,6 +14,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
 {
     Route::get('/', 'HomepageController@show');
     Route::get('about-us', 'AboutPageController@show');
+    Route::view('founder', 'front.about.profiles.founder');
 
     Route::get('courses', 'CoursesController@index');
     Route::get('courses/{slug}', 'CoursesController@show');
@@ -22,7 +23,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
     Route::get('teachers/{slug}', 'TeachersController@show');
 
     Route::get('students/sign-up', 'StudentsInquiryController@show');
-    Route::get('teachers/sign-up', 'TeachersInquiryController@show');
+    Route::get('join-us', 'TeachersInquiryController@show');
 
     Route::get('contact-us', 'ContactMessageController@create');
 

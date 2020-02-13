@@ -52,6 +52,21 @@ class SubjectsTest extends TestCase
     }
 
     /**
+     *@test
+     */
+    public function can_be_scoped_to_public()
+    {
+        factory(Subject::class, 3)->state('public')->create();
+        factory(Subject::class, 2)->state('private')->create();
+
+        $fetched = Subject::public()->get();
+
+        $this->assertCount(3, $fetched);
+
+        $fetched->each(fn ($subject) => $this->assertTrue($subject->is_public));
+    }
+
+    /**
      * @test
      */
     public function to_array_has_correct_attributes()

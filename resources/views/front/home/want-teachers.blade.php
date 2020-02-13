@@ -3,7 +3,7 @@
         <p data-usher class="max-w-2xl type-h1 mb-6">{{ trans('home.want-teachers.heading') }}</p>
         <p class="max-w-2xl type-b1">{{ trans('home.want-teachers.text') }}</p>
         <div class="mt-20 text-center">
-            <a href="" class="btn btn-dark">{!! trans('home.want-teachers.button') !!}</a>
+            <a href="{{ localUrl('join-us') }}" class="btn btn-dark">{!! trans('home.want-teachers.button') !!}</a>
         </div>
     </div>
 </div>

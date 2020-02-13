@@ -11,6 +11,6 @@
 </div>
 <div class="flex flex-col items-center pt-32 pb-48 wave-blue-bottom">
     <a href="{{ localUrl("/students/sign-up?course={$course['slug']}") }}" class="btn btn-dark mb-12">{!! trans('courses.show.course_link') !!}</a>
-    <a href="{{ localUrl("/courses") }}" class="type-a1 arrow-link-right">{!! trans('courses.show.back_link') !!}</a>
+    <a href="{{ localUrl("/courses") }}" class="type-a1 arrow-link-right hover:text-hms-navy">{!! trans('courses.show.back_link') !!}</a>
 </div>
 @endsection

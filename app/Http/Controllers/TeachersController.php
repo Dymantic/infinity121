@@ -17,7 +17,7 @@ class TeachersController extends Controller
     public function show($slug)
     {
         return view('front.teachers.show', [
-            'teacher' => Profile::whereSlug($slug)->firstOrFail()->forCurrentLang()
+            'teacher' => Profile::active()->whereSlug($slug)->firstOrFail()->forCurrentLang()
         ]);
     }
 }

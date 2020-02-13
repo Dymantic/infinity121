@@ -12,22 +12,23 @@ class AboutPageController extends Controller
             [
                 'name' => 'Keith Gillibrand',
                 'role' => trans('leadership.roles.founder-ceo'),
-                'avatar' => '/images/profiles/default.jpg',
+                'avatar' => '/images/profiles/hero.jpg',
+                'page-link' => 'founder',
             ],
             [
                 'name' => 'Sandy Hsu',
-                'role' => trans('leadership.roles.senior-partner'),
+                'role' => trans('leadership.roles.liaison-japan'),
+                'avatar' => '/images/profiles/girl.jpg',
+            ],
+            [
+                'name' => 'Percy Chan',
+                'role' => trans('leadership.roles.liaison-business'),
                 'avatar' => '/images/profiles/default.jpg',
             ],
             [
                 'name' => 'Jen Jenkins',
-                'role' => trans('leadership.roles.senior-partner'),
-                'avatar' => '/images/profiles/default.jpg',
-            ],
-            [
-                'name' => 'Percy Chan',
-                'role' => trans('leadership.roles.hr-manager'),
-                'avatar' => '/images/profiles/default.jpg',
+                'role' => trans('leadership.roles.liaison-toefl'),
+                'avatar' => '/images/profiles/goofy.jpg',
             ],
         ];
         return view('front.about.page', ['team' => $team]);
