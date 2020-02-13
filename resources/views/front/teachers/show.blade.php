@@ -24,20 +24,16 @@
                     <span>{{ $teacher['qualifications'] }}</span>
                 </p>
                 <p>
-                    <span class="type-h2">{{ trans('teachers.show.courses') }}: </span>
-                    <span>{{ implode(", ", $teacher['subject_names']) }}</span>
-                </p>
-                <p>
                     <span class="type-h2">{{ trans('teachers.show.experience') }}: </span>
                     <span>{{ $teacher['teaching_since'] }}</span>
                 </p>
                 <p>
                     <span class="type-h2">{{ trans('teachers.show.chinese-level') }}: </span>
-                    <span>{{ $teacher['chinese_ability'] }}</span>
+                    <span>{{ $teacher['chinese_ability_full'] }}</span>
                 </p>
                 <p>
-                    <span class="type-h2">{{ trans('teachers.show.nationality') }}: </span>
-                    <span>{{ $teacher['nationality'] }}</span>
+                    <span class="type-h2">{{ trans('teachers.show.courses') }}: </span>
+                    <span>{{ implode(", ", $teacher['subject_names']) }}</span>
                 </p>
             </div>
         </div>
