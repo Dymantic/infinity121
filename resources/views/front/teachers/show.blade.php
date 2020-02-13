@@ -33,7 +33,7 @@
                 </p>
                 <p>
                     <span class="type-h2">{{ trans('teachers.show.languages') }}: </span>
-                    <span>{{ implode(", ", $teacher['spoken_languages']) }}</span>
+                    <span class="capitalize">{{ implode(", ", $teacher['spoken_languages']) }}</span>
                 </p>
                 <p>
                     <span class="type-h2">{{ trans('teachers.show.courses') }}: </span>
