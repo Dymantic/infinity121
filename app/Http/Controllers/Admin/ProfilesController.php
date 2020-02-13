@@ -22,7 +22,7 @@ class ProfilesController extends Controller
             'teaching_since'  => ['integer', new ReasonableStartingYear()],
             'chinese_ability' => ['integer', 'min:1', 'max:4'],
             'spoken_languages' => ['array'],
-            'spoken_languages.*' => ['in:en,sp,jp,zh,fr,ge']
+            'spoken_languages.*' => ['in:en,sp,jp,zh,fr,de']
         ]);
 
         $profile->updateWithTranslations(request()->only([
