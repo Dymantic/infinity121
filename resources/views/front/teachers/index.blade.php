@@ -8,7 +8,7 @@
             <p class="type-b1 max-w-2xl mx-auto text-center">{{ trans('teachers.index.intro.text') }}</p>
         </div>
     </div>
-    <div class="grid-4x max-w-5xl mx-auto pb-20">
+    <div class="grid-4x max-w-5xl mx-auto pb-40">
         @foreach($teachers as $teacher)
             @include('front.home.teacher-card', ['teacher' => $teacher])
         @endforeach

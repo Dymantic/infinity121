@@ -13,8 +13,8 @@
            href="{{ localUrl("/students/sign-up") }}">{{ trans('navbar.sign-up') }}</a>
         <div class="hidden md:block group relative">
             <button
-                class="hidden md:inline-block type-a1 tracking-wide ml-4 focus:outline-none dropdown-btn capitalize">{{ trans('navbar.more') }}
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 11.92" class="w-4 ml-2 inline">
+                class="hidden md:inline-block type-a1 tracking-wide ml-4 mr-6 focus:outline-none dropdown-btn capitalize">{{ trans('navbar.more') }}
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 11.92" class="w-4 ml-1 inline">
                     <path class="stroke-current" fill="none" stroke-linecap="round" stroke-linejoin="round"
                           stroke-width="4" d="M22 2L12 9.92 2 2"/>
                 </svg>

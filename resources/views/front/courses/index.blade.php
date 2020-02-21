@@ -1,7 +1,7 @@
 @extends('front.base')
 
 @section('content')
-<div>
+<div class="pb-20">
     <div class="max-w-5xl mx-auto py-16 px-6">
         <div>
             <h1 class="my-20 type-h1 text-center">{{ trans('courses.index.intro.heading') }}</h1>
