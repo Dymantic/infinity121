@@ -13,6 +13,7 @@ export default [
             {path: 'edit', component: ProfileEdit},
         ]
     },
+    {path: '/', redirect: '/me/show'},
     {path: '/me/password/edit', component: ResetPassword},
     {path: '/me/user-info', component: UpdateUserInfo},
 ];

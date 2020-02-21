@@ -2,6 +2,7 @@
 # Website message
 
 Name: {{ $name }}
+
 Email: {{ $email }}
 
 Message:

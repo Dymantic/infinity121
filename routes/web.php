@@ -42,6 +42,8 @@ Route::get('style-guide', function () {
 });
 
 Route::group(['namespace' => 'Auth'], function() {
+    Route::redirect('admin', '/admin/dashboard');
+    Route::redirect('home', '/admin/dashboard');
     Route::view('admin/login', 'admin.auth.login')->name('login');
     Route::post('admin/login', 'LoginController@login');
     Route::post('admin/logout', 'LoginController@logout');
