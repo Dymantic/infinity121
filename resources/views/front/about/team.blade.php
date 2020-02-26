@@ -1,4 +1,4 @@
-<div class="wave-blue-top bg-white">
+<div class="wave-blue-top bg-white px-6">
     <div class="max-w-3xl mx-auto pt-48">
         <h1 data-usher class="type-h1 my-20 text-center">{{ trans('about.team.heading') }}</h1>
         <p class="type-b1 my-8 text-center">{{ trans('about.team.paragraph_one') }}</p>

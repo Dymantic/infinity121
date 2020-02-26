@@ -1,0 +1,21 @@
+.little-slider::after {
+    content: 'flickity';
+    display: none;
+}
+
+@media screen and (max-width: 640px) {
+    .little-slider .little-slider-card {
+        transition: .3s ease-in-out;
+        opacity: 1;
+    }
+
+    .little-slider .little-slider-card:not(.is-selected) {
+        opacity: 0;
+    }
+}
+
+@media screen and (min-width: 641px) {
+    .little-slider::after {
+        content: '';
+    }
+}

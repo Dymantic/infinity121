@@ -1,4 +1,4 @@
-<div data-usher class="flex flex-col justify-between card w-68 mx-auto">
+<div class="little-slider-card mx-4 md:mx-2 flex flex-col justify-between card w-68 mx-auto">
     <div>
         <img src="{{ $teacher['avatar_thumb'] }}" alt="" class="w-32 h-32 rounded-full mb-8 mx-auto object-cover">
         <p class="type-h2 border-b border-hms-navy">{{ $teacher['name'] }}</p>

@@ -1,4 +1,4 @@
-<div data-usher class="flex flex-col justify-between card w-64 mb-6 md:mb-0 @if(!$loop->first) md:ml-8 @endif">
+<div class="little-slider-card flex flex-col justify-between card mx-4 md:mx-2 w-64 mb-6 md:mb-0 @if(!$loop->first) md:ml-8 @endif">
     <div>
         <img class="max-w-full" src="{{ $subject['title_image']['thumb'] }}" alt="">
         <p class="type-h2 mt-4 border-b border-hms-navy">{{ $subject['title'] }}</p>

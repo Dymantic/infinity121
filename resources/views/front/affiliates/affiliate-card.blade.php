@@ -1,4 +1,4 @@
-<div class="w-64 card flex flex-col justify-between" data-usher>
+<div class="w-64 mx-auto card flex flex-col justify-between" data-usher>
     <div>
         <img src="{{ $affiliate['logo_thumb'] }}" alt="{{ $affiliate['name'] }}">
         <p class="type-h2 border-b border-hms-navy my-6">{{ $affiliate['name'] }}</p>
