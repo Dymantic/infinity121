@@ -10,7 +10,7 @@
         @include('front.contact.contact-details')
 
         <div>
-            <contact-form :labels='@json($labels)'></contact-form>
+            <contact-form :labels='@json($labels)' :dialog='@json($dialog)'></contact-form>
         </div>
 
     </div>

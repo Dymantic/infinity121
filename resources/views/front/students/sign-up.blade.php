@@ -8,7 +8,7 @@
     </div>
 
     <div>
-        <student-signup :course="{{ $course }}" :subjects='@json($subjects)' :labels='@json($labels)'></student-signup>
+        <student-signup :course="{{ $course }}" :subjects='@json($subjects)' :dialog='@json($dialog)' :labels='@json($labels)'></student-signup>
     </div>
 
 </div>

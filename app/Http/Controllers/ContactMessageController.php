@@ -19,7 +19,11 @@ class ContactMessageController extends Controller
             'message' => trans('forms.message'),
             'send' => trans('forms.send'),
         ];
-        return view('front.contact.page', ['labels' => $labels]);
+        $dialog = [
+            'success' => trans('dialogs.contact_form.success'),
+            'error' => trans('dialogs.contact_form.error'),
+        ];
+        return view('front.contact.page', ['labels' => $labels, 'dialog' => $dialog]);
     }
 
     public function store()

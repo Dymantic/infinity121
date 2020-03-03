@@ -24,8 +24,11 @@ class TeachersInquiryController extends Controller
             'message'                  => trans('forms.message'),
         ];
 
+        $dialog = trans('dialogs.teacher_sign_up');
+
         return view('front.teachers.sign-up', [
-            'labels' => $formLabels
+            'labels' => $formLabels,
+            'dialog' => $dialog,
         ]);
     }
 

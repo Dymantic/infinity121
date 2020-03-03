@@ -30,10 +30,13 @@ class StudentsInquiryController extends Controller
             'message'         => trans('forms.message'),
         ];
 
+        $dialog = trans('dialogs.student_sign_up');
+
         return view('front.students.sign-up', [
             'subjects' => $subjects,
             'labels'   => $formLabels,
             'course'   => $course,
+            'dialog'   => $dialog,
         ]);
     }
 

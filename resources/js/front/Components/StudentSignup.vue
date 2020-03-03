@@ -59,13 +59,29 @@
             </div>
         </form>
         <modal :show="showSuccessModal" @close="showSuccessModal = false">
-            <div class="max-w-sm p-8">
-                Boom baby!
+            <div class="max-w-sm">
+                <div class="bg-hms-navy px-6 py-2">
+                    <p class="type-h2 text-mustard">{{ dialog.success.heading }}</p>
+                </div>
+                <div class="p-8">
+                    <p class="type-b1 text-deep-navy">{{ dialog.success.message }}</p>
+                </div>
+                <div class="flex p-4 justify-end">
+                    <button class="btn btn-dark" @click="showSuccessModal = false">{{ dialog.success.button }}</button>
+                </div>
             </div>
         </modal>
         <modal :show="showFailureModal" @close="showFailureModal = false">
-            <div class="max-w-sm p-8">
-                Oh kak!
+            <div class="max-w-sm">
+                <div class="bg-red-500 px-6 py-2">
+                    <p class="type-h2 text-white">{{ dialog.error.heading }}</p>
+                </div>
+                <div class="p-8">
+                    <p class="type-b1">{{ dialog.error.message }}</p>
+                </div>
+                <div class="flex p-4 justify-end">
+                    <button class="btn btn-grey" @click="showFailureModal = false">{{ dialog.error.button }}</button>
+                </div>
             </div>
         </modal>
     </div>
@@ -95,7 +111,7 @@
     }
 
     export default {
-        props: ['subjects', 'labels', 'course'],
+        props: ['subjects', 'labels', 'course', 'dialog'],
 
         data() {
             return {

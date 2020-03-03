@@ -8,7 +8,7 @@
         </div>
 
         <div>
-            <teacher-signup :labels='@json($labels)'></teacher-signup>
+            <teacher-signup :labels='@json($labels)' :dialog='@json($dialog)'></teacher-signup>
         </div>
 
     </div>
