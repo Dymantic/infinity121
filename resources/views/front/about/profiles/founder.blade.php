@@ -3,8 +3,8 @@
 @section('content')
     <div class="h-16"></div>
     <div class="pt-4 pb-32 wave-yellow-top px-6">
-        <h1 class="type-h1 text-center py-20 px-6">{{ trans('founder.heading') }}</h1>
-        <div class="type-b1 max-w-2xl mx-auto mt-20">
+        <h1 class="type-h1 md:text-center mt-20 mb-12">{{ trans('founder.heading') }}</h1>
+        <div class="type-b1 max-w-2xl mx-auto mt-12 md:mt-20">
             @foreach(trans('founder.text') as $paragraph)
             <p class="my-6">{!! $paragraph !!}</p>
             @endforeach
