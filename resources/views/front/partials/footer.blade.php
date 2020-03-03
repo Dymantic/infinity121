@@ -2,7 +2,7 @@
     <div class="py-12">
         @include('svg.logos.logo_footer', ['classes' => 'h-8 block mx-auto'])
     </div>
-    <div class="max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-center pb-12">
+    <div class="max-w-5xl mx-auto flex flex-col md:flex-row items-center md:items-start justify-center pb-12">
         <div class="w-full mb-12 md:mb-0 md:w-1/3 flex flex-col items-center">
             <p class="type-h2 mb-6">Sign Up to Learn</p>
             <p class="type-b2"><a class="hover:text-mustard" href="/">TOIEC</a></p>
