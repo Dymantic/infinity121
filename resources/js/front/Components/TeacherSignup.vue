@@ -40,37 +40,16 @@
                 <button type="submit" :disabled="waiting" class="btn btn-dark">Sign Up &gt;</button>
             </div>
         </form>
-        <modal :show="showSuccessModal" @close="showSuccessModal = false">
-            <div class="max-w-sm">
-                <div class="bg-hms-navy px-6 py-2">
-                    <p class="type-h2 text-mustard">{{ dialog.success.heading }}</p>
-                </div>
-                <div class="p-8">
-                    <p class="type-b1 text-deep-navy">{{ dialog.success.message }}</p>
-                </div>
-                <div class="flex p-4 justify-end">
-                    <button class="btn btn-dark" @click="showSuccessModal = false">{{ dialog.success.button }}</button>
-                </div>
-            </div>
-        </modal>
-        <modal :show="showFailureModal" @close="showFailureModal = false">
-            <div class="max-w-sm">
-                <div class="bg-red-500 px-6 py-2">
-                    <p class="type-h2 text-white">{{ dialog.error.heading }}</p>
-                </div>
-                <div class="p-8">
-                    <p class="type-b1">{{ dialog.error.message }}</p>
-                </div>
-                <div class="flex p-4 justify-end">
-                    <button class="btn btn-grey" @click="showFailureModal = false">{{ dialog.error.button }}</button>
-                </div>
-            </div>
-        </modal>
+        <confirmation-dialog :dialog="dialog"
+                             :showSuccess="showSuccessModal"
+                             :showError="showFailureModal"
+                             @close-success="showSuccessModal = false"
+                             @close-error="showFailureModal = false"/>
     </div>
 </template>
 
 <script type="text/babel">
-
+    import ConfirmationDialog from "./ConfirmationDialog";
     function baseFormDataValues() {
         return {
             name: '',
@@ -93,6 +72,10 @@
 
     export default {
         props: ['labels', 'dialog'],
+
+        components: {
+            ConfirmationDialog,
+        },
 
         data() {
             return {

@@ -10,23 +10,23 @@ class AboutPageController extends Controller
     {
         $team = [
             [
-                'name' => 'Keith Gillibrand',
+                'name' => trans('leadership.names.keith-gillibrand'),
                 'role' => trans('leadership.roles.founder-ceo'),
                 'avatar' => '/images/profiles/hero.jpg',
                 'page-link' => 'founder',
             ],
             [
-                'name' => 'Sandy Hsu',
+                'name' => trans('leadership.names.kay-gillibrand'),
                 'role' => trans('leadership.roles.liaison-japan'),
                 'avatar' => '/images/profiles/girl.jpg',
             ],
             [
-                'name' => 'Percy Chan',
+                'name' => trans('leadership.names.keith-gillibrand'),
                 'role' => trans('leadership.roles.liaison-business'),
                 'avatar' => '/images/profiles/default.jpg',
             ],
             [
-                'name' => 'Jen Jenkins',
+                'name' => trans('leadership.names.keith-gillibrand'),
                 'role' => trans('leadership.roles.liaison-toefl'),
                 'avatar' => '/images/profiles/goofy.jpg',
             ],

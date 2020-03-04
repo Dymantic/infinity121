@@ -32,7 +32,9 @@ For business, for school, or just for fun; we have the right course for you to s
 
     'teachers'      => [
         'heading' => 'Friendly, professional tutors at your service.',
-        'intro' => 'All iTc’s tutors have a proven track record of improving students English, a passion for teaching and at least one speciality. Every student is carefully assessed then aligned with the best teacher to meet his or her needs.'
+        'intro' => 'All iTc’s tutors have a proven track record of improving students English, a passion for teaching and at least one speciality. Every student is carefully assessed then aligned with the best teacher to meet his or her needs.',
+        'bio-button' => 'Bio',
+        'button' => 'See all teachers',
     ],
 
     'testimonials'  => [
