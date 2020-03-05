@@ -52,7 +52,7 @@ class DeleteUser extends Command
             $profile->assignSubjects([]);
             $profile->delete();
         }
-        
+
         $user->delete();
     }
 }

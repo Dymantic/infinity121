@@ -8,7 +8,7 @@ use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 
-class AdminRegistered extends Notification
+class AdminRegistered extends Notification implements ShouldQueue
 {
     use Queueable;
 
