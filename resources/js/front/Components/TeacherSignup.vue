@@ -37,7 +37,7 @@
                 <textarea v-model="formData.teaching_experience" class="input-text input-textbox h-32" id="teaching_experience"></textarea>
             </div>
             <div class="py-12 text-center">
-                <button type="submit" :disabled="waiting" class="btn btn-dark">Sign Up &gt;</button>
+                <button type="submit" :disabled="waiting" class="btn btn-dark">{{ labels.send }} &gt;</button>
             </div>
         </form>
         <confirmation-dialog :dialog="dialog"

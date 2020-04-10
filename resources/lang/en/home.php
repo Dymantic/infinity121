@@ -16,23 +16,23 @@ return [
 For business, for school, or just for fun; we have the right course for you to succeed.',
             'two' => 'When you harness the power of English, you open the door to the rest of the world. Go on… Open the door!'
         ],
-        'link' => 'About iTC'
+        'link' => 'About Infinity'
     ],
 
     'courses'       => [
         'heading' => 'Courses for everyone, and every level.',
-        'intro' => 'Whether TOEIC, TOEFL, IELT’s, Business English or just conversation, your tutor and course coordinator will make use of the best methods, utilise the latest books, videos, online exercises and practice exams; to improve your performance. With iTc as your educational partner, improvement is guaranteed.',
+        'intro' => 'Whether TOEIC, TOEFL, IELT’s, Business English or just conversation, your tutor and course coordinator will make use of the best methods, utilise the latest books, videos, online exercises and practice exams; to improve your performance. With Infinity as your educational partner, improvement is guaranteed.',
         'button' => 'See All Courses &gt;',
         'card-link' => 'See course'
     ],
 
     'selling-points'       => [
-        'heading' => 'Why you\'ll love iTC.',
+        'heading' => 'Why you\'ll love Infinity.',
     ],
 
     'teachers'      => [
         'heading' => 'Friendly, professional tutors at your service.',
-        'intro' => 'All iTc’s tutors have a proven track record of improving students English, a passion for teaching and at least one speciality. Every student is carefully assessed then aligned with the best teacher to meet his or her needs.',
+        'intro' => 'All Infinity’s tutors have a proven track record of improving students English, a passion for teaching and at least one speciality. Every student is carefully assessed then aligned with the best teacher to meet his or her needs.',
         'bio-button' => 'Bio',
         'button' => 'See all teachers',
     ],
@@ -45,11 +45,11 @@ For business, for school, or just for fun; we have the right course for you to s
                 'testimonial_author' => 'Chun-Tao Tsao - University of Texas at Austin',
             ],
             [
-                'testimonial_content' => '“iTc has helped me for over 4 years now, way beyond just English tuition, helping with emails, presentation materials and speeches. I can highly recommend iTc…”',
+                'testimonial_content' => '“Infinity has helped me for over 4 years now, way beyond just English tuition, helping with emails, presentation materials and speeches. I can highly recommend Infinity…”',
                 'testimonial_author' => 'Jackie Lee - FD Johnson Fitness',
             ],
             [
-                'testimonial_content' => '“iTc has helped me for 3 years with English tuition and technical accounting wording. Keith is one of very few native English speaking CPA’s here in Taichung. First class!”',
+                'testimonial_content' => '“Infinity has helped me for 3 years with English tuition and technical accounting wording. Keith is one of very few native English speaking CPA’s here in Taichung. First class!”',
                 'testimonial_author' => 'Tino Chen - Founder - Chia-Chung CPA',
             ],
 

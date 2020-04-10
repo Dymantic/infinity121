@@ -74,6 +74,8 @@ Route::group(['prefix' => 'admin/api', 'middleware' => ['auth'], 'namespace' => 
 
     Route::get('profiles', 'TeacherProfilesController@index');
 
+    Route::post('profiles-order', 'ProfilesOrderController@store')->middleware('admin');
+
     Route::post('published-profiles', 'PublishedProfilesController@store')->middleware('admin');
     Route::delete('published-profiles/{profile}', 'PublishedProfilesController@destroy')->middleware('admin');
 

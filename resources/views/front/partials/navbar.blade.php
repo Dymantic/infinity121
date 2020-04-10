@@ -28,7 +28,7 @@
         <div class="md:hidden">
             @include('front.partials.subnav-links')
         </div>
-        <a class="type-a1 tracking-wide ml-4 hover:text-mustard" href="{{ transUrl(Request::path()) }}">中文</a>
+        <a class="type-a1 tracking-wide ml-4 hover:text-mustard" href="{{ transUrl(Request::path()) }}">{{ trans('navbar.lang') }}</a>
     </div>
     <button class="md:hidden nav-trigger hover:text-mustard">
         <svg class="w-6 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">

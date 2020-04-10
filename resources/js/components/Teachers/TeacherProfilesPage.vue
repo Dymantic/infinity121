@@ -1,7 +1,7 @@
 <template>
     <div class="max-w-4xl mx-auto">
-        <page-header title="iTC Teachers">
-
+        <page-header title="Infinity Teachers">
+            <router-link to="/sort-teachers" class="btn btn-navy">Sort Teachers</router-link>
         </page-header>
         <div class="my-12">
             <table class="w-full max-w-xl">

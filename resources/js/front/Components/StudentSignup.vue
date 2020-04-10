@@ -26,10 +26,10 @@
                 <span class="text-xs text-red-400" v-show="formErrors.english_ability">{{ formErrors.english_ability }}</span>
                 <div class="select-container">
                     <select v-model="formData.english_ability" id="english_ability" class="input-text">
-                        <option value="none">None</option>
-                        <option value="little">Very little</option>
-                        <option value="some">Some</option>
-                        <option value="strong">Strong</option>
+                        <option value="none">{{ labels.abilities.none }}</option>
+                        <option value="little">{{ labels.abilities.some }}</option>
+                        <option value="some">{{ labels.abilities.good }}</option>
+                        <option value="strong">{{ labels.abilities.strong }}</option>
                     </select>
                 </div>
 
@@ -55,7 +55,7 @@
                 <textarea v-model="formData.message" id="message" class="input-text input-textbox h-32"></textarea>
             </div>
             <div class="py-12 text-center">
-                <button type="submit" :disabled="waiting" class="btn btn-dark">Sign Up &gt;</button>
+                <button type="submit" :disabled="waiting" class="btn btn-dark">{{ labels.send }} &gt;</button>
             </div>
         </form>
         <confirmation-dialog :dialog="dialog"

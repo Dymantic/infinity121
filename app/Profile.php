@@ -57,6 +57,23 @@ class Profile extends Model implements HasMedia
         return $query->where('is_public', true);
     }
 
+    public function scopeInOrder($query)
+    {
+        return $query->orderByRaw('position NULLS LAST');
+    }
+
+    public static function setOrder(array $ordered_ids)
+    {
+        collect($ordered_ids)->each(
+            fn ($id, $position) => static::setProfilePosition($id, $position)
+        );
+    }
+
+    private static function setProfilePosition($id, $position)
+    {
+        optional(static::find($id))->update(['position' => $position + 1]);
+    }
+
     public function setProfileImage($file)
     {
         $this->clearMediaCollection(static::AVATAR);
@@ -102,24 +119,25 @@ class Profile extends Model implements HasMedia
         $avatar = $this->getFirstMedia(static::AVATAR);
 
         return [
-            'id'              => $this->id,
-            'name'            => $this->name,
-            'slug'            => $this->slug,
-            'bio'             => $this->bio,
-            'nationality'     => Nationalities::byCode($this->nationality),
-            'country_code'     => $this->nationality,
-            'qualifications'  => $this->qualifications,
-            'teaching_specialties' => $this->teaching_specialties,
-            'teaching_since'  => $this->teaching_since,
-            'years_experience' => Carbon::now()->year - $this->teaching_since,
-            'chinese_ability' => $this->chinese_ability,
-            'chinese_ability_full' => $this->ability_scale[$this->chinese_ability] ?? '',
-            'avatar_original' => $avatar ? $avatar->getUrl() : static::DEFAULT_AVATAR,
-            'avatar_thumb'    => $avatar ? $avatar->getUrl('thumb') : static::DEFAULT_AVATAR,
-            'is_public'       => $this->is_public,
-            'subjects'        => $this->subjects->map->toArray()->all(),
+            'id'                    => $this->id,
+            'name'                  => $this->name,
+            'slug'                  => $this->slug,
+            'bio'                   => $this->bio,
+            'nationality'           => Nationalities::byCode($this->nationality),
+            'country_code'          => $this->nationality,
+            'qualifications'        => $this->qualifications,
+            'teaching_specialties'  => $this->teaching_specialties,
+            'teaching_since'        => $this->teaching_since,
+            'years_experience'      => Carbon::now()->year - $this->teaching_since,
+            'chinese_ability'       => $this->chinese_ability,
+            'chinese_ability_full'  => $this->ability_scale[$this->chinese_ability] ?? '',
+            'avatar_original'       => $avatar ? $avatar->getUrl() : static::DEFAULT_AVATAR,
+            'avatar_thumb'          => $avatar ? $avatar->getUrl('thumb') : static::DEFAULT_AVATAR,
+            'is_public'             => $this->is_public,
+            'subjects'              => $this->subjects->map->toArray()->all(),
             'spoken_language_codes' => $this->spoken_languages,
-            'spoken_languages' => $this->spokenLanguageNames(),
+            'spoken_languages'      => $this->spokenLanguageNames(),
+            'position'              => $this->position,
         ];
     }
 
@@ -133,7 +151,8 @@ class Profile extends Model implements HasMedia
             'fr' => 'french',
             'de' => 'german',
         ];
-        return collect($this->spoken_languages)->map(function($code) use ($languages) {
+
+        return collect($this->spoken_languages)->map(function ($code) use ($languages) {
             return $languages[$code];
         })->all();
     }
@@ -141,11 +160,11 @@ class Profile extends Model implements HasMedia
     public function forCurrentLang()
     {
         return array_merge($this->toArray(), [
-            'bio' => $this->bio[app()->getLocale()] ?? '',
-            'nationality' => Nationalities::byCode($this->nationality)[app()->getLocale()] ?? '',
-            'subject_names' => $this->subjects->pluck('title')->map(function($name) {
+            'bio'           => $this->bio[app()->getLocale()] ?? '',
+            'nationality'   => Nationalities::byCode($this->nationality)[app()->getLocale()] ?? '',
+            'subject_names' => $this->subjects->pluck('title')->map(function ($name) {
                 return $name[app()->getLocale()] ?? '';
-            })->reject(function($name) {
+            })->reject(function ($name) {
                 return $name === "";
             })->all(),
 

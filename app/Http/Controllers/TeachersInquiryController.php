@@ -22,6 +22,7 @@ class TeachersInquiryController extends Controller
             'available_hours_per_week' => trans('forms.available-hours'),
             'teaching_experience'      => trans('forms.teaching-experience'),
             'message'                  => trans('forms.message'),
+            'send'                     => trans('forms.send'),
         ];
 
         $dialog = trans('dialogs.teacher_sign_up');

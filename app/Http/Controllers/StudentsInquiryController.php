@@ -28,6 +28,8 @@ class StudentsInquiryController extends Controller
             'english_ability' => trans('forms.english-ability'),
             'address'         => trans('forms.address'),
             'message'         => trans('forms.message'),
+            'abilities'       => trans('forms.abilities'),
+            'send'            => trans('forms.send'),
         ];
 
         $dialog = trans('dialogs.student_sign_up');

@@ -65,13 +65,14 @@ class PresentProfilesTest extends TestCase
             'teaching_since'        => 2010,
             'years_experience'      => Carbon::now()->year - 2010,
             'chinese_ability'       => 2,
-            'chinese_ability_full'       => 'some',
+            'chinese_ability_full'  => 'some',
             'is_public'             => true,
             'avatar_original'       => Profile::DEFAULT_AVATAR,
             'avatar_thumb'          => Profile::DEFAULT_AVATAR,
             'subjects'              => collect([$subjectA, $subjectB])->map->toArray()->all(),
             'spoken_language_codes' => ['en', 'zh'],
-            'spoken_languages'      => ["english", "chinese"]
+            'spoken_languages'      => ["english", "chinese"],
+            'position'              => null
         ];
 
         $this->assertEquals($expected, $teacher_profile->toArray());

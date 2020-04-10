@@ -5,7 +5,7 @@ return [
     'email' => 'Email',
     'phone' => 'Phone',
     'age' => 'Age',
-    'course' => 'Course',
+    'course' => 'Desired Course',
     'english-ability' => 'English Ability',
     'address' => 'Address',
     'message' => 'Message',
@@ -13,4 +13,11 @@ return [
     'available-hours' => 'Available hours per week',
     'teaching-experience' => 'A little about your teaching experience',
     'send' => 'Send',
+
+    'abilities' => [
+        'none'   => 'None',
+        'some'   => 'Some',
+        'good'   => 'Good',
+        'strong' => 'Strong',
+    ]
 ];

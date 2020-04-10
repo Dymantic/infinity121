@@ -1,3 +1,14 @@
+function intByPropertyName(name) {
+
+    return (a,b) => {
+        const resolved_a = resolve(name, a);
+        const resolved_b = resolve(name, b);
+
+        return resolved_a - resolved_b;
+    };
+}
+
+
 function azByPropetryName(name) {
 
     return (a,b) => {
@@ -21,4 +32,4 @@ function resolve(path, obj) {
     }, obj)
 }
 
-export {azByPropetryName};
+export {azByPropetryName, intByPropertyName};

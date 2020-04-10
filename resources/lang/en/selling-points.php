@@ -7,11 +7,11 @@ return [
     ],
     'personalised' => [
         'heading' => 'Customised courses',
-        'text' => 'Each course is personalised to your exact level and learning preferences. No “one-size-fits-all” at iTc.'
+        'text' => 'Each course is personalised to your exact level and learning preferences. No “one-size-fits-all” at Infinity.'
     ],
     'quality' => [
         'heading' => 'Quality Guaranteed',
-        'text' => 'All iTc tutors are qualified with at least 5 years of teaching experience in Taiwan.'
+        'text' => 'All Infinity tutors are qualified with at least 5 years of teaching experience in Taiwan.'
     ],
     'one-stop' => [
         'heading' => 'One-Stop Shop',

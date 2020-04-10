@@ -4,40 +4,40 @@ return [
 
     'student_sign_up' => [
         'success' => [
-            'heading' => 'Hi there!',
-            'message' => 'We will soon be in touch to arrange the next steps and get you going on your path to success. Thanks for using Infinity.',
-            'button' => 'Okay'
+            'heading' => '您好！',
+            'message' => '我們將很快與您聯繫，以安排下一步工作，並幫助您邁向成功之路。感謝您使用Infinity。',
+            'button' => '好。'
         ],
         'error' => [
-            'heading' => 'Oh dear :(',
-            'message' => 'Sorry, there was a problem receiving your request. Please refresh and try again.',
-            'button' => 'Okay'
+            'heading' => '天呀 :(',
+            'message' => '抱歉，收到您的請求時出現問題。請刷新此頁面，然後重試。',
+            'button' => '好。'
         ]
     ],
 
     'teacher_sign_up' => [
         'success' => [
-            'heading' => 'Nice to meet you!',
-            'message' => 'We have your details and we will be in touch soon. Thanks for getting in touch.',
-            'button' => 'Okay'
+            'heading' => '很高興認識您！',
+            'message' => '我們收到您的詳細資料，我們會盡快與您聯繫，謝謝。',
+            'button' => '好。'
         ],
         'error' => [
-            'heading' => 'Oh dear :(',
-            'message' => 'Sorry, there was a problem receiving your details. Please refresh and try again.',
-            'button' => 'Okay'
+            'heading' => '天呀 :(',
+            'message' => '抱歉，在接收您的資料時出現問題。請刷新此頁面，然後重試。',
+            'button' => '好。'
         ]
     ],
 
     'contact_form' => [
         'success' => [
-            'heading' => 'Got it :)',
-            'message' => 'Your message has been received. Thanks!',
-            'button' => 'Okay'
+            'heading' => '收到 :)',
+            'message' => '已收到您的留言，謝謝！',
+            'button' => '好。'
         ],
         'error' => [
-            'heading' => 'Oh dear :(',
-            'message' => 'Sorry, there was a problem receiving your message. Please refresh and try again.',
-            'button' => 'Okay'
+            'heading' => '天呀 :(',
+            'message' => '抱歉，在接收您的訊息時出現問題，請刷新此頁面，然後重試。',
+            'button' => '好。'
         ]
     ]
 ];
