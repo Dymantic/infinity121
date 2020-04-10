@@ -12,7 +12,7 @@ class HomepageController extends Controller
     {
         $subjects = Subject::public()->latest()->take(4)->get()->map->forCurrentLang();
         $selling_points = ['location', 'personalised', 'quality', 'one-stop', 'business', 'specialised'];
-        $teachers = Profile::teachers()->active()->latest()->take(3)->get()->map->forCurrentLang();
+        $teachers = Profile::inOrder()->teachers()->active()->latest()->take(3)->get()->map->forCurrentLang();
         $testimonials = trans('home.testimonials.all');
 
         return view('front.home.page', [

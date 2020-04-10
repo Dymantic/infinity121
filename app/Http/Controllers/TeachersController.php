@@ -10,7 +10,7 @@ class TeachersController extends Controller
     public function index()
     {
         return view('front.teachers.index', [
-            'teachers' => Profile::teachers()->active()->get()->map->forCurrentLang()
+            'teachers' => Profile::inOrder()->teachers()->active()->get()->map->forCurrentLang()
         ]);
     }
 
