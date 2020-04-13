@@ -9,7 +9,7 @@ return [
     ],
 
     'show' => [
-        'course_link' => '線上註冊 &gt;',
+        'course_link' => '請求聯繫 &gt;',
         'back_link' => '回到課程'
     ]
 ];

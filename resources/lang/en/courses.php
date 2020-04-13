@@ -9,7 +9,7 @@ return [
     ],
 
     'show' => [
-        'course_link' => 'Enrol now &gt;',
+        'course_link' => 'Request Contact &gt;',
         'back_link' => 'Back to courses'
     ]
 ];

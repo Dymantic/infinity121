@@ -59,7 +59,7 @@ class Profile extends Model implements HasMedia
 
     public function scopeInOrder($query)
     {
-        return $query->orderByRaw('ISNULL(position), position ASC');
+        return $query->orderByRaw('IFNULL(position,99999), position ASC');
     }
 
     public static function setOrder(array $ordered_ids)

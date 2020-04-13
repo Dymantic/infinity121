@@ -12,6 +12,7 @@ class ProfilesOrderTest extends TestCase
 {
     use RefreshDatabase;
 
+
     /**
      *@test
      */

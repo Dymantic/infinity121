@@ -11,7 +11,7 @@ return [
     ],
     'team'       => [
         'heading' => 'Infinity Leadership Team',
-        'paragraph_one' => 'We are the backbone of Infinity. Please feel free to contact us if you have any questions or problems.'
+        'paragraph_one' => 'A small team of dedicated professionals,'
     ],
     'affiliates' => [
         'heading' => 'Affiliate Opportunity',

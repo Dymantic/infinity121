@@ -11,7 +11,7 @@ return [
     ],
     'team'       => [
         'heading' => 'Infinity領導者',
-        'paragraph_one' => 'We are the backbone of Infinity. Please feel free to contact us if you have any questions or problems.'
+        'paragraph_one' => '一個專業人士的團隊'
     ],
     'affiliates' => [
         'heading' => '會員機會',

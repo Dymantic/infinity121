@@ -5,7 +5,7 @@ return [
 
         'intro' => [
             'heading' => 'Infinity Teachers',
-            'text' => 'Into to all coursesLorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorp- er suscipit lobortis nisl ut aliquip.'
+            'text' => 'Infinity can boast one of the widest selection of quality tutors in Taiwan, covering most of the major cities and some of the smaller ones. Expansion into Japan is on the horizon, with affiliation in 2020 with language schools in the UK'
         ]
     ],
 
