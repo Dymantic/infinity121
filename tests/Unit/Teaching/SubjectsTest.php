@@ -28,7 +28,7 @@ class SubjectsTest extends TestCase
     }
 
     /**
-     *@test
+     * @test
      */
     public function can_be_published()
     {
@@ -40,7 +40,7 @@ class SubjectsTest extends TestCase
     }
 
     /**
-     *@test
+     * @test
      */
     public function can_be_retracted()
     {
@@ -52,7 +52,7 @@ class SubjectsTest extends TestCase
     }
 
     /**
-     *@test
+     * @test
      */
     public function can_be_scoped_to_public()
     {
@@ -63,7 +63,7 @@ class SubjectsTest extends TestCase
 
         $this->assertCount(3, $fetched);
 
-        $fetched->each(fn ($subject) => $this->assertTrue($subject->is_public));
+        $fetched->each(fn($subject) => $this->assertTrue($subject->is_public));
     }
 
     /**
@@ -77,6 +77,7 @@ class SubjectsTest extends TestCase
             'title'       => ['en' => 'test title', 'zh' => 'zh test title'],
             'description' => ['en' => 'test description', 'zh' => 'zh test description'],
             'writeup'     => ['en' => 'test writeup', 'zh' => 'zh test writeup'],
+            'position'    => 1,
         ]);
 
         $image = $subject->setTitleImage(UploadedFile::fake()->image('testpic.png'));
@@ -87,7 +88,8 @@ class SubjectsTest extends TestCase
             'description' => ['en' => 'test description', 'zh' => 'zh test description'],
             'writeup'     => ['en' => 'test writeup', 'zh' => 'zh test writeup'],
             'slug'        => 'test-title',
-            'is_public' => true,
+            'is_public'   => true,
+            'position'    => 1,
             'title_image' => [
                 'thumb'    => $image->getUrl('thumb'),
                 'web'      => $image->getUrl('web'),

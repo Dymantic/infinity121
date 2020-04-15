@@ -90,6 +90,8 @@ Route::group(['prefix' => 'admin/api', 'middleware' => ['auth'], 'namespace' => 
     Route::post('public-subjects', 'PublicSubjectsController@store');
     Route::delete('public-subjects/{subject}', 'PublicSubjectsController@destroy');
 
+    Route::post('subjects-order', 'SubjectsOrderController@store');
+
     Route::get('nationalities', 'NationalitiesController@index');
 
     Route::get('affiliates', 'AffiliatesController@index');

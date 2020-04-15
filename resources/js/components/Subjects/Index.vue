@@ -3,25 +3,26 @@
         <section class="flex justify-between items-center py-8">
             <h1 class="flex-1 text-5xl font-bold">Subjects</h1>
             <div class="flex justify-end items-center">
+                <router-link to="/subjects-order" class="btn mr-4">Set Order</router-link>
                 <add-subject-button @submission-error="addSubjectError"
                                     @subject-added="subjectAdded"
                 ></add-subject-button>
             </div>
         </section>
-        <div class="max-w-4xl mx-auto three-grid">
-            <div v-for="subject in subjects" :key="subject.id" class="mb-8 w-64 mx-auto bg-white shadow-lg">
-                <router-link class="font-semibold hover:text-hms-navy" :to="`/subjects/${subject.id}/show`">
-                    <div class="pb-3/4 grad-bg-indigo relative w-full">
-                        <img v-if="subject.title_image.thumb" :src="subject.title_image.thumb"
-                             class="w-full h-full object-cover absolute"
-                             alt="">
-                    </div>
+        <div class="max-w-4xl mx-auto">
 
-                    <p class="px-4 pb-4 pt-2">{{ subject.title.en }}</p>
+                <router-link v-for="subject in subjects" :key="subject.id" class="font-semibold hover:text-hms-navy" :to="`/subjects/${subject.id}/show`">
+                    <div  class="mb-8 max-w-2xl bg-white shadow-lg flex items-center">
+                        <div class="grad-bg-indigo w-16 h-12 mr-8">
+                            <img v-if="subject.title_image.thumb" :src="subject.title_image.thumb"
+                                 class="w-full h-full object-cover"
+                                 alt="">
+                        </div>
+                        <p class="">{{ subject.title.en }}</p>
+                    </div>
                 </router-link>
             </div>
         </div>
-    </div>
 </template>
 
 <script type="text/babel">

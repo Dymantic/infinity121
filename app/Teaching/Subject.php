@@ -43,6 +43,27 @@ class Subject extends Model implements HasMedia
         return $query->where('is_public', true);
     }
 
+    public function scopeInOrder($query)
+    {
+        return $query->orderByRaw('IFNULL(position,99999), position ASC');
+    }
+
+    public static function setOrder(array $order)
+    {
+        collect($order)->each(
+            fn($subject_id, $position) => static::setSubjectPosition($subject_id, $position + 1)
+        );
+    }
+
+    private static function setSubjectPosition($id, $position)
+    {
+        $subject = static::find($id);
+
+        if ($subject) {
+            $subject->update(['position' => $position]);
+        }
+    }
+
     public function profiles()
     {
         return $this->belongsToMany(Profile::class);
@@ -127,6 +148,7 @@ class Subject extends Model implements HasMedia
             'description' => $this->description,
             'writeup'     => $this->writeup,
             'is_public'   => $this->is_public,
+            'position'    => $this->position,
             'title_image' => [
                 'thumb'    => $this->titleImage('thumb'),
                 'web'      => $this->titleImage('web'),

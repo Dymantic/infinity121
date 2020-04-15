@@ -6,7 +6,7 @@ return [
     'banner' => [
         'heading' => 'Tomorrow\'s training, today.',
         'text' => 'Professional English teachers to meet your specific needs.',
-        'button' => 'Enrol now &gt;'
+        'button' => 'Request a Call &gt;'
     ],
 
     'about'         => [

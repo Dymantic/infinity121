@@ -1,5 +1,6 @@
 import axios from "axios";
 import {notify} from "../components/Messaging/notify";
+import {intByPropertyName} from "../libs/sorting";
 
 export default {
     namespaced: true,
@@ -10,17 +11,7 @@ export default {
 
     getters: {
         sorted_subjects: state => {
-          return  state.subjects.sort((a, b) => {
-                const titleA = a.title['en'].toUpperCase();
-                const titleB = b.title['en'].toUpperCase();
-                if (titleA < titleB) {
-                    return -1;
-                }
-                if (titleA > titleB) {
-                    return 1;
-                }
-                return 0;
-            });
+          return  state.subjects.sort(intByPropertyName('position'));
         },
 
         byId: state => id => state.subjects.find(subject => subject.id === id),
@@ -107,6 +98,17 @@ export default {
                          resolve({message: 'Subject has been retracted'});
                      })
                      .catch(() => reject({message: 'Unable to retract subject.'}))
+            });
+        },
+
+        orderSubjects({dispatch}, subject_ids) {
+            return new Promise((resolve, reject) => {
+               axios.post("/admin/api/subjects-order", {subject_ids})
+                   .then(() => {
+                       dispatch('fetchSubjects').catch(notify.error);
+                       resolve();
+                   })
+                   .catch(() => reject({message: 'Unable to set subject order'}));
             });
         }
 

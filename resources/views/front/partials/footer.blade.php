@@ -5,9 +5,13 @@
     <div class="max-w-5xl mx-auto flex flex-col md:flex-row items-center md:items-start justify-center pb-12">
         <div class="w-full mb-12 md:mb-0 md:w-1/3 flex flex-col items-center">
             <p class="type-h2 mb-6">{{ trans('footer.sign_up') }}</p>
-            <p class="type-b2"><a class="hover:text-mustard" href="/">TOIEC</a></p>
-            <p class="type-b2"><a class="hover:text-mustard" href="/">TOEFL</a></p>
-            <p class="type-b2"><a class="hover:text-mustard" href="/">IELTS</a></p>
+            @foreach($top_subjects as $subject)
+                <p class="type-b2 w-40 text-center truncate">
+                    <a class="hover:text-mustard"
+                       href="{{ localUrl('/courses/' . $subject['slug']) }}">{{ $subject['title'] }}
+                    </a>
+                </p>
+            @endforeach
             <p class="type-b2"><a class="hover:text-mustard" href="{{ localUrl("/courses") }}">{{ trans('footer.more') }} &gt;</a></p>
         </div>
         <div class="w-full mb-12 md:mb-0 md:w-1/3 flex flex-col items-center">

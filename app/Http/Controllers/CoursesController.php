@@ -9,7 +9,7 @@ class CoursesController extends Controller
 {
     public function index()
     {
-        return view('front.courses.index', ['courses' => Subject::public()->get()->map->forCurrentLang()]);
+        return view('front.courses.index', ['courses' => Subject::inOrder()->public()->get()->map->forCurrentLang()]);
     }
 
     public function show($slug)

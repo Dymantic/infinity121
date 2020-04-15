@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Teaching\Subject;
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -23,6 +25,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        View::composer(
+            'front.partials.footer',
+            fn($view) => $view->with('top_subjects', Subject::inOrder()->public()->limit(3)->get()->map->forCurrentLang()));
     }
 }
