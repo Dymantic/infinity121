@@ -57,9 +57,9 @@ return [
     ],
 
     'sign-up' => [
-        'heading' => '為何要等，立即致電！',
+        'heading' => '為何要等，為何要等！',
         'text' => '不要擱置您的夢想，從今天開始，儘早實現您的目標。',
-        'button' => '註冊會員 &gt;'
+        'button' => '請求通話 &gt;'
     ],
 
     'want-teachers' => [

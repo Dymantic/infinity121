@@ -2,6 +2,9 @@
 
 namespace App;
 
+use App\Calendar\AvailabilityCheck;
+use App\Calendar\TimePeriod;
+use App\Teaching\AvailablePeriod;
 use App\Teaching\Subject;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Model;
@@ -65,7 +68,7 @@ class Profile extends Model implements HasMedia
     public static function setOrder(array $ordered_ids)
     {
         collect($ordered_ids)->each(
-            fn ($id, $position) => static::setProfilePosition($id, $position)
+            fn($id, $position) => static::setProfilePosition($id, $position)
         );
     }
 
@@ -169,5 +172,40 @@ class Profile extends Model implements HasMedia
             })->all(),
 
         ]);
+    }
+
+    public function availablePeriods()
+    {
+        return $this->hasMany(AvailablePeriod::class);
+    }
+
+    public function setAvailabilityFor($day, array $periods)
+    {
+        $this->availablePeriods()->where('day_of_week', $day)->get()->each->delete();
+        collect($periods)->each(
+            fn($period) => $this->availablePeriods()->create([
+                'day_of_week' => $day,
+                'starts' => $period->starts(),
+                'ends' => $period->ends(),
+            ])
+        );
+    }
+
+    public static function availableOn($day)
+    {
+        return new AvailabilityCheck($day);
+    }
+
+    public function availablePeriodsSummary()
+    {
+        return $this
+            ->availablePeriods
+            ->groupBy('day_of_week')
+            ->map(fn ($daily_periods, $day_of_week) =>
+                [
+                    'day' => $day_of_week,
+                    'periods' => $daily_periods->map(fn ($period) => $period->timePeriod())->all()
+                ]
+            )->values()->all();
     }
 }

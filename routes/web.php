@@ -72,6 +72,9 @@ Route::group(['prefix' => 'admin/api', 'middleware' => ['auth'], 'namespace' => 
     Route::post('profiles/{profile}', 'ProfilesController@update');
     Route::post('me/profile/image', 'ProfileImageController@update');
 
+    Route::get('me/available-periods', 'TeacherAvailablePeriodsController@show');
+    Route::post('me/available-periods', 'TeacherAvailablePeriodsController@store');
+
     Route::get('profiles', 'TeacherProfilesController@index');
 
     Route::post('profiles-order', 'ProfilesOrderController@store')->middleware('admin');

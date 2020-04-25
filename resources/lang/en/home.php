@@ -58,9 +58,9 @@ For business, for school, or just for fun; we have the right course for you to s
     ],
 
     'sign-up' => [
-        'heading' => 'Why wait - Call now!',
+        'heading' => 'Why wait? Request a call now!',
         'text' => 'Don’t put your dreams on hold. Start today and reach your goals sooner.',
-        'button' => 'Sign up now &gt;'
+        'button' => 'Request a Call &gt;'
     ],
 
     'want-teachers' => [

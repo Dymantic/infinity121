@@ -39,6 +39,7 @@ class ContactMessage extends Notification implements ShouldQueue
     {
         return (new MailMessage)
                     ->subject("Website message from {$this->message->name}")
+                    ->from($this->message->email, $this->message->name)
                     ->markdown('mail.contact-message', [
                         'name' => $this->message->name,
                         'email' => $this->message->email,
