@@ -19,7 +19,7 @@
 <div class="splash py-80 px-6">
     <div class="md:pt-48">
         <div data-usher class="max-w-2xl mx-auto p-8 bg-opaque">
-            <p class="type-h1 text-center mb-6">{{ trans('home.sign-up.heading') }}</p>
+            <p class="type-h1 text-center mb-6">{!! trans('home.sign-up.heading') !!}</p>
             <p class="type-b1 text-center">{{ trans('home.sign-up.text') }}</p>
         </div>
         <div class="text-center py-32 md:py-48">
