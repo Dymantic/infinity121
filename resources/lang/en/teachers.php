@@ -4,8 +4,8 @@ return [
     'index' => [
 
         'intro' => [
-            'heading' => 'Infinity Teachers',
-            'text' => 'Infinity can boast one of the widest selection of quality tutors in Taiwan, covering most of the major cities and some of the smaller ones. Expansion into Japan is on the horizon, with affiliation in 2020 with language schools in the UK'
+            'heading' => 'Our Dedicated Teachers',
+            'text' => 'Infinity can boast one of the widest selection of quality tutors in Taiwan, covering most of the major cities and some of the smaller ones. Expansion into Japan is on the horizon, with affiliation in 2020 with language schools in the UK.'
         ]
     ],
 

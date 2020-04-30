@@ -163,7 +163,7 @@ class Profile extends Model implements HasMedia
     public function forCurrentLang()
     {
         return array_merge($this->toArray(), [
-            'bio'           => $this->bio[app()->getLocale()] ?? '',
+            'bio'           => $this->getTranslation('bio', app()->getLocale(), 'en'),
             'nationality'   => Nationalities::byCode($this->nationality)[app()->getLocale()] ?? '',
             'subject_names' => $this->subjects->pluck('title')->map(function ($name) {
                 return $name[app()->getLocale()] ?? '';
@@ -172,6 +172,16 @@ class Profile extends Model implements HasMedia
             })->all(),
 
         ]);
+    }
+
+    private function getTranslation($field, $desired_lang, $default)
+    {
+        if(($this->{$field}[$desired_lang] ?? '') === '') {
+            return $this->{$field}[$default];
+        }
+
+        return $this->{$field}[$desired_lang];
+
     }
 
     public function availablePeriods()
