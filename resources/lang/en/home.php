@@ -1,7 +1,10 @@
 <?php
 
 return [
-    'meta' => [],
+    'meta' => [
+        'title' => 'Infinity Training Corporation - English tutoring in Taiwan',
+        'description' => 'Infinity Training Corporation offers excellent English tutoring based on your needs.'
+    ],
 
     'banner' => [
         'heading' => 'Tomorrow\'s training, today.',

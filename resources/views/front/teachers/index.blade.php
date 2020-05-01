@@ -1,5 +1,16 @@
 @extends('front.base')
 
+@section('title')
+    {{ trans('teachers.meta.title') }}
+@endsection
+
+@section('head')
+    @include('front.partials.ogmeta', [
+      'ogTitle' => trans('teachers.meta.title'),
+      'ogDescription' => trans('teachers.meta.description'),
+    ])
+@endsection
+
 @section('content')
 <div>
     <div class="max-w-5xl mx-auto py-16 px-6">

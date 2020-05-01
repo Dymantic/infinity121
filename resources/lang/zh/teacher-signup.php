@@ -3,8 +3,8 @@
 return [
 
     'meta' => [
-        'title' => '',
-        'description' => ''
+        'title' => '成為Infinity Training Corporation的老師 ',
+        'description' => '我們經常在尋找熱誠又教學經驗豐富的英語輔導老師來加入Infinity Training Corporation的團隊。'
     ],
 
     'intro' => [

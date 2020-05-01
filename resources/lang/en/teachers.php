@@ -1,6 +1,12 @@
 <?php
 
 return [
+
+    'meta' => [
+        'title' => 'Our teachers at Infinity Training Corporation',
+        'description' => 'Infinity Training Corporation couldn’t be more proud of our excellent, experienced and passionate teachers.',
+    ],
+
     'index' => [
 
         'intro' => [

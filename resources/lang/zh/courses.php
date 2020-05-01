@@ -1,6 +1,12 @@
 <?php
 
 return [
+
+    'meta' => [
+        'title' => 'Infinity Training Corporation的課程',
+        'description' => '從GEPT到商用英語，Infinity Training Corporation提供您英語需求的課程。',
+    ],
+
     'index' => [
         'intro' => [
             'heading' => '課程',

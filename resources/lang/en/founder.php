@@ -2,6 +2,11 @@
 
 return [
 
+    'meta' => [
+        'title' => 'Keith Gillibrand, founder of Infinity Training Corporation.',
+        'description' => 'Meet Keith, the founder of Infinity Training Corporation.'
+    ],
+
     'heading' => 'About the Founder',
 
     'text' => [

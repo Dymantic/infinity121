@@ -1,5 +1,16 @@
 @extends('front.base')
 
+@section('title')
+    {{ $teacher['name'] }} | Infinity Training Corporation
+@endsection
+
+@section('head')
+    @include('front.partials.ogmeta', [
+      'ogTitle' => $teacher['name'] . " | Infinity Training Corporation",
+      'ogDescription' => $teacher['bio'],
+    ])
+@endsection
+
 @section('content')
 <div class="max-w-5xl mx-auto pt-16">
     <h1 class="type-h1 my-20 text-center">{{ $teacher['name'] }}</h1>

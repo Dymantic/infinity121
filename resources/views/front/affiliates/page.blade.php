@@ -1,5 +1,16 @@
 @extends('front.base')
 
+@section('title')
+    {{ trans('affiliates.meta.title') }}
+@endsection
+
+@section('head')
+    @include('front.partials.ogmeta', [
+      'ogTitle' => trans('affiliates.meta.title'),
+      'ogDescription' => trans('affiliates.meta.description'),
+    ])
+@endsection
+
 @section('content')
     <div class="pt-16 bg-shady-blue wave-white-bottom pb-48">
         <div class="px-6">

@@ -1,5 +1,16 @@
 @extends('front.base')
 
+@section('title')
+    {{ trans('contact.meta.title') }}
+@endsection
+
+@section('head')
+    @include('front.partials.ogmeta', [
+      'ogTitle' => trans('contact.meta.title'),
+      'ogDescription' => trans('contact.meta.description'),
+    ])
+@endsection
+
 @section('content')
     <div class="max-w-5xl px-6 pt-16 mx-auto">
         <div>

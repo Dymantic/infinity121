@@ -3,8 +3,8 @@
 return [
 
     'meta' => [
-        'title' => '',
-        'description' => ''
+        'title' => '成為Infinity Training Corporation的學生',
+        'description' => '讓我們認識您及您的需求，我們將與您聯絡，幫助您如何在Infinity Training Corporation報名。',
     ],
 
     'intro' => [

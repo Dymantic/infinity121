@@ -1,6 +1,12 @@
 <?php
 
 return [
+
+    'meta' => [
+        'title' => 'Infinity Training Corporation的教師團隊',
+        'description' => 'Infinity Training Corporation 為他們優秀、經驗豐富、熱誠的老師們感到驕傲。',
+    ],
+
     'index' => [
 
         'intro' => [

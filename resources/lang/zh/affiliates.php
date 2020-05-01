@@ -3,8 +3,8 @@
 return [
 
     'meta' => [
-        'title' => 'Infinity Affiliates',
-        'description' => '',
+        'title' => 'Infinity Training Corporation 的會員',
+        'description' => '我們重視Infinity Training Corporation的人脈關係，這些都是我們引以為榮的會員與公司。',
     ],
 
     'intro' => [

@@ -3,8 +3,8 @@
 return [
 
     'meta' => [
-        'title' => 'Infinity Affiliates',
-        'description' => '',
+        'title' => 'Affiliates of Infinity Training Corporation.',
+        'description' => 'We value our connections at Infinity Training Corporation. These are the people and companies we are proud to be affiliated with.',
     ],
 
     'intro' => [

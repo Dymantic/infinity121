@@ -2,6 +2,11 @@
 
 return [
 
+    'meta' => [
+        'title' => '王楷司 (Keith Gillibrand)，Infinity Training Corporation 的創辦人',
+        'description' => '認識王楷司，Infinity Training Corporation 的創辦人',
+    ],
+
     'heading' => '創辦人簡介',
 
     'text' => [

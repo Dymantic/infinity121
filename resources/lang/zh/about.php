@@ -1,6 +1,12 @@
 <?php
 
 return [
+
+    'meta' => [
+        'title' => '關於Infinity Training Corporation',
+        'description' => '認識Infinity Training Corporation ',
+    ],
+
     'intro'      => [
         'heading' => '關於Infinity',
         'paragraph_one' => 'Infinity成立於2012年，宗旨在實現一個特定目標：「提供最好的導師、最新資料，並為每個學生使用正確的教學形式」。 Infinity擁有種類繁多的合格教師，以及我們為您量身定制的導師服務（每天08.00至21.30可用），Infinity已成長為大台中地區經驗豐富，合格導師的領先提供商之一。'

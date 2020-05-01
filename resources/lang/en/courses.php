@@ -1,6 +1,12 @@
 <?php
 
 return [
+
+    'meta' => [
+        'title' => 'Available courses at Infinity Training Corporation',
+        'description' => 'From GEPT to Business English, Infinity Training Corporation has the ideal course to fit your English needs.',
+    ],
+
     'index' => [
         'intro' => [
             'heading' => 'Courses',

@@ -1,5 +1,16 @@
 @extends('front.base')
 
+@section('title')
+    {{ $course['title'] }} | Infinity Training Corporation
+@endsection
+
+@section('head')
+    @include('front.partials.ogmeta', [
+      'ogTitle' => $course['title'] . " | Infinity Training Corporation",
+      'ogDescription' => $course['description'],
+    ])
+@endsection
+
 @section('content')
 <div class="h-16"></div>
 <div class="pt-4 pb-32 wave-yellow-top px-6">

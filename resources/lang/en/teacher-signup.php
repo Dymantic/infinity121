@@ -3,8 +3,8 @@
 return [
 
     'meta' => [
-        'title' => '',
-        'description' => ''
+        'title' => 'Become a teacher at Infinity Training Corporation.',
+        'description' => 'We are always looking for passionate and experienced English tutors to join the team at Infinity Training Corporation.',
     ],
 
     'intro' => [

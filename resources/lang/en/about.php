@@ -1,6 +1,12 @@
 <?php
 
 return [
+
+    'meta' => [
+        'title' => 'About Infinity Training Corporation',
+        'description' => 'Who we are, and what we are all about at Infinity Training Corporation.'
+    ],
+
     'intro'      => [
         'heading' => 'About Infinity',
         'paragraph_one' => 'Infinity was founded in 2012 with one specific goal. “To provide the best tutors, the most up-to-date materials and to utilize the right teaching format for every student”. With the widest selection of qualified teachers, our tailor-made tutor service (available 08.00 - 21.30, every day), Infinity has grown to become one of Taichung’s leading providers of experienced, qualified tutors.'

@@ -1,7 +1,10 @@
 <?php
 
 return [
-    'meta' => [],
+    'meta' => [
+        'title' => 'Infinity Training Corporation: 台灣英語輔導團',
+        'description' => 'Infinity Training Corporation依照您的英語程度提供輔導',
+    ],
 
     'banner' => [
         'heading' => '未來的今日訓練。',
