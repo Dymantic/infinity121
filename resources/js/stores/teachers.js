@@ -36,6 +36,23 @@ export default {
             });
         },
 
+        fetchTeacherById({ getters }, id) {
+            return new Promise((resolve, reject) => {
+                const in_store = getters.byId(id);
+
+                if (in_store) {
+                    return resolve(in_store);
+                }
+
+                axios
+                    .get(`/admin/api/profiles/${id}`)
+                    .then(({ data }) => resolve(data))
+                    .catch(() =>
+                        reject({ message: "Unable to fetch teacher info" })
+                    );
+            });
+        },
+
         publishTeacher({ dispatch }, teacher_id) {
             return new Promise((resolve, reject) => {
                 axios

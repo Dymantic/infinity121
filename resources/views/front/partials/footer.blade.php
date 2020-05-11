@@ -18,8 +18,10 @@
             <p class="type-h2 mb-6">{{ trans('footer.contact') }}</p>
             <p class="type-b2">+886 4 084272</p>
             <p class="type-b2">+886 89 7454 444</p>
-            <p class="type-b2"><a href="mailto:services@infinity121.com">services@infinity121.com</a></p>
-            <p class="type-b2">{{ trans('footer.line_app') }}: @infinity121</p>
+            <p class="type-b2"><a href="mailto:contact@infinity121.com">contact@infinity121.com</a></p>
+            <p class="type-b2">
+                <a href="https://line.me/R/ti/p/@maxmax">{{ trans('footer.line_app') }}: @infinity121</a>
+                </p>
         </div>
         <div class="w-full mb-12 md:mb-0 md:w-1/3 flex flex-col items-center">
             <p class="type-h2 mb-6">

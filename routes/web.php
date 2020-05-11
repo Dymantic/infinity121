@@ -68,7 +68,8 @@ Route::group(['prefix' => 'admin/api', 'middleware' => ['auth'], 'namespace' => 
     Route::post('users/teachers', 'TeachersController@store')->middleware('admin');
     Route::post('me/password', 'UsersPasswordController@update');
 
-    Route::get('me/profile', 'ProfilesController@show');
+    Route::get('me/profile', 'MyProfileController@show');
+    Route::get('profiles/{profile}', 'ProfilesController@show');
     Route::post('profiles/{profile}', 'ProfilesController@update');
     Route::post('me/profile/image', 'ProfileImageController@update');
 

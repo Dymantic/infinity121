@@ -9,9 +9,9 @@ return [
     'english-ability'     => '英文程度',
     'address'             => '地址',
     'message'             => '留言',
-    'years-in-taiwan'     => 'Years in Taiwan',
-    'available-hours'     => 'Available hours per week',
-    'teaching-experience' => 'A little about your teaching experience',
+    'years-in-taiwan'     => '在台灣居住多久',
+    'available-hours'     => '每周可調配時間',
+    'teaching-experience' => '請簡要描述您的教學經驗',
     'send'                => '送出',
 
     'abilities' => [

@@ -97,6 +97,10 @@ export default {
             state.is_admin = is_admin;
         },
 
+        setProfile(state, profile) {
+            state.profile = profile;
+        },
+
         setNationalities(state, nationalities) {
             state.nationalities = nationalities;
         },
@@ -135,10 +139,18 @@ export default {
             });
         },
 
-        fetchProfile({ state }) {
-            return axios
-                .get("/admin/api/me/profile")
-                .then(({ data }) => (state.profile = data));
+        fetchProfile({ commit }) {
+            return new Promise((resolve, reject) => {
+                axios
+                    .get("/admin/api/me/profile")
+                    .then(({ data }) => {
+                        commit("setProfile", data);
+                        resolve(data);
+                    })
+                    .catch(() =>
+                        reject({ message: "Unable to fetch your profile" })
+                    );
+            });
         },
 
         fetchNationalities({ commit }) {
@@ -162,7 +174,10 @@ export default {
                 axios
                     .post(`/admin/api/profiles/${formData.id}`, formData)
                     .then(() => {
-                        dispatch("fetchProfile");
+                        dispatch("fetchProfile").catch(notify.error);
+                        dispatch("teachers/fetchTeachers", null, {
+                            root: true
+                        });
                         resolve();
                     })
                     .catch(({ response }) => {

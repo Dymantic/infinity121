@@ -10,13 +10,17 @@ use App\Http\Controllers\Controller;
 class ProfilesController extends Controller
 {
 
-    public function show()
+    public function show(Profile $profile)
     {
-        return request()->user()->fresh()->profile->toArray();
+        return $profile->toArray();
     }
 
     public function update(Profile $profile)
     {
+        if(request()->user()->id !== $profile->user->id && !request()->user()->is_admin) {
+            abort(403);
+        }
+
         request()->validate([
             'name'            => ['required'],
             'teaching_since'  => ['integer', new ReasonableStartingYear()],

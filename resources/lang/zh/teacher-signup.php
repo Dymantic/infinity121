@@ -8,7 +8,7 @@ return [
     ],
 
     'intro' => [
-        'heading' => '#TODO',
-        'text' => '#TODO'
+        'heading' => '加入團隊',
+        'text' => '請填寫您的資料，我們之後會聯絡您。'
     ]
 ];

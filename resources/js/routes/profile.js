@@ -1,6 +1,6 @@
 import ProfilePage from "../components/Profiles/MainPage";
 import ProfileShow from "../components/Profiles/Show";
-import ProfileEdit from "../components/Profiles/Edit";
+import MyProfileEdit from "../components/Profiles/EditMyProfile";
 import ResetPassword from "../components/Profiles/ResetPassword";
 import UpdateUserInfo from "../components/Users/UpdateUserInfo";
 import AvailablePeriods from "../components/Calendar/AvailablePeriods";
@@ -12,7 +12,7 @@ export default [
         component: ProfilePage,
         children: [
             { path: "show", component: ProfileShow },
-            { path: "edit", component: ProfileEdit }
+            { path: "edit", component: MyProfileEdit }
         ]
     },
     { path: "/", redirect: "/me/show" },

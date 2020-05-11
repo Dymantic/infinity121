@@ -23,7 +23,7 @@
             <p class="type-b1 text-center">{{ trans('home.sign-up.text') }}</p>
         </div>
         <div class="text-center py-32 md:py-48">
-            <a href="" class="btn btn-bright">{!! trans('home.sign-up.button') !!}</a>
+            <a href="{{ localUrl("/students/sign-up") }}" class="btn btn-bright">{!! trans('home.sign-up.button') !!}</a>
         </div>
     </div>
 </div>

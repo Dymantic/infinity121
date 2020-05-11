@@ -4,9 +4,12 @@
 namespace Tests\Feature\Users;
 
 
+use App\Profile;
 use App\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Http\Response;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Http;
 use Tests\TestCase;
 
 class UpdateProfileTest extends TestCase
@@ -54,6 +57,32 @@ class UpdateProfileTest extends TestCase
             'bio' => 'Test english bio',
         ]);
 
+    }
+
+    /**
+     *@test
+     */
+    public function a_non_admin_cannot_update_another_teachers_profile()
+    {
+//        $this->withoutExceptionHandling();
+
+        $non_admin = factory(User::class)->state('teacher-only')->create();
+        $teacher = factory(Profile::class)->create();
+
+        $before_request = $teacher->toArray();
+
+        $response = $this->actingAs($non_admin)->postJson("/admin/api/profiles/{$teacher->id}", [
+            'name' => 'Test Profile Name',
+            'bio' => ['en' => 'Test english bio'],
+            'nationality' => 'test_nationality',
+            'qualifications' => 'test qualification',
+            'teaching_since' => 1999,
+            'chinese_ability' => 4,
+            'spoken_languages' => ['en', 'sp'],
+        ]);
+        $response->assertStatus(Response::HTTP_FORBIDDEN);
+
+        $this->assertEquals($before_request, $teacher->fresh()->toArray());
     }
 
     /**
