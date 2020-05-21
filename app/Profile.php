@@ -6,6 +6,7 @@ use App\Calendar\AvailabilityCheck;
 use App\Calendar\TimePeriod;
 use App\Teaching\AvailablePeriod;
 use App\Teaching\Subject;
+use App\Teaching\UnavailablePeriod;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
@@ -217,5 +218,18 @@ class Profile extends Model implements HasMedia
                     'periods' => $daily_periods->map(fn ($period) => $period->timePeriod())->all()
                 ]
             )->values()->all();
+    }
+
+    public function unavailablePeriods()
+    {
+        return $this->hasMany(UnavailablePeriod::class);
+    }
+
+    public function setUnavailablePeriod($from, $to)
+    {
+        return $this->unavailablePeriods()->create([
+            'starts' => $from,
+            'ends' => $to,
+        ]);
     }
 }

@@ -36,7 +36,8 @@ export default {
             { code: "de", name: "German" }
         ],
         nationalities: {},
-        available_periods: []
+        available_periods: [],
+        unavailable_periods: []
     },
 
     getters: {
@@ -86,7 +87,10 @@ export default {
             }
 
             return day.periods.map(p => new TimePeriod(p.starts, p.ends));
-        }
+        },
+
+        unavailablePeriodById: state => id =>
+            state.unavailable_periods.find(p => p.id === parseInt(id))
     },
 
     mutations: {
@@ -107,6 +111,10 @@ export default {
 
         setAvailablePeriods(state, periods) {
             state.available_periods = periods;
+        },
+
+        setUnavailablePeriods(state, periods) {
+            state.unavailable_periods = periods;
         }
     },
 
@@ -245,6 +253,51 @@ export default {
                     })
                     .catch(() =>
                         reject({ message: "Unable to save available hours" })
+                    );
+            });
+        },
+
+        fetchUnavailablePeriods({ commit }) {
+            return new Promise((resolve, reject) => {
+                axios
+                    .get("/admin/api/me/unavailable-periods")
+                    .then(({ data }) => {
+                        commit("setUnavailablePeriods", data);
+                        resolve();
+                    })
+                    .catch(() =>
+                        reject({
+                            message: "Unable to fetch time you are unavailable"
+                        })
+                    );
+            });
+        },
+
+        storeUnavailablePeriod({ dispatch }, { formData, id }) {
+            const url = id
+                ? `/admin/api/me/unavailable-periods/${id}`
+                : "/admin/api/me/unavailable-periods";
+            return new Promise((resolve, reject) => {
+                axios
+                    .post(url, formData)
+                    .then(() => {
+                        dispatch("fetchUnavailablePeriods").catch(notify.error);
+                        resolve();
+                    })
+                    .catch(({ response }) => reject(response));
+            });
+        },
+
+        deleteUnavailablePeriod({ dispatch }, id) {
+            return new Promise((resolve, reject) => {
+                axios
+                    .delete(`/admin/api/me/unavailable-periods/${id}`)
+                    .then(() => {
+                        dispatch("fetchUnavailablePeriods").catch(notify.error);
+                        resolve();
+                    })
+                    .catch(() =>
+                        reject({ message: "Unable to delete time period." })
                     );
             });
         }

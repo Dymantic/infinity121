@@ -62,4 +62,38 @@ function timeToMinutes(time) {
     return hours * 60 + minutes;
 }
 
-export { intToTimeString, dayNameFromInt, everyHalfHour, timeToMinutes };
+function timeStringIsValid(time_string) {
+    const regex = /^[012]{1}[0-9]{1}:[0-5]{1}[0-9]{1}$/;
+
+    if (!time_string.match(regex)) {
+        return false;
+    }
+
+    const hours = parseInt(time_string.slice(0, 2));
+
+    return hours <= 23;
+}
+
+function dateAsYMDString(date) {
+    const year = date.getFullYear();
+    const month = date.getMonth() + 1;
+    const day = date.getDate();
+    return `${year}-${paddedToTwo(month)}-${paddedToTwo(day)}`;
+}
+
+function paddedToTwo(int) {
+    if (int > 9) {
+        return `${int}`;
+    }
+
+    return `0${int}`;
+}
+
+export {
+    intToTimeString,
+    dayNameFromInt,
+    everyHalfHour,
+    timeToMinutes,
+    timeStringIsValid,
+    dateAsYMDString
+};

@@ -76,6 +76,11 @@ Route::group(['prefix' => 'admin/api', 'middleware' => ['auth'], 'namespace' => 
     Route::get('me/available-periods', 'TeacherAvailablePeriodsController@show');
     Route::post('me/available-periods', 'TeacherAvailablePeriodsController@store');
 
+    Route::get('me/unavailable-periods', 'TeacherUnavailablePeriodsController@index');
+    Route::post('me/unavailable-periods', 'TeacherUnavailablePeriodsController@store');
+    Route::post('me/unavailable-periods/{period}', 'TeacherUnavailablePeriodsController@update');
+    Route::delete('me/unavailable-periods/{period}', 'TeacherUnavailablePeriodsController@delete');
+
     Route::get('profiles', 'TeacherProfilesController@index');
 
     Route::post('profiles-order', 'ProfilesOrderController@store')->middleware('admin');
@@ -108,6 +113,18 @@ Route::group(['prefix' => 'admin/api', 'middleware' => ['auth'], 'namespace' => 
 
     Route::post('published-affiliates', 'PublishedAffiliatesController@store');
     Route::delete('published-affiliates/{affiliate}', 'PublishedAffiliatesController@destroy');
+
+    Route::post('countries', 'CountriesController@store');
+    Route::post('countries/{country}', 'CountriesController@update');
+    Route::delete('countries/{country}', 'CountriesController@delete');
+
+    Route::post('countries/{country}/regions', 'RegionsController@store');
+    Route::post('regions/{region}', 'RegionsController@update');
+    Route::delete('regions/{region}', 'RegionsController@delete');
+
+    Route::post('regions/{region}/areas', 'AreasController@store');
+    Route::post('areas/{area}', 'AreasController@update');
+    Route::delete('areas/{area}', 'AreasController@delete');
 });
 
 Route::get('admin/dashboard', 'Admin\Pages\DashboardController')->middleware('auth');

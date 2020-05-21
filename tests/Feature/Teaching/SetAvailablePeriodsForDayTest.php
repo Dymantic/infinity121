@@ -4,6 +4,7 @@
 namespace Tests\Feature\Teaching;
 
 
+use App\Calendar\TimePeriod;
 use App\Profile;
 use App\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -43,6 +44,31 @@ class SetAvailablePeriodsForDayTest extends TestCase
             'day_of_week' => Carbon::MONDAY,
             'starts' => 1400,
             'ends' => 1900,
+        ]);
+    }
+
+    /**
+     *@test
+     */
+    public function a_day_may_have_no_available_periods()
+    {
+        $this->withoutExceptionHandling();
+
+        $teacher = $this->createTeacher();
+        $periodA = new TimePeriod("0900","1200");
+        $periodB = new TimePeriod("1600","2000");
+
+        $teacher->setAvailabilityFor(Carbon::MONDAY, [$periodA, $periodB]);
+
+        $response = $this->actingAs($teacher->user)->postJson("/admin/api/me/available-periods", [
+            'day_of_week' => Carbon::MONDAY,
+            'periods' => []
+        ]);
+        $response->assertSuccessful();
+
+        $this->assertDatabaseMissing('available_periods', [
+            'profile_id' => $teacher->id,
+            'day_of_week' => Carbon::MONDAY,
         ]);
     }
 

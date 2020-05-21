@@ -20,7 +20,7 @@ class AvailablePeriodsRequest extends FormRequest
     {
         return [
             'day_of_week' => new ValidDayOfWeek,
-            'periods' => ['required', 'array'],
+            'periods' => ['present', 'array'],
             'periods.*' => new ValidTimePeriod,
         ];
     }
