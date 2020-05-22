@@ -20,6 +20,10 @@ return [
         'endpoint' => env('MAILGUN_ENDPOINT', 'api.mailgun.net'),
     ],
 
+    'google' => [
+        'tracking' => env('GA_TRACKING')
+    ],
+
     'postmark' => [
         'token' => env('POSTMARK_TOKEN'),
     ],
