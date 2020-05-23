@@ -12,6 +12,7 @@ import users from "./stores/users";
 import me from "./stores/me";
 import teachers from "./stores/teachers";
 import affiliates from "./stores/affiliates";
+import locations from "./stores/locations";
 
 const store = new Vuex.Store({
     modules: {
@@ -19,7 +20,8 @@ const store = new Vuex.Store({
         users,
         me,
         teachers,
-        affiliates
+        affiliates,
+        locations
     }
 });
 
@@ -28,13 +30,15 @@ import userRoutes from "./routes/users";
 import subjectRoutes from "./routes/subjects";
 import teacherRoutes from "./routes/teachers";
 import affiliateRoutes from "./routes/affiliates";
+import locationRoutes from "./routes/locations";
 
 const routes = [
     ...profileRoutes,
     ...userRoutes,
     ...subjectRoutes,
     ...teacherRoutes,
-    ...affiliateRoutes
+    ...affiliateRoutes,
+    ...locationRoutes
 ];
 const router = new VueRouter({ routes });
 

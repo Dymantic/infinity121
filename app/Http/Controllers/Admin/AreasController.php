@@ -22,7 +22,7 @@ class AreasController extends Controller
     public function update(Area $area)
     {
         request()->validate([
-            'name' => ['required', new UniqueInRegion($area->region)]
+            'name' => ['required', new UniqueInRegion($area->region, $area->id)]
         ]);
 
         $area->update(request()->only('name'));

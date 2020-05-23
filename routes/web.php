@@ -114,6 +114,7 @@ Route::group(['prefix' => 'admin/api', 'middleware' => ['auth'], 'namespace' => 
     Route::post('published-affiliates', 'PublishedAffiliatesController@store');
     Route::delete('published-affiliates/{affiliate}', 'PublishedAffiliatesController@destroy');
 
+    Route::get('countries', 'CountriesController@index');
     Route::post('countries', 'CountriesController@store');
     Route::post('countries/{country}', 'CountriesController@update');
     Route::delete('countries/{country}', 'CountriesController@delete');

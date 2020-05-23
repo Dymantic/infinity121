@@ -9,6 +9,12 @@ use Illuminate\Validation\Rule;
 
 class CountriesController extends Controller
 {
+
+    public function index()
+    {
+        return Country::with('regions.areas')->get()->map->toArray();
+    }
+
     public function store()
     {
         request()->validate([
