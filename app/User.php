@@ -25,8 +25,14 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
         'is_admin' => 'boolean',
-        'is_teacher' => 'boolean'
+        'is_teacher' => 'boolean',
+        'removed' => 'boolean',
     ];
+
+    public function scopeActive($query)
+    {
+        $query->where('removed', false);
+    }
 
     public function scopeAdmins($query)
     {
@@ -84,6 +90,16 @@ class User extends Authenticatable
     public function updatePassword($password)
     {
         $this->password = Hash::make($password);
+        $this->save();
+    }
+
+    public function retire()
+    {
+        if($this->profile) {
+            $this->profile->retract();
+        }
+
+        $this->removed = true;
         $this->save();
     }
 }

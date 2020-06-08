@@ -61,7 +61,10 @@ Route::group(['namespace' => 'Auth'], function() {
 
 
 Route::group(['prefix' => 'admin/api', 'middleware' => ['auth'], 'namespace' => 'Admin'], function() {
+
     Route::get('users', 'UsersController@index')->middleware('admin');
+    Route::delete('users/{user}', 'UsersController@destroy');
+
     Route::get('me', 'UsersController@show');
     Route::post('me', 'UsersController@update');
     Route::post('users/admins', 'AdminUsersController@store')->middleware('admin');
@@ -80,6 +83,8 @@ Route::group(['prefix' => 'admin/api', 'middleware' => ['auth'], 'namespace' => 
     Route::post('me/unavailable-periods', 'TeacherUnavailablePeriodsController@store');
     Route::post('me/unavailable-periods/{period}', 'TeacherUnavailablePeriodsController@update');
     Route::delete('me/unavailable-periods/{period}', 'TeacherUnavailablePeriodsController@delete');
+
+    Route::post('me/working-areas', 'TeacherWorkingAreasController@store');
 
     Route::get('profiles', 'TeacherProfilesController@index');
 
@@ -126,6 +131,24 @@ Route::group(['prefix' => 'admin/api', 'middleware' => ['auth'], 'namespace' => 
     Route::post('regions/{region}/areas', 'AreasController@store');
     Route::post('areas/{area}', 'AreasController@update');
     Route::delete('areas/{area}', 'AreasController@delete');
+
+
+    Route::get('customers', 'CustomersController@index');
+    Route::post('customers', 'CustomersController@store');
+    Route::get('customers/{customer}', 'CustomersController@show');
+    Route::post('customers/{customer}', 'CustomersController@update');
+    Route::delete('customers/{customer}', 'CustomersController@delete');
+    Route::post('customers/{customer}/courses', 'CustomerCoursesController@store');
+
+    Route::get('courses/{course}', 'CustomerCoursesController@show');
+    Route::post('courses/{course}', 'CustomerCoursesController@update');
+    Route::post('courses/{course}/lesson-blocks', 'CourseLessonBlocksController@store');
+
+    Route::post('courses/{course}/location', 'CourseLocationController@store');
+    Route::post('courses/{course}/teacher', 'CourseTeacherController@store');
+    Route::delete('courses/{course}/teacher', 'CourseTeacherController@destroy');
+
+    Route::post('available-teachers', 'AvailableTeachersController@show');
 });
 
 Route::get('admin/dashboard', 'Admin\Pages\DashboardController')->middleware('auth');

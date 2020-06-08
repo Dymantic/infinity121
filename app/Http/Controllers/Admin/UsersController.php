@@ -12,7 +12,7 @@ class UsersController extends Controller
 
     public function index()
     {
-        return User::with('profile')->get();
+        return User::with('profile')->active()->get();
     }
 
     public function show()
@@ -32,5 +32,10 @@ class UsersController extends Controller
         $user->update(request()->only('name', 'email'));
 
         return $user->fresh();
+    }
+
+    public function destroy(User $user)
+    {
+        $user->retire();
     }
 }

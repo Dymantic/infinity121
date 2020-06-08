@@ -4,12 +4,18 @@ namespace App\Teaching;
 
 use App\Profile;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Carbon;
 
 class UnavailablePeriod extends Model
 {
     protected $fillable = ['starts', 'ends'];
 
     protected $dates = ['starts', 'ends'];
+
+    public static function booted()
+    {
+        static::addGlobalScope('upcoming', fn($builder) => $builder->where('ends', '>=', Carbon::now()));
+    }
 
     public function teacher()
     {

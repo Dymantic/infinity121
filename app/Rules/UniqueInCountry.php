@@ -9,15 +9,18 @@ class UniqueInCountry implements Rule
 {
 
     private Country $country;
+    private ?int $ignore;
 
-    public function __construct(Country $country)
+    public function __construct(Country $country, int $ignore = null)
     {
         $this->country = $country;
+        $this->ignore = $ignore;
     }
 
     public function passes($attribute, $value)
     {
         return $this->country->regions()
+                             ->whereKeyNot($this->ignore)
                              ->where('name', $value)->count() === 0;
     }
 

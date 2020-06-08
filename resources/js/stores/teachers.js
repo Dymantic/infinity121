@@ -1,6 +1,7 @@
 import axios from "axios";
 import { notify } from "../components/Messaging/notify";
 import { intByPropertyName } from "../libs/sorting";
+import { availableTeachers } from "../api/teachers";
 
 export default {
     namespaced: true,
@@ -113,6 +114,10 @@ export default {
                     })
                     .catch(() => reject({ message: "Unable to set order." }));
             });
+        },
+
+        queryAvailableTeachers({}, { subject_id, area_id, lesson_blocks }) {
+            return availableTeachers(subject_id, area_id, lesson_blocks);
         }
     }
 };

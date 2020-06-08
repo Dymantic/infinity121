@@ -1,4 +1,5 @@
 import axios from "axios";
+import { notify } from "../components/Messaging/notify";
 
 export default {
     namespaced: true,
@@ -12,7 +13,8 @@ export default {
 
         teachers: state => state.users.filter(u => !u.is_admin && u.is_teacher),
 
-        byId: state => id => state.users.find(u => parseInt(u.id) === parseInt(id)),
+        byId: state => id =>
+            state.users.find(u => parseInt(u.id) === parseInt(id))
     },
 
     mutations: {
@@ -22,15 +24,28 @@ export default {
     },
 
     actions: {
-        fetchAllUsers({commit}) {
+        fetchAllUsers({ commit }) {
             return new Promise((resolve, reject) => {
-                axios.get("/admin/api/users")
-                     .then(({data}) => {
-                         commit('setUsers', data);
-                         resolve();
-                     })
-                     .catch(() => reject({message: 'Unable to fetch users'}));
+                axios
+                    .get("/admin/api/users")
+                    .then(({ data }) => {
+                        commit("setUsers", data);
+                        resolve();
+                    })
+                    .catch(() => reject({ message: "Unable to fetch users" }));
+            });
+        },
+
+        removeUser({ dispatch }, id) {
+            return new Promise((resolve, reject) => {
+                axios
+                    .delete(`/admin/api/users/${id}`)
+                    .then(() => {
+                        dispatch("fetchAllUsers").catch(notify.error);
+                        resolve();
+                    })
+                    .catch(() => reject({ message: "Unable to delete user." }));
             });
         }
     }
-}
+};

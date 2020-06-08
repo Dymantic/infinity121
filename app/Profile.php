@@ -4,6 +4,7 @@ namespace App;
 
 use App\Calendar\AvailabilityCheck;
 use App\Calendar\TimePeriod;
+use App\Locations\Area;
 use App\Teaching\AvailablePeriod;
 use App\Teaching\Subject;
 use App\Teaching\UnavailablePeriod;
@@ -52,13 +53,37 @@ class Profile extends Model implements HasMedia
     public function scopeTeachers($query)
     {
         return $query->whereHas('user', function ($q) {
-            $q->where('is_teacher', true);
+            $q->where('removed', false)->where('is_teacher', true);
+
         });
     }
 
     public function scopeActive($query)
     {
         return $query->where('is_public', true);
+    }
+
+    public function scopeTeachingIn($query, $area_id)
+    {
+        return $query->whereHas('workingAreas', fn ($q) => $q->where("areas.id", $area_id));
+    }
+
+    public function scopeCanTeach($query, $subject_id)
+    {
+        return $query->whereHas('subjects', fn ($q) => $q->where('subjects.id', $subject_id));
+    }
+
+    public function scopeAvailableFor($query, $lessons)
+    {
+        foreach($lessons as $lesson) {
+            $query->whereHas('availablePeriods', function($q) use ($lesson) {
+                $q->where([
+                    ['day_of_week', $lesson['day_of_week']],
+                    ['starts', '<=', intval($lesson['starts'])],
+                    ['ends', '>=', intval($lesson['ends'])]
+                ]);
+            });
+        }
     }
 
     public function scopeInOrder($query)
@@ -121,6 +146,7 @@ class Profile extends Model implements HasMedia
     public function toArray()
     {
         $avatar = $this->getFirstMedia(static::AVATAR);
+        $this->load('workingAreas.region.country');
 
         return [
             'id'                    => $this->id,
@@ -142,6 +168,7 @@ class Profile extends Model implements HasMedia
             'spoken_language_codes' => $this->spoken_languages,
             'spoken_languages'      => $this->spokenLanguageNames(),
             'position'              => $this->position,
+            'working_areas'         => $this->workingAreas->map->toArray()->all(),
         ];
     }
 
@@ -177,7 +204,7 @@ class Profile extends Model implements HasMedia
 
     private function getTranslation($field, $desired_lang, $default)
     {
-        if(($this->{$field}[$desired_lang] ?? '') === '') {
+        if (($this->{$field}[$desired_lang] ?? '') === '') {
             return $this->{$field}[$default];
         }
 
@@ -196,8 +223,8 @@ class Profile extends Model implements HasMedia
         collect($periods)->each(
             fn($period) => $this->availablePeriods()->create([
                 'day_of_week' => $day,
-                'starts' => $period->starts(),
-                'ends' => $period->ends(),
+                'starts'      => $period->starts(),
+                'ends'        => $period->ends(),
             ])
         );
     }
@@ -212,11 +239,10 @@ class Profile extends Model implements HasMedia
         return $this
             ->availablePeriods
             ->groupBy('day_of_week')
-            ->map(fn ($daily_periods, $day_of_week) =>
-                [
-                    'day' => $day_of_week,
-                    'periods' => $daily_periods->map(fn ($period) => $period->timePeriod())->all()
-                ]
+            ->map(fn($daily_periods, $day_of_week) => [
+                'day'     => $day_of_week,
+                'periods' => $daily_periods->map(fn($period) => $period->timePeriod())->all()
+            ]
             )->values()->all();
     }
 
@@ -229,7 +255,17 @@ class Profile extends Model implements HasMedia
     {
         return $this->unavailablePeriods()->create([
             'starts' => $from,
-            'ends' => $to,
+            'ends'   => $to,
         ]);
+    }
+
+    public function workingAreas()
+    {
+        return $this->belongsToMany(Area::class);
+    }
+
+    public function setWorkingAreas(array $area_ids)
+    {
+        $this->workingAreas()->sync($area_ids);
     }
 }

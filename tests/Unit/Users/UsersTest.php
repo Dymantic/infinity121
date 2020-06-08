@@ -2,6 +2,7 @@
 
 namespace Tests\Unit\Users;
 
+use App\Profile;
 use App\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Hash;
@@ -79,5 +80,44 @@ class UsersTest extends TestCase
         $this->assertTrue($admins->contains($adminA));
         $this->assertTrue($admins->contains($adminB));
         $this->assertFalse($admins->contains($teacher));
+    }
+
+    /**
+     *@test
+     */
+    public function can_be_retired()
+    {
+        $user = factory(User::class)->create();
+        $profile = factory(Profile::class)->create([
+            'user_id' => $user->id,
+            'is_public' => true,
+        ]);
+
+        $this->assertFalse($user->removed);
+        $this->assertTrue($profile->is_public);
+
+        $user->retire();
+
+        $user = $user->fresh();
+
+        $this->assertTrue($user->removed);
+        $this->assertFalse($profile->fresh()->is_public);
+
+    }
+
+    /**
+     *@test
+     */
+    public function have_active_scope()
+    {
+        $userA = factory(User::class)->create();
+        $userB = factory(User::class)->create();
+
+        $userB->retire();
+
+        $scoped = User::active()->get();
+
+        $this->assertCount(1, $scoped);
+        $this->assertTrue($scoped->first()->is($userA));
     }
 }

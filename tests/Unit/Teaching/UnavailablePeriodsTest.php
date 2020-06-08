@@ -18,6 +18,36 @@ class UnavailablePeriodsTest extends TestCase
     /**
      *@test
      */
+    public function globally_scoped_to_upcoming()
+    {
+        $old_from = Carbon::today()->subMonth();
+        $old_to = Carbon::today()->subMonth()->addDay();
+
+        $past_from = Carbon::today()->subDays(2);
+        $upcoming_to = Carbon::today()->addDays(3);
+
+        $future_from = Carbon::today()->addWeek();
+        $future_to = Carbon::today()->addWeek()->addDay();
+        /**
+         * @var Profile $teacher
+         */
+        $teacher = $this->createTeacher();
+
+        $old = $teacher->setUnavailablePeriod($old_from, $old_to);
+        $ongoing = $teacher->setUnavailablePeriod($past_from, $upcoming_to);
+        $future = $teacher->setUnavailablePeriod($future_from, $future_to);
+
+        $this->assertCount(2, $teacher->fresh()->unavailablePeriods);
+
+        $teacher->fresh()->unavailablePeriods->each(
+            fn($p) => $this->assertTrue(Carbon::now()->lessThanOrEqualTo($p->ends))
+        );
+
+    }
+
+    /**
+     *@test
+     */
     public function set_unavailable_period_for_teacher()
     {
         $teacher = $this->createTeacher();

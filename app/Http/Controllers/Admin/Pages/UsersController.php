@@ -18,4 +18,6 @@ class UsersController extends Controller
     {
         return view('admin.users.show', ['user' => $user]);
     }
+
+
 }

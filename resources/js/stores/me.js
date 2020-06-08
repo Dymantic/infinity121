@@ -90,7 +90,9 @@ export default {
         },
 
         unavailablePeriodById: state => id =>
-            state.unavailable_periods.find(p => p.id === parseInt(id))
+            state.unavailable_periods.find(p => p.id === parseInt(id)),
+
+        myWorkingAreas: state => state.profile.working_areas
     },
 
     mutations: {
@@ -298,6 +300,22 @@ export default {
                     })
                     .catch(() =>
                         reject({ message: "Unable to delete time period." })
+                    );
+            });
+        },
+
+        setWorkingAreas({ dispatch }, area_ids) {
+            return new Promise((resolve, reject) => {
+                axios
+                    .post("/admin/api/me/working-areas", { area_ids })
+                    .then(() => {
+                        dispatch("fetchProfile").catch(notify.error);
+                        resolve({
+                            message: "Your working locations have been updated."
+                        });
+                    })
+                    .catch(() =>
+                        reject({ message: "Unable to save working locations." })
                     );
             });
         }

@@ -26,7 +26,7 @@ class CountriesController extends Controller
     public function update(Country $country)
     {
         request()->validate([
-            'name' => ['required', Rule::unique('countries', 'name', $country->id)]
+            'name' => ['required', Rule::unique('countries', 'name')->ignore($country->id)]
         ]);
 
         $country->update(request()->only('name'));

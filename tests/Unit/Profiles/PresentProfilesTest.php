@@ -4,6 +4,7 @@
 namespace Tests\Unit\Profiles;
 
 
+use App\Locations\Area;
 use App\Profile;
 use App\Teaching\Subject;
 use App\User;
@@ -53,6 +54,10 @@ class PresentProfilesTest extends TestCase
         ]);
         $teacher_profile->assignSubjects([$subjectA->id, $subjectB->id]);
 
+        $areaA = factory(Area::class)->create();
+        $areaB = factory(Area::class)->create(['region_id' => $areaA->region_id]);
+        $teacher_profile->setWorkingAreas([$areaA->id, $areaB->id]);
+
         $expected = [
             'id'                    => $teacher_profile->id,
             'name'                  => 'test name',
@@ -72,7 +77,25 @@ class PresentProfilesTest extends TestCase
             'subjects'              => collect([$subjectA, $subjectB])->map->toArray()->all(),
             'spoken_language_codes' => ['en', 'zh'],
             'spoken_languages'      => ["english", "chinese"],
-            'position'              => null
+            'position'              => null,
+            'working_areas' => [
+                [
+                    'id' => $areaA->id,
+                    'country_name' => $areaA->region->country->name,
+                    'country_id' => $areaA->region->country->id,
+                    'region_name' => $areaA->region->name,
+                    'region_id' => $areaA->region_id,
+                    'area_name' => $areaA->name,
+                ],
+                [
+                    'id' => $areaB->id,
+                    'country_name' => $areaB->region->country->name,
+                    'country_id' => $areaB->region->country->id,
+                    'region_name' => $areaB->region->name,
+                    'region_id' => $areaB->region_id,
+                    'area_name' => $areaB->name,
+                ]
+            ]
         ];
 
         $this->assertEquals($expected, $teacher_profile->toArray());

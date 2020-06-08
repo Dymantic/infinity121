@@ -9,7 +9,32 @@ export default {
 
     getters: {
         countryById: state => id =>
-            state.countries.find(c => c.id === parseInt(id))
+            state.countries.find(c => c.id === parseInt(id)),
+
+        regionsOfCountry: state => id => {
+            const country = state.countries.find(c => c.id === parseInt(id));
+            if (!country) {
+                return [];
+            }
+            return country.regions;
+        },
+
+        areasOfRegion: state => id => {
+            const country = state.countries.find(c =>
+                c.regions.map(r => r.id).includes(parseInt(id))
+            );
+            if (!country) {
+                console.log("no country for old men");
+                return [];
+            }
+
+            const region = country.regions.find(r => r.id === parseInt(id));
+            if (!region) {
+                console.log("no region for old men");
+                return [];
+            }
+            return region.areas;
+        }
     },
 
     mutations: {
@@ -61,6 +86,20 @@ export default {
             });
         },
 
+        deleteCountry({ dispatch }, id) {
+            return new Promise((resolve, reject) => {
+                axios
+                    .delete(`/admin/api/countries/${id}`)
+                    .then(() => {
+                        dispatch("fetchLocations").catch(notify.error);
+                        resolve();
+                    })
+                    .catch(() =>
+                        reject({ message: "Unable to delete country" })
+                    );
+            });
+        },
+
         addRegion({ dispatch }, { country_id, formData }) {
             return new Promise((resolve, reject) => {
                 axios
@@ -92,6 +131,20 @@ export default {
             });
         },
 
+        deleteRegion({ dispatch }, id) {
+            return new Promise((resolve, reject) => {
+                axios
+                    .delete(`/admin/api/regions/${id}`)
+                    .then(() => {
+                        dispatch("fetchLocations").catch(notify.error);
+                        resolve();
+                    })
+                    .catch(() =>
+                        reject({ message: "Unable to delete region" })
+                    );
+            });
+        },
+
         addArea({ dispatch }, { region_id, formData }) {
             return new Promise((resolve, reject) => {
                 axios
@@ -117,6 +170,18 @@ export default {
                         });
                     })
                     .catch(({ response }) => reject(response));
+            });
+        },
+
+        deleteArea({ dispatch }, id) {
+            return new Promise((resolve, reject) => {
+                axios
+                    .delete(`/admin/api/areas/${id}`)
+                    .then(() => {
+                        dispatch("fetchLocations").catch(notify.error);
+                        resolve();
+                    })
+                    .catch(() => reject({ message: "Unable to delete area" }));
             });
         }
     }
