@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "70af72440d757f7525bdbd95a364d992",
+    "content-hash": "b724a11e31b823f420996dc763f26601",
     "packages": [
         {
             "name": "aws/aws-sdk-php",
-            "version": "3.138.5",
+            "version": "3.141.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "2c9ce7a12991e983e009ac9db453036000188ddd"
+                "reference": "d57dbde176a7db7a6131bb5d325aff63515eabc3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/2c9ce7a12991e983e009ac9db453036000188ddd",
-                "reference": "2c9ce7a12991e983e009ac9db453036000188ddd",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/d57dbde176a7db7a6131bb5d325aff63515eabc3",
+                "reference": "d57dbde176a7db7a6131bb5d325aff63515eabc3",
                 "shasum": ""
             },
             "require": {
@@ -88,7 +88,7 @@
                 "s3",
                 "sdk"
             ],
-            "time": "2020-05-20T18:12:57+00:00"
+            "time": "2020-06-10T18:11:38+00:00"
         },
         {
             "name": "brick/math",

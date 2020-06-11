@@ -16,7 +16,7 @@ return [
     |
     */
 
-    'driver' => env('MAIL_DRIVER', 'smtp'),
+    'driver' => env('MAIL_DRIVER', 'ses'),
 
     /*
     |--------------------------------------------------------------------------
@@ -56,7 +56,7 @@ return [
     */
 
     'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'site@infinity121.com'),
+        'address' => env('MAIL_FROM_ADDRESS', 'contact@infinity121.com'),
         'name' => env('MAIL_FROM_NAME', 'Infinity Admin'),
     ],
 
