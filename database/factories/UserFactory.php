@@ -25,6 +25,7 @@ $factory->define(User::class, function (Faker $faker) {
         'is_teacher' => false,
         'is_admin' => true,
         'removed' => false,
+        'receive_admin_emails' => true,
         'remember_token' => Str::random(10),
     ];
 });

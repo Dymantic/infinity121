@@ -1,5 +1,9 @@
 import axios from "axios";
 import { notify } from "../components/Messaging/notify";
+import {
+    subscribeUserToAdminEmails,
+    unsubscribeUserFromAdminEmails
+} from "../api/users";
 
 export default {
     namespaced: true,
@@ -46,6 +50,18 @@ export default {
                     })
                     .catch(() => reject({ message: "Unable to delete user." }));
             });
+        },
+
+        subscribeUserToEmails({ dispatch }, { user_id }) {
+            return subscribeUserToAdminEmails(user_id).then(() =>
+                dispatch("fetchAllUsers").catch(notify.error)
+            );
+        },
+
+        unsubscribeUserFromEmails({ dispatch }, { user_id }) {
+            return unsubscribeUserFromAdminEmails(user_id).then(() =>
+                dispatch("fetchAllUsers").catch(notify.error)
+            );
         }
     }
 };

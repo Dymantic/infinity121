@@ -251,6 +251,11 @@ class Profile extends Model implements HasMedia
         return $this->hasMany(UnavailablePeriod::class);
     }
 
+    public function clearTimeBlock()
+    {
+
+    }
+
     public function setUnavailablePeriod($from, $to)
     {
         return $this->unavailablePeriods()->create([

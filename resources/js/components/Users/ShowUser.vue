@@ -22,6 +22,12 @@
                 </div>
             </div>
         </section>
+
+        <admin-email-subscribe
+            :user="user"
+            v-if="user.is_admin"
+        ></admin-email-subscribe>
+
         <section v-if="is_teacher" class="my-16 mx-auto max-w-4xl">
             <profile-card :profile="user.profile"></profile-card>
         </section>
@@ -34,13 +40,15 @@ import ProfileCard from "../Profiles/ProfileCard";
 import DeleteUser from "./DeleteUser";
 import Page from "../UI/Page";
 import PageHeader from "../UI/PageHeader";
+import AdminEmailSubscribe from "./AdminEmailSubscribe";
 
 export default {
     components: {
         ProfileCard,
         DeleteUser,
         Page,
-        PageHeader
+        PageHeader,
+        AdminEmailSubscribe
     },
 
     computed: {

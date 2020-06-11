@@ -1,7 +1,7 @@
 <template>
     <div>
         <p class="text-lg font-bold mb-6">Course General Info</p>
-        <div class="mb-6">
+        <div class="mb-6" v-if="course && course.starts_from">
             <label class="form-label font-bold" for="start_date"
                 >Course starts from:</label
             >

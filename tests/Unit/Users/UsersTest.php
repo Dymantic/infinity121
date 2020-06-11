@@ -120,4 +120,55 @@ class UsersTest extends TestCase
         $this->assertCount(1, $scoped);
         $this->assertTrue($scoped->first()->is($userA));
     }
+
+    /**
+     *@test
+     */
+    public function can_subscribe_to_admin_emails()
+    {
+        $user = factory(User::class)->state('admin-only')->create();
+
+        $user->subscribeToAdminEmails();
+
+        $this->assertTrue($user->fresh()->receive_admin_emails);
+    }
+
+    /**
+     *@test
+     */
+    public function can_unsubscribe_from_admin_emails()
+    {
+        $user = factory(User::class)->state('admin-only')->create([
+            'receive_admin_emails' => true,
+        ]);
+
+        $user->unsubscribeFromAdminEmails();
+
+        $this->assertFalse($user->fresh()->receive_admin_emails);
+    }
+
+    /**
+     *@test
+     */
+    public function can_be_scoped_to_admin_email_subscribers()
+    {
+        $userA = factory(User::class)->state('admin-only')->create([
+            'receive_admin_emails' => true,
+        ]);
+        $userB = factory(User::class)->state('admin-only')->create([
+            'receive_admin_emails' => false,
+        ]);
+        $userC = factory(User::class)->state('admin-teacher')->create([
+            'receive_admin_emails' => true,
+        ]);
+        $userD = factory(User::class)->state('teacher-only')->create([
+            'receive_admin_emails' => true,
+        ]);
+
+        $scoped = User::receivesAdminEmails()->get();
+
+        $this->assertCount(2, $scoped);
+        $this->assertTrue($scoped->contains($userA));
+        $this->assertTrue($scoped->contains($userC));
+    }
 }

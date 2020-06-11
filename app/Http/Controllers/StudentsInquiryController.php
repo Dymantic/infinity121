@@ -52,7 +52,7 @@ class StudentsInquiryController extends Controller
         ]);
 
         $inquiry = StudentInquiry::create(request()->all());
-        Notification::send(User::admins()->get(), new StudentSignedUp($inquiry));
+        Notification::send(User::receivesAdminEmails()->get(), new StudentSignedUp($inquiry));
 
         return $inquiry;
     }

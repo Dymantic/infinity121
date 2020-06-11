@@ -19,7 +19,6 @@ class Customer extends Model
             'subject_id' => $data['subject_id'],
             'total_lessons' => $data['total_lessons'],
             'students' => $data['students'],
-            'starts_from' => $data['starts_from'],
         ]);
     }
 

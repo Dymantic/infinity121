@@ -13,20 +13,26 @@ class User extends Authenticatable
 
 
     protected $fillable = [
-        'name', 'email', 'password', 'is_admin', 'is_teacher',
+        'name',
+        'email',
+        'password',
+        'is_admin',
+        'is_teacher',
     ];
 
 
     protected $hidden = [
-        'password', 'remember_token',
+        'password',
+        'remember_token',
     ];
 
 
     protected $casts = [
-        'email_verified_at' => 'datetime',
-        'is_admin' => 'boolean',
-        'is_teacher' => 'boolean',
-        'removed' => 'boolean',
+        'email_verified_at'    => 'datetime',
+        'is_admin'             => 'boolean',
+        'is_teacher'           => 'boolean',
+        'removed'              => 'boolean',
+        'receive_admin_emails' => 'boolean',
     ];
 
     public function scopeActive($query)
@@ -39,14 +45,22 @@ class User extends Authenticatable
         return $query->where('is_admin', true);
     }
 
+    public function scopeReceivesAdminEmails($query)
+    {
+        return $query->where([
+            ['is_admin', true],
+            ['receive_admin_emails', true]
+        ]);
+    }
+
     public static function addAdmin($attributes)
     {
         $admin = static::create([
-            'name' => $attributes['name'],
-            'email' => $attributes['email'],
-            'is_admin' => true,
+            'name'       => $attributes['name'],
+            'email'      => $attributes['email'],
+            'is_admin'   => true,
             'is_teacher' => $attributes['is_teacher'] ?? false,
-            'password' => Hash::make($attributes['password']),
+            'password'   => Hash::make($attributes['password']),
         ]);
 
         $admin->makeProfile();
@@ -57,11 +71,11 @@ class User extends Authenticatable
     public static function addTeacher($attributes)
     {
         $teacher = static::create([
-            'name' => $attributes['name'],
-            'email' => $attributes['email'],
-            'is_admin' => false,
+            'name'       => $attributes['name'],
+            'email'      => $attributes['email'],
+            'is_admin'   => false,
             'is_teacher' => true,
-            'password' => Hash::make($attributes['password']),
+            'password'   => Hash::make($attributes['password']),
         ]);
 
         $teacher->makeProfile();
@@ -76,10 +90,10 @@ class User extends Authenticatable
 
     public function makeProfile()
     {
-        if(!$this->profile) {
+        if (!$this->profile) {
             $this->profile()->create([
-                'name' => $this->name,
-                'bio' => ['en' => ''],
+                'name'             => $this->name,
+                'bio'              => ['en' => ''],
                 'spoken_languages' => ['en']
             ]);
         }
@@ -95,11 +109,23 @@ class User extends Authenticatable
 
     public function retire()
     {
-        if($this->profile) {
+        if ($this->profile) {
             $this->profile->retract();
         }
 
         $this->removed = true;
+        $this->save();
+    }
+
+    public function subscribeToAdminEmails()
+    {
+        $this->receive_admin_emails = true;
+        $this->save();
+    }
+
+    public function unsubscribeFromAdminEmails()
+    {
+        $this->receive_admin_emails = false;
         $this->save();
     }
 }

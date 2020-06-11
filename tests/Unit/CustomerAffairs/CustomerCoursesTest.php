@@ -28,7 +28,6 @@ class CustomerCoursesTest extends TestCase
                 ['name' => 'test student A', 'age' => 'test age'],
                 ['name' => 'test student B', 'age' => 'test age'],
             ],
-            'starts_from' => Carbon::today()->addWeek()->setDay(3)->format('Y-m-d')
         ];
 
         $course = $customer->addCourse($info);
@@ -37,10 +36,24 @@ class CustomerCoursesTest extends TestCase
         $this->assertTrue($course->customer->is($customer));
         $this->assertTrue($course->subject->is($subject));
         $this->assertEquals(20, $course->total_lessons);
-        $this->assertTrue($course->starts_from->isSameDay(Carbon::today()->addWeek()->setDay(3)));
 
         $this->assertCount(2, $course->students);
         $this->assertEquals(['name' => 'test student A', 'age' => 'test age'], $course->students[0]);
         $this->assertEquals(['name' => 'test student B', 'age' => 'test age'], $course->students[1]);
+    }
+
+    /**
+     *@test
+     */
+    public function can_confirm_a_course()
+    {
+        $course = factory(Course::class)->state('unconfirmed')->create();
+
+        $course->confirm(Carbon::tomorrow());
+        $course = $course->fresh();
+
+        $this->assertTrue($course->isConfirmed());
+        $this->assertTrue($course->starts_from->isSameDay(Carbon::tomorrow()));
+        $this->assertTrue($course->confirmed_on->isSameDay(Carbon::today()));
     }
 }

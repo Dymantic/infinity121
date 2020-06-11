@@ -31,7 +31,6 @@ class AddCourseTest extends TestCase
         $response = $this->asAdmin()->postJson("/admin/api/customers/{$customer->id}/courses", [
             'subject_id'    => $subject->id,
             'total_lessons' => 20,
-            'starts_from' => Carbon::today()->addWeek()->setDay(3)->format('Y-m-d'),
             'students'      => [
                 ['name' => 'test student A', 'age' => 'test age'],
                 ['name' => 'test student B', 'age' => 'test age'],
@@ -44,11 +43,12 @@ class AddCourseTest extends TestCase
             'customer_id'   => $customer->id,
             'subject_id'    => $subject->id,
             'total_lessons' => 20,
-            'starts_from' => Carbon::today()->addWeek()->setDay(3),
             'students'      => json_encode([
                 ['name' => 'test student A', 'age' => 'test age'],
                 ['name' => 'test student B', 'age' => 'test age'],
-            ])
+            ]),
+            'confirmed_on' => null,
+            'starts_from' => null,
         ]);
 
     }
@@ -85,21 +85,6 @@ class AddCourseTest extends TestCase
         $this->assertFieldIsInvalid(['total_lessons' => 'not-an-integer']);
     }
 
-    /**
-     *@test
-     */
-    public function the_starts_from_date_is_required()
-    {
-        $this->assertFieldIsInvalid(['starts_from' => null]);
-    }
-
-    /**
-     *@test
-     */
-    public function starts_from_must_be_a_date()
-    {
-        $this->assertFieldIsInvalid(['starts_from' => 'not-a-date']);
-    }
 
     /**
      *@test

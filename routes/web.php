@@ -65,6 +65,9 @@ Route::group(['prefix' => 'admin/api', 'middleware' => ['auth'], 'namespace' => 
     Route::get('users', 'UsersController@index')->middleware('admin');
     Route::delete('users/{user}', 'UsersController@destroy');
 
+    Route::post('admin-email-subscriptions', 'AdminEmailSubscriptionsController@store');
+    Route::delete('admin-email-subscriptions/{user}', 'AdminEmailSubscriptionsController@destroy');
+
     Route::get('me', 'UsersController@show');
     Route::post('me', 'UsersController@update');
     Route::post('users/admins', 'AdminUsersController@store')->middleware('admin');
@@ -138,11 +141,14 @@ Route::group(['prefix' => 'admin/api', 'middleware' => ['auth'], 'namespace' => 
     Route::get('customers/{customer}', 'CustomersController@show');
     Route::post('customers/{customer}', 'CustomersController@update');
     Route::delete('customers/{customer}', 'CustomersController@delete');
+    Route::get('customers/{customer}/courses', 'CustomerCoursesController@index');
     Route::post('customers/{customer}/courses', 'CustomerCoursesController@store');
 
     Route::get('courses/{course}', 'CustomerCoursesController@show');
     Route::post('courses/{course}', 'CustomerCoursesController@update');
     Route::post('courses/{course}/lesson-blocks', 'CourseLessonBlocksController@store');
+
+    Route::post('confirmed-courses', 'ConfirmedCoursesController@store');
 
     Route::post('courses/{course}/location', 'CourseLocationController@store');
     Route::post('courses/{course}/teacher', 'CourseTeacherController@store');

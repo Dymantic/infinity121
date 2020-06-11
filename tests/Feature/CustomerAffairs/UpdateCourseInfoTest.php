@@ -30,7 +30,6 @@ class UpdateCourseInfoTest extends TestCase
             'students' => [
                 ['name' => 'new student name', 'age' => 'high school'],
             ],
-            'starts_from' => Carbon::tomorrow()->format('Y-m-d'),
             'total_lessons' => 6,
             'subject_id' => $subject->id,
         ]);
@@ -41,7 +40,6 @@ class UpdateCourseInfoTest extends TestCase
             'students' => json_encode([
                 ['name' => 'new student name', 'age' => 'high school'],
             ]),
-            'starts_from' => Carbon::tomorrow(),
             'total_lessons' => 6,
             'subject_id' => $subject->id,
         ]);
@@ -79,21 +77,6 @@ class UpdateCourseInfoTest extends TestCase
         $this->assertFieldIsInvalid(['total_lessons' => 'not-an-integer']);
     }
 
-    /**
-     *@test
-     */
-    public function the_starts_from_date_is_required()
-    {
-        $this->assertFieldIsInvalid(['starts_from' => null]);
-    }
-
-    /**
-     *@test
-     */
-    public function starts_from_must_be_a_date()
-    {
-        $this->assertFieldIsInvalid(['starts_from' => 'not-a-date']);
-    }
 
     /**
      *@test

@@ -43,7 +43,7 @@ class TeachersInquiryController extends Controller
 
         $inquiry = TeacherInquiry::create(request()->all());
 
-        Notification::send(User::admins()->get(), new TeacherSignedUp($inquiry));
+        Notification::send(User::receivesAdminEmails()->get(), new TeacherSignedUp($inquiry));
 
         return $inquiry;
     }

@@ -35,6 +35,6 @@ class ContactMessageController extends Controller
 
         $message = new Message(request()->only('name', 'email', 'message'));
 
-        Notification::send(User::admins()->get(), new ContactMessage($message));
+        Notification::send(User::receivesAdminEmails()->get(), new ContactMessage($message));
     }
 }

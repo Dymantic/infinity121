@@ -13,7 +13,18 @@ $factory->define(Course::class, function (Faker $faker) {
         'customer_id' => factory(Customer::class),
         'subject_id' => factory(Subject::class),
         'students' => ['name' => $faker->name, 'age' => 'adult'],
-        'starts_from' => Carbon::today()->addWeek(),
+        'starts_from' => null,
+        'confirmed_on' => null,
         'total_lessons' => 20,
     ];
 });
+
+$factory->state(Course::class, 'unconfirmed', [
+    'starts_from' => null,
+    'confirmed_on' => null,
+]);
+
+$factory->state(Course::class, 'confirmed', [
+    'starts_from' => Carbon::yesterday(),
+    'confirmed_on' => Carbon::yesterday(),
+]);

@@ -1,4 +1,4 @@
-import { post } from "./http";
+import { get, post } from "./http";
 
 function fetchCourse(id) {
     return new Promise((resolve, reject) => {
@@ -7,6 +7,10 @@ function fetchCourse(id) {
             .then(({ data }) => resolve(data))
             .catch(() => reject({ message: "Unable to find course." }));
     });
+}
+
+function fetchCustomerCourses(customer_id) {
+    return get(`/admin/api/customers/${customer_id}/courses`);
 }
 
 function createCourse(customer_id, formData) {
@@ -71,13 +75,19 @@ function clearCourseTeacher(course_id) {
     });
 }
 
+function confirmCourse(course_id, starts_from) {
+    return post("/admin/api/confirmed-courses", { course_id, starts_from });
+}
+
 export {
     fetchCourse,
+    fetchCustomerCourses,
     updateCourseBasicInfo,
     updateCourseTimeInfo,
     updateCourseLocationInfo,
     updateCourseTeacher,
     createCourse,
     assignCourseTeacher,
-    clearCourseTeacher
+    clearCourseTeacher,
+    confirmCourse
 };

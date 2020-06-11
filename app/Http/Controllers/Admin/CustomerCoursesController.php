@@ -10,6 +10,11 @@ use Illuminate\Http\Request;
 class CustomerCoursesController extends Controller
 {
 
+    public function index(Customer $customer)
+    {
+        return $customer->courses->map->toArray();
+    }
+
     public function show(Course $course)
     {
         return $course->toArray();
@@ -20,7 +25,6 @@ class CustomerCoursesController extends Controller
         request()->validate([
             'subject_id' => ['required', 'exists:subjects,id'],
             'total_lessons' => ['required', 'integer'],
-            'starts_from' => ['required', 'date'],
             'students' => ['required', 'array'],
             'students.*' => ['array'],
             'students.*.name' => ['required'],
@@ -31,7 +35,6 @@ class CustomerCoursesController extends Controller
             'subject_id',
             'students',
             'total_lessons',
-            'starts_from'
         ]));
 
         return $course;
@@ -42,7 +45,6 @@ class CustomerCoursesController extends Controller
         request()->validate([
             'subject_id' => ['required', 'exists:subjects,id'],
             'total_lessons' => ['required', 'integer'],
-            'starts_from' => ['required', 'date'],
             'students' => ['required', 'array'],
             'students.*' => ['array'],
             'students.*.name' => ['required'],
