@@ -4,6 +4,7 @@
 namespace Tests\Feature\Teaching;
 
 
+use App\Calendar\Day;
 use App\Calendar\TimePeriod;
 use App\Locations\Area;
 use App\Profile;
@@ -50,78 +51,78 @@ class FetchAvailableTeachersForCourseTest extends TestCase
         $noTimes->assignSubjects([$subjectA->id]);
         $noSubject->assignSubjects([$subjectB->id]);
 
-        $availableA->setAvailabilityFor(1, [
+        $availableA->setAvailabilityForDay(new Day(1, [
             new TimePeriod("08:00", "13:00"),
             new TimePeriod("14:00", "17:00"),
-        ]);
-        $availableA->setAvailabilityFor(3, [
+        ]));
+        $availableA->setAvailabilityForDay(new Day(3, [
             new TimePeriod("08:00", "13:00"),
             new TimePeriod("14:00", "17:00"),
-        ]);
-        $availableA->setAvailabilityFor(5, [
+        ]));
+        $availableA->setAvailabilityForDay(new Day(5, [
             new TimePeriod("08:00", "13:00"),
             new TimePeriod("14:00", "17:00"),
-        ]);
+        ]));
 
-        $availableB->setAvailabilityFor(1, [
+        $availableB->setAvailabilityForDay(new Day(1, [
             new TimePeriod("09:30", "12:30"),
             new TimePeriod("15:00", "18:30"),
-        ]);
-        $availableB->setAvailabilityFor(3, [
+        ]));
+        $availableB->setAvailabilityForDay(new Day(3, [
             new TimePeriod("09:30", "12:30"),
             new TimePeriod("15:00", "18:30"),
-        ]);
-        $availableB->setAvailabilityFor(5, [
+        ]));
+        $availableB->setAvailabilityForDay(new Day(5, [
             new TimePeriod("09:30", "12:30"),
             new TimePeriod("15:00", "18:30"),
-        ]);
+        ]));
 
-        $notAllTimes->setAvailabilityFor(1, [
+        $notAllTimes->setAvailabilityForDay(new Day(1, [
             new TimePeriod("09:30", "12:30"),
             new TimePeriod("15:00", "18:30"),
-        ]);
-        $notAllTimes->setAvailabilityFor(3, [
+        ]));
+        $notAllTimes->setAvailabilityForDay(new Day(3, [
             new TimePeriod("09:30", "12:30"),
             new TimePeriod("15:00", "18:30"),
-        ]);
-        $notAllTimes->setAvailabilityFor(5, [
+        ]));
+        $notAllTimes->setAvailabilityForDay(new Day(5, [
             new TimePeriod("09:30", "12:30"),
-        ]);
+        ]));
 
-        $otherLocation->setAvailabilityFor(1, [
+        $otherLocation->setAvailabilityForDay(new Day(1, [
             new TimePeriod("08:00", "13:00"),
             new TimePeriod("14:00", "17:00"),
-        ]);
-        $otherLocation->setAvailabilityFor(3, [
+        ]));
+        $otherLocation->setAvailabilityForDay(new Day(3, [
             new TimePeriod("08:00", "13:00"),
             new TimePeriod("14:00", "17:00"),
-        ]);
-        $otherLocation->setAvailabilityFor(5, [
+        ]));
+        $otherLocation->setAvailabilityForDay(new Day(5, [
             new TimePeriod("08:00", "13:00"),
             new TimePeriod("14:00", "17:00"),
-        ]);
+        ]));
 
-        $noTimes->setAvailabilityFor(2, [
+        $noTimes->setAvailabilityForDay(new Day(2, [
             new TimePeriod("08:00", "13:00"),
             new TimePeriod("14:00", "17:00"),
-        ]);
-        $noTimes->setAvailabilityFor(4, [
+        ]));
+        $noTimes->setAvailabilityForDay(new Day(4, [
             new TimePeriod("08:00", "13:00"),
             new TimePeriod("14:00", "17:00"),
-        ]);
+        ]));
 
-        $noSubject->setAvailabilityFor(1, [
+        $noSubject->setAvailabilityForDay(new Day(1, [
             new TimePeriod("08:00", "13:00"),
             new TimePeriod("14:00", "17:00"),
-        ]);
-        $noSubject->setAvailabilityFor(3, [
+        ]));
+        $noSubject->setAvailabilityForDay(new Day(3, [
             new TimePeriod("08:00", "13:00"),
             new TimePeriod("14:00", "17:00"),
-        ]);
-        $noSubject->setAvailabilityFor(5, [
+        ]));
+        $noSubject->setAvailabilityForDay(new Day(5, [
             new TimePeriod("08:00", "13:00"),
             new TimePeriod("14:00", "17:00"),
-        ]);
+        ]));
 
         $response = $this->asAdmin()->postJson("/admin/api/available-teachers", [
             'subject_id' => $subjectA->id,

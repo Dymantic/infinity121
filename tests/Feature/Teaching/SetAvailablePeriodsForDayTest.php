@@ -4,6 +4,7 @@
 namespace Tests\Feature\Teaching;
 
 
+use App\Calendar\Day;
 use App\Calendar\TimePeriod;
 use App\Profile;
 use App\User;
@@ -58,7 +59,7 @@ class SetAvailablePeriodsForDayTest extends TestCase
         $periodA = new TimePeriod("09:00","12:00");
         $periodB = new TimePeriod("16:00","20:00");
 
-        $teacher->setAvailabilityFor(Carbon::MONDAY, [$periodA, $periodB]);
+        $teacher->setAvailabilityForDay(new Day(Carbon::MONDAY, [$periodA, $periodB]));
 
         $response = $this->actingAs($teacher->user)->postJson("/admin/api/me/available-periods", [
             'day_of_week' => Carbon::MONDAY,

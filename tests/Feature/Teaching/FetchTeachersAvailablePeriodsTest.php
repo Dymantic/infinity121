@@ -4,6 +4,7 @@
 namespace Tests\Feature\Teaching;
 
 
+use App\Calendar\Day;
 use App\Calendar\TimePeriod;
 use App\Profile;
 use App\User;
@@ -25,19 +26,19 @@ class FetchTeachersAvailablePeriodsTest extends TestCase
         $teacher = factory(Profile::class)
             ->create(['user_id' => factory(User::class)->state('teacher-only')]);
 
-        $teacher->setAvailabilityFor(Carbon::MONDAY, [
+        $teacher->setAvailabilityForDay(new Day(Carbon::MONDAY, [
             new TimePeriod("10:00", "12:00"),
             new TimePeriod("14:00", "17:00")
-        ]);
+        ]));
 
-        $teacher->setAvailabilityFor(Carbon::WEDNESDAY, [
+        $teacher->setAvailabilityForDay(new Day(Carbon::WEDNESDAY, [
             new TimePeriod("14:00", "19:30")
-        ]);
+        ]));
 
-        $teacher->setAvailabilityFor(Carbon::FRIDAY, [
+        $teacher->setAvailabilityForDay(new Day(Carbon::FRIDAY, [
             new TimePeriod("09:00", "11:30"),
             new TimePeriod("16:00", "20:00")
-        ]);
+        ]));
 
         $expected = [
             [

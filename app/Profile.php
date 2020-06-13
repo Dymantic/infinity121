@@ -2,6 +2,8 @@
 
 namespace App;
 
+use App\Calendar\Day;
+use App\Calendar\TimePeriod;
 use App\Locations\Area;
 use App\Teaching\AvailablePeriod;
 use App\Teaching\Subject;
@@ -215,16 +217,16 @@ class Profile extends Model implements HasMedia
         return $this->hasMany(AvailablePeriod::class);
     }
 
-    public function setAvailabilityFor($day, array $periods)
+    public function setAvailabilityForDay(Day $day)
     {
-        $this->availablePeriods()->where('day_of_week', $day)->get()->each->delete();
-        collect($periods)->each(
-            fn($period) => $this->availablePeriods()->create([
-                'day_of_week' => $day,
-                'starts'      => $period->startAsInt(),
-                'ends'        => $period->endAsInt(),
-            ])
-        );
+        $this->availablePeriods()->where('day_of_week', $day->week_day)->get()->each->delete();
+
+        $day->periods->each(fn (TimePeriod $p) => $this->availablePeriods()->create([
+            'day_of_week' => $day->week_day,
+            'starts'      => $p->startAsInt(),
+            'ends'        => $p->endAsInt(),
+        ]));
+
     }
 
     public function availablePeriodsSummary()
@@ -234,7 +236,7 @@ class Profile extends Model implements HasMedia
             ->groupBy('day_of_week')
             ->map(fn($daily_periods, $day_of_week) => [
                 'day'     => $day_of_week,
-                'periods' => $daily_periods->map(fn($period) => $period->timePeriod())->all()
+                'periods' => $daily_periods->map(fn($period) => $period->timeStringTuple())->all()
             ]
             )->values()->all();
     }
@@ -244,8 +246,17 @@ class Profile extends Model implements HasMedia
         return $this->hasMany(UnavailablePeriod::class);
     }
 
-    public function clearTimeBlock()
+    public function clearTimeBlock(array $timeBlock)
     {
+        $periods = $this->availablePeriods()->where('day_of_week', $timeBlock['day_of_week'])->get();
+        $day = new Day($timeBlock['day_of_week']);
+        foreach ($periods as $period) {
+            $day = $day->addPeriod($period->timePeriod());
+        }
+
+        $day = $day->clearPeriod(new TimePeriod($timeBlock['starts'], $timeBlock['ends']));
+
+        $this->setAvailabilityForDay($day);
 
     }
 

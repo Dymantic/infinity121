@@ -4,6 +4,7 @@
 namespace Tests\Unit\Teaching;
 
 
+use App\Calendar\Day;
 use App\Calendar\TimePeriod;
 use App\Profile;
 use App\User;
@@ -25,7 +26,9 @@ class PeriodsAvailableTest extends TestCase
         $periodA = new TimePeriod("09:00","12:00");
         $periodB = new TimePeriod("16:00","20:00");
 
-        $teacher->setAvailabilityFor(Carbon::MONDAY, [$periodA, $periodB]);
+        $day = new Day(Carbon::MONDAY, [$periodA, $periodB]);
+
+        $teacher->setAvailabilityForDay($day);
 
         $available_periods = $teacher->fresh()->availablePeriods;
 
@@ -50,11 +53,16 @@ class PeriodsAvailableTest extends TestCase
         $periodB = new TimePeriod("16:00","20:00");
         $periodC = new TimePeriod("14:00","19:00");
 
-        $teacher->setAvailabilityFor(Carbon::MONDAY, [$periodC]);
+        $originalDay = new Day(Carbon::MONDAY, [$periodC]);
+        $newDay = new Day(Carbon::MONDAY, [$periodA, $periodB]);
+
+
+
+        $teacher->setAvailabilityForDay($originalDay);
 
         $this->assertCount(1, $teacher->fresh()->availablePeriods);
 
-        $teacher->setAvailabilityFor(Carbon::MONDAY, [$periodA, $periodB]);
+        $teacher->setAvailabilityForDay($newDay);
 
         $currently_available = $teacher->fresh()->availablePeriods;
         $this->assertCount(2, $currently_available);

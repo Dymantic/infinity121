@@ -21,6 +21,6 @@ class TeacherAvailablePeriodsController extends Controller
     {
         $teacher = $request->teacher();
 
-        $teacher->setAvailabilityFor($request->day(), $request->timePeriods());
+        $teacher->setAvailabilityForDay($request->asDay());
     }
 }

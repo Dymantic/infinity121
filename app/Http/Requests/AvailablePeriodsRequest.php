@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Calendar\Day;
 use App\Calendar\TimePeriod;
 use App\Rules\ValidDayOfWeek;
 use App\Rules\ValidTimePeriod;
@@ -35,10 +36,14 @@ class AvailablePeriodsRequest extends FormRequest
         return $this->day_of_week;
     }
 
-    public function timePeriods()
+    public function asDay()
     {
-        return collect($this->periods)
-            ->map(fn ($times) => new TimePeriod($times[0], $times[1]))
-            ->all();
+        $day = new Day($this->day_of_week);
+
+        foreach($this->periods as $times) {
+            $day->addPeriod(new TimePeriod($times[0], $times[1]));
+        }
+
+        return $day;
     }
 }

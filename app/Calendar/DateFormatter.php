@@ -11,6 +11,8 @@ class DateFormatter
     const STANDARD = 'Y-m-d';
     const PRETTY = 'jS M, Y';
 
+    const WEEKDAYS = ['Sunday', "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", 'Saturday'];
+
     public static function standard($date): string
     {
         if(!$date) {
