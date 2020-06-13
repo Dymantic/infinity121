@@ -2,6 +2,7 @@
 
 namespace App\Teaching;
 
+use App\Calendar\Time;
 use Illuminate\Database\Eloquent\Model;
 
 class AvailablePeriod extends Model
@@ -10,6 +11,9 @@ class AvailablePeriod extends Model
 
     public function timePeriod()
     {
-        return ["starts" => $this->starts, "ends" => $this->ends];
+        return [
+            "starts" => Time::fromInt($this->starts)->timeString,
+            "ends" => Time::fromInt($this->ends)->timeString,
+        ];
     }
 }

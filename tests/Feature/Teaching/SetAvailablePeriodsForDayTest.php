@@ -27,7 +27,7 @@ class SetAvailablePeriodsForDayTest extends TestCase
         $response = $this->actingAs($teacher->user)->postJson("/admin/api/me/available-periods", [
             'day_of_week' => Carbon::MONDAY,
             'periods' => [
-                [900, 1200], [1400, 1900]
+                ["9:00", "12:00"], ["14:00", "19:00"]
             ]
         ]);
         $response->assertSuccessful();
@@ -55,8 +55,8 @@ class SetAvailablePeriodsForDayTest extends TestCase
         $this->withoutExceptionHandling();
 
         $teacher = $this->createTeacher();
-        $periodA = new TimePeriod("0900","1200");
-        $periodB = new TimePeriod("1600","2000");
+        $periodA = new TimePeriod("09:00","12:00");
+        $periodB = new TimePeriod("16:00","20:00");
 
         $teacher->setAvailabilityFor(Carbon::MONDAY, [$periodA, $periodB]);
 
@@ -124,36 +124,25 @@ class SetAvailablePeriodsForDayTest extends TestCase
                 'value' => 'not-a-tuple',
                 'message' => 'valid period is a tuple of strings'
             ],
+
             [
-                'value' => ["1200", "1500"],
-                'message' => 'tuple must contain integers'
+                'value' => ["99", "12:00"],
+                'message' => 'start not valid time string'
             ],
             [
-                'value' => ["1200", 1400],
-                'message' => 'start must be int'
+                'value' => ["14:00", "14562:314"],
+                'message' => 'end not valid time string'
             ],
             [
-                'value' => [1300, "1800"],
-                'message' => 'end must be int'
-            ],
-            [
-                'value' => [99, 1200],
-                'message' => 'start not valid time int'
-            ],
-            [
-                'value' => [1400, 14562314],
-                'message' => 'end not valid time int'
-            ],
-            [
-                'value' => [1400, 1000],
+                'value' => ["14:00", "10:00"],
                 'message' => 'start must be before end'
             ],
             [
-                'value' => [3400, 1000],
+                'value' => ["34:00", "10:00"],
                 'message' => 'start has invalid hours'
             ],
             [
-                'value' => [470, 1000],
+                'value' => ["4:70", "10:00"],
                 'message' => 'start has invalid minutes'
             ],
         ]);
@@ -174,7 +163,7 @@ class SetAvailablePeriodsForDayTest extends TestCase
     {
         $valid = [
             'day_of_week' => Carbon::MONDAY,
-            'periods' => [["0900", "1200"], ["1400", "1900"]],
+            'periods' => [["09:00", "12:00"], ["14:00", "19:00"]],
         ];
 
         $teacher = $this->createTeacher();

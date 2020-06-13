@@ -2,8 +2,6 @@
 
 namespace App;
 
-use App\Calendar\AvailabilityCheck;
-use App\Calendar\TimePeriod;
 use App\Locations\Area;
 use App\Teaching\AvailablePeriod;
 use App\Teaching\Subject;
@@ -223,15 +221,10 @@ class Profile extends Model implements HasMedia
         collect($periods)->each(
             fn($period) => $this->availablePeriods()->create([
                 'day_of_week' => $day,
-                'starts'      => $period->starts(),
-                'ends'        => $period->ends(),
+                'starts'      => $period->startAsInt(),
+                'ends'        => $period->endAsInt(),
             ])
         );
-    }
-
-    public static function availableOn($day)
-    {
-        return new AvailabilityCheck($day);
     }
 
     public function availablePeriodsSummary()

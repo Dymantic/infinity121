@@ -6,22 +6,36 @@ namespace App\Calendar;
 
 class TimePeriod
 {
-    private $start_time;
-    private $end_time;
+    private Time $start;
+    private Time $end;
 
     public function __construct(string $start_time, string $end_time)
     {
-        $this->start_time = $start_time;
-        $this->end_time = $end_time;
+        $this->start = new Time($start_time);
+        $this->end = new Time($end_time);
+
+        if($this->end->isSameOrBefore($this->start)) {
+            throw new \InvalidArgumentException("Period start must be before the end");
+        }
     }
 
-    public function starts()
+    public function startAsInt(): int
     {
-        return intval($this->start_time);
+        return $this->start->intVal();
     }
 
-    public function ends()
+    public function endAsInt(): int
     {
-        return intval($this->end_time);
+        return $this->end->intVal();
+    }
+
+    public function contains(Time $time): bool
+    {
+        return $this->start->isSameOrBefore($time) && $this->end->isSameOrAfter($time);
+    }
+
+    public function overlaps(TimePeriod $period): bool
+    {
+        return !($this->start->isAfter($period->end) || $this->end->isBefore($period->start));
     }
 }

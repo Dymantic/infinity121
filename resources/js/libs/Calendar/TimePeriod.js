@@ -1,9 +1,11 @@
-import { intToTimeString } from "../time_functions";
+import { intToTimeString, stringTimeToInt } from "../time_functions";
 
 class TimePeriod {
     constructor(starts, ends) {
-        this.starts = parseInt(starts);
-        this.ends = parseInt(ends);
+        this.starts = stringTimeToInt(starts);
+        this.ends = stringTimeToInt(ends);
+        this.starts_string = starts;
+        this.ends_string = ends;
     }
 
     isValid() {
@@ -11,13 +13,11 @@ class TimePeriod {
     }
 
     asTimePair() {
-        return [this.starts, this.ends];
+        return [this.starts_string, this.ends_string];
     }
 
     asString() {
-        return `${intToTimeString(this.starts)} - ${intToTimeString(
-            this.ends
-        )}`;
+        return `${this.starts_string} - ${this.ends_string}`;
     }
 }
 

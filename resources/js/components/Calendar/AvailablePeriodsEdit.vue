@@ -80,7 +80,6 @@ export default {
 
     data() {
         return {
-            possible_times: everyHalfHour,
             periods: [],
             ready: false
         };

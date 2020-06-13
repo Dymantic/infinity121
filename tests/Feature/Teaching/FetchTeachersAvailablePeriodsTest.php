@@ -26,38 +26,38 @@ class FetchTeachersAvailablePeriodsTest extends TestCase
             ->create(['user_id' => factory(User::class)->state('teacher-only')]);
 
         $teacher->setAvailabilityFor(Carbon::MONDAY, [
-            new TimePeriod("1000", "1200"),
-            new TimePeriod("1400", "1700")
+            new TimePeriod("10:00", "12:00"),
+            new TimePeriod("14:00", "17:00")
         ]);
 
         $teacher->setAvailabilityFor(Carbon::WEDNESDAY, [
-            new TimePeriod("1400", "1930")
+            new TimePeriod("14:00", "19:30")
         ]);
 
         $teacher->setAvailabilityFor(Carbon::FRIDAY, [
-            new TimePeriod("0900", "1130"),
-            new TimePeriod("1600", "2000")
+            new TimePeriod("09:00", "11:30"),
+            new TimePeriod("16:00", "20:00")
         ]);
 
         $expected = [
             [
                 "day" => 1,
                 "periods" => [
-                    ["starts" => 1000, "ends" => 1200],
-                    ["starts" => 1400, "ends" => 1700],
+                    ["starts" => "10:00", "ends" => "12:00"],
+                    ["starts" => "14:00", "ends" => "17:00"],
                 ],
             ],
             [
                 "day" => 3,
                 "periods" => [
-                    ["starts" => 1400, "ends" => 1930],
+                    ["starts" => "14:00", "ends" => "19:30"],
                 ],
             ],
             [
                 "day" => 5,
                 "periods" => [
-                    ["starts" => 900, "ends" => 1130],
-                    ["starts" => 1600, "ends" => 2000],
+                    ["starts" => "9:00", "ends" => "11:30"],
+                    ["starts" => "16:00", "ends" => "20:00"],
                 ],
             ],
         ];

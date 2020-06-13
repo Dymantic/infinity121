@@ -7,7 +7,7 @@
                     v-for="time in possible_times"
                     :key="time"
                     :value="time"
-                    >{{ timeAsString(time) }}</option
+                    >{{ time }}</option
                 >
             </select>
 
@@ -17,7 +17,7 @@
                     v-for="time in possible_times"
                     :key="time"
                     :value="time"
-                    >{{ timeAsString(time) }}</option
+                    >{{ time }}</option
                 >
             </select>
         </div>

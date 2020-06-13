@@ -22,8 +22,8 @@ class PeriodsAvailableTest extends TestCase
     {
         $teacher = $this->createTeacher();
 
-        $periodA = new TimePeriod("0900","1200");
-        $periodB = new TimePeriod("1600","2000");
+        $periodA = new TimePeriod("09:00","12:00");
+        $periodB = new TimePeriod("16:00","20:00");
 
         $teacher->setAvailabilityFor(Carbon::MONDAY, [$periodA, $periodB]);
 
@@ -46,9 +46,9 @@ class PeriodsAvailableTest extends TestCase
     {
         $teacher = $this->createTeacher();
 
-        $periodA = new TimePeriod("0900","1200");
-        $periodB = new TimePeriod("1600","2000");
-        $periodC = new TimePeriod("1400","1900");
+        $periodA = new TimePeriod("09:00","12:00");
+        $periodB = new TimePeriod("16:00","20:00");
+        $periodC = new TimePeriod("14:00","19:00");
 
         $teacher->setAvailabilityFor(Carbon::MONDAY, [$periodC]);
 
@@ -62,33 +62,7 @@ class PeriodsAvailableTest extends TestCase
         $currently_available->each(fn ($period) => $this->assertNotEquals(1400, $period->starts));
     }
 
-    /**
-     *@test
-     */
-    public function check_for_teachers_available_on_given_day_and_period()
-    {
-        $teacherA = $this->createTeacherWithPeriods(Carbon::MONDAY, [
-            ["0900", "1200"], ["1400", "1500"], ["1600", "2000"]
-        ]);
-        $teacherB = $this->createTeacherWithPeriods(Carbon::MONDAY, [
-            ["1400", "1900"]
-        ]);
-        $teacherC = $this->createTeacherWithPeriods(Carbon::TUESDAY, [
-            ["0900", "1200"], ["1400", "1500"], ["1600", "2000"]
-        ]);
-        $teacherD = $this->createTeacherWithPeriods(Carbon::MONDAY, [
-            ["0900", "1200"], ["1300", "1430"]
-        ]);
 
-        $requested_period = new TimePeriod("1400", "1500");
-
-        $available_teachers = Profile::availableOn(Carbon::MONDAY)->for($requested_period);
-
-        $this->assertCount(2, $available_teachers);
-
-        $available_teachers->each(fn ($teacher) => $this->assertNotEquals($teacher->id, $teacherC->id));
-        $available_teachers->each(fn ($teacher) => $this->assertNotEquals($teacher->id, $teacherD->id));
-    }
 
     private function createTeacher()
     {

@@ -2,6 +2,7 @@
 
 namespace App\Rules;
 
+use App\Calendar\Time;
 use Illuminate\Contracts\Validation\Rule;
 
 class ValidTimePeriod implements Rule
@@ -13,22 +14,14 @@ class ValidTimePeriod implements Rule
             return false;
         }
 
-        $starts = $value[0];
-        $ends = $value[1];
-
-        if(!is_int($starts) || !is_int($ends)) {
+        try {
+            $start = new Time($value[0]);
+            $end = new Time($value[1]);
+        } catch(\Exception $e) {
             return false;
         }
 
-        if(!$this->isValidTimeInt($starts) || !$this->isValidTimeInt($ends)) {
-            return false;
-        }
-
-        if(intval($starts) >= intval($ends)) {
-            return false;
-        }
-
-        return true;
+        return $start->isBefore($end);
     }
 
     /**
@@ -38,26 +31,6 @@ class ValidTimePeriod implements Rule
      */
     public function message()
     {
-        return 'A time period must be represented as a tuple of time strings in the format of "1400"';
-    }
-
-    private function isValidTimeInt($time_int)
-    {
-        if(!is_int($time_int) || $time_int < 100) {
-            return false;
-        }
-
-        $minutes = $time_int % 100;
-        $hours = floor($time_int / 100);
-
-        if($minutes > 59 || $minutes < 0) {
-            return false;
-        }
-
-        if($hours > 23 || $hours < 0) {
-            return false;
-        }
-
-        return true;
+        return 'Times must be presented as hh:mm (eg 12:00), and the start should come before the end';
     }
 }

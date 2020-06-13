@@ -51,76 +51,76 @@ class FetchAvailableTeachersForCourseTest extends TestCase
         $noSubject->assignSubjects([$subjectB->id]);
 
         $availableA->setAvailabilityFor(1, [
-            new TimePeriod("0800", "1300"),
-            new TimePeriod("1400", "1700"),
+            new TimePeriod("08:00", "13:00"),
+            new TimePeriod("14:00", "17:00"),
         ]);
         $availableA->setAvailabilityFor(3, [
-            new TimePeriod("0800", "1300"),
-            new TimePeriod("1400", "1700"),
+            new TimePeriod("08:00", "13:00"),
+            new TimePeriod("14:00", "17:00"),
         ]);
         $availableA->setAvailabilityFor(5, [
-            new TimePeriod("0800", "1300"),
-            new TimePeriod("1400", "1700"),
+            new TimePeriod("08:00", "13:00"),
+            new TimePeriod("14:00", "17:00"),
         ]);
 
         $availableB->setAvailabilityFor(1, [
-            new TimePeriod("0930", "1230"),
-            new TimePeriod("1500", "1830"),
+            new TimePeriod("09:30", "12:30"),
+            new TimePeriod("15:00", "18:30"),
         ]);
         $availableB->setAvailabilityFor(3, [
-            new TimePeriod("0930", "1230"),
-            new TimePeriod("1500", "1830"),
+            new TimePeriod("09:30", "12:30"),
+            new TimePeriod("15:00", "18:30"),
         ]);
         $availableB->setAvailabilityFor(5, [
-            new TimePeriod("0930", "1230"),
-            new TimePeriod("1500", "1830"),
+            new TimePeriod("09:30", "12:30"),
+            new TimePeriod("15:00", "18:30"),
         ]);
 
         $notAllTimes->setAvailabilityFor(1, [
-            new TimePeriod("0930", "1230"),
-            new TimePeriod("1500", "1830"),
+            new TimePeriod("09:30", "12:30"),
+            new TimePeriod("15:00", "18:30"),
         ]);
         $notAllTimes->setAvailabilityFor(3, [
-            new TimePeriod("0930", "1230"),
-            new TimePeriod("1500", "1830"),
+            new TimePeriod("09:30", "12:30"),
+            new TimePeriod("15:00", "18:30"),
         ]);
         $notAllTimes->setAvailabilityFor(5, [
-            new TimePeriod("0930", "1230"),
+            new TimePeriod("09:30", "12:30"),
         ]);
 
         $otherLocation->setAvailabilityFor(1, [
-            new TimePeriod("0800", "1300"),
-            new TimePeriod("1400", "1700"),
+            new TimePeriod("08:00", "13:00"),
+            new TimePeriod("14:00", "17:00"),
         ]);
         $otherLocation->setAvailabilityFor(3, [
-            new TimePeriod("0800", "1300"),
-            new TimePeriod("1400", "1700"),
+            new TimePeriod("08:00", "13:00"),
+            new TimePeriod("14:00", "17:00"),
         ]);
         $otherLocation->setAvailabilityFor(5, [
-            new TimePeriod("0800", "1300"),
-            new TimePeriod("1400", "1700"),
+            new TimePeriod("08:00", "13:00"),
+            new TimePeriod("14:00", "17:00"),
         ]);
 
         $noTimes->setAvailabilityFor(2, [
-            new TimePeriod("0800", "1300"),
-            new TimePeriod("1400", "1700"),
+            new TimePeriod("08:00", "13:00"),
+            new TimePeriod("14:00", "17:00"),
         ]);
         $noTimes->setAvailabilityFor(4, [
-            new TimePeriod("0800", "1300"),
-            new TimePeriod("1400", "1700"),
+            new TimePeriod("08:00", "13:00"),
+            new TimePeriod("14:00", "17:00"),
         ]);
 
         $noSubject->setAvailabilityFor(1, [
-            new TimePeriod("0800", "1300"),
-            new TimePeriod("1400", "1700"),
+            new TimePeriod("08:00", "13:00"),
+            new TimePeriod("14:00", "17:00"),
         ]);
         $noSubject->setAvailabilityFor(3, [
-            new TimePeriod("0800", "1300"),
-            new TimePeriod("1400", "1700"),
+            new TimePeriod("08:00", "13:00"),
+            new TimePeriod("14:00", "17:00"),
         ]);
         $noSubject->setAvailabilityFor(5, [
-            new TimePeriod("0800", "1300"),
-            new TimePeriod("1400", "1700"),
+            new TimePeriod("08:00", "13:00"),
+            new TimePeriod("14:00", "17:00"),
         ]);
 
         $response = $this->asAdmin()->postJson("/admin/api/available-teachers", [
