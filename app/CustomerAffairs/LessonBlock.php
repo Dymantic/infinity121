@@ -36,6 +36,14 @@ class LessonBlock extends Model
             ->setMinutes($time->minutes());
     }
 
+    public function toTimeTuple()
+    {
+        return [
+            'starts' => $this->starts,
+            'ends' => $this->ends,
+        ];
+    }
+
     private function dayName(int $day): string
     {
         $days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];

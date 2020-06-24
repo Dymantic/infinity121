@@ -41,8 +41,9 @@ class AvailablePeriodsRequest extends FormRequest
         $day = new Day($this->day_of_week);
 
         foreach($this->periods as $times) {
-            $day->addPeriod(new TimePeriod($times[0], $times[1]));
+            $day = $day->addPeriod(new TimePeriod($times[0], $times[1]));
         }
+
 
         return $day;
     }

@@ -56,4 +56,32 @@ class CustomerCoursesTest extends TestCase
         $this->assertTrue($course->starts_from->isSameDay(Carbon::tomorrow()));
         $this->assertTrue($course->confirmed_on->isSameDay(Carbon::today()));
     }
+
+    /**
+     *@test
+     */
+    public function can_be_scoped_to_confirmed()
+    {
+        $confirmed = factory(Course::class)->state('confirmed')->create();
+        $unconfirmed = factory(Course::class)->state('unconfirmed')->create();
+
+        $scoped = Course::confirmed()->get();
+
+        $this->assertCount(1, $scoped);
+        $this->assertTrue($scoped->first()->is($confirmed));
+    }
+
+    /**
+     *@test
+     */
+    public function can_be_scoped_to_unconfirmed()
+    {
+        $confirmed = factory(Course::class)->state('confirmed')->create();
+        $unconfirmed = factory(Course::class)->state('unconfirmed')->create();
+
+        $scoped = Course::unconfirmed()->get();
+
+        $this->assertCount(1, $scoped);
+        $this->assertTrue($scoped->first()->is($unconfirmed));
+    }
 }

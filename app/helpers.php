@@ -23,3 +23,16 @@ function transUrl($url) {
 
     return '/en/' . ltrim($url, '/');
 }
+
+function translatedUrl($url, $locale) {
+    $url = Str::start($url, '/');
+
+    if($url === '/en' || $url === '/zh' || $url === '/jp') {
+        $url = $url . '/';
+    }
+    if(Str::startsWith($url, ['/en/', '/zh/', '/jp/'])) {
+        $url = mb_substr($url, 4);
+    }
+
+    return sprintf("/%s/%s", $locale, $url);
+}

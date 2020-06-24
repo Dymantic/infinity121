@@ -63,10 +63,10 @@ Route::group(['namespace' => 'Auth'], function() {
 Route::group(['prefix' => 'admin/api', 'middleware' => ['auth'], 'namespace' => 'Admin'], function() {
 
     Route::get('users', 'UsersController@index')->middleware('admin');
-    Route::delete('users/{user}', 'UsersController@destroy');
+    Route::delete('users/{user}', 'UsersController@destroy')->middleware('admin');
 
-    Route::post('admin-email-subscriptions', 'AdminEmailSubscriptionsController@store');
-    Route::delete('admin-email-subscriptions/{user}', 'AdminEmailSubscriptionsController@destroy');
+    Route::post('admin-email-subscriptions', 'AdminEmailSubscriptionsController@store')->middleware('admin');
+    Route::delete('admin-email-subscriptions/{user}', 'AdminEmailSubscriptionsController@destroy')->middleware('admin');
 
     Route::get('me', 'UsersController@show');
     Route::post('me', 'UsersController@update');
@@ -79,6 +79,8 @@ Route::group(['prefix' => 'admin/api', 'middleware' => ['auth'], 'namespace' => 
     Route::post('profiles/{profile}', 'ProfilesController@update');
     Route::post('me/profile/image', 'ProfileImageController@update');
 
+    Route::get('me/current-schedule', 'MyCurrentScheduleController@show');
+
     Route::get('me/available-periods', 'TeacherAvailablePeriodsController@show');
     Route::post('me/available-periods', 'TeacherAvailablePeriodsController@store');
 
@@ -89,6 +91,9 @@ Route::group(['prefix' => 'admin/api', 'middleware' => ['auth'], 'namespace' => 
 
     Route::post('me/working-areas', 'TeacherWorkingAreasController@store');
 
+    Route::get('me/due-lessons', 'MyDueLessonsController@index');
+    Route::get('me/completed-lessons', 'MyCompletedLessonsController@index');
+
     Route::get('profiles', 'TeacherProfilesController@index');
 
     Route::post('profiles-order', 'ProfilesOrderController@store')->middleware('admin');
@@ -96,18 +101,18 @@ Route::group(['prefix' => 'admin/api', 'middleware' => ['auth'], 'namespace' => 
     Route::post('published-profiles', 'PublishedProfilesController@store')->middleware('admin');
     Route::delete('published-profiles/{profile}', 'PublishedProfilesController@destroy')->middleware('admin');
 
-    Route::post('profiles/{profile}/subjects', 'ProfileSubjectsController@update');
+    Route::post('profiles/{profile}/subjects', 'ProfileSubjectsController@update')->middleware('admin');
 
     Route::get('subjects', 'SubjectsController@index')->middleware('admin');
     Route::post('subjects', 'SubjectsController@store')->middleware('admin');
     Route::post('subjects/{subject}', 'SubjectsController@update')->middleware('admin');
     Route::delete('subjects/{subject}', 'SubjectsController@delete')->middleware('admin');
-    Route::post('subjects/{subject}/image', 'SubjectTitleImageController@store');
+    Route::post('subjects/{subject}/image', 'SubjectTitleImageController@store')->middleware('admin');
 
-    Route::post('public-subjects', 'PublicSubjectsController@store');
-    Route::delete('public-subjects/{subject}', 'PublicSubjectsController@destroy');
+    Route::post('public-subjects', 'PublicSubjectsController@store')->middleware('admin');
+    Route::delete('public-subjects/{subject}', 'PublicSubjectsController@destroy')->middleware('admin');
 
-    Route::post('subjects-order', 'SubjectsOrderController@store');
+    Route::post('subjects-order', 'SubjectsOrderController@store')->middleware('admin');
 
     Route::get('nationalities', 'NationalitiesController@index');
 
@@ -117,44 +122,50 @@ Route::group(['prefix' => 'admin/api', 'middleware' => ['auth'], 'namespace' => 
     Route::post('affiliates/{affiliate}', 'AffiliatesController@update')->middleware('admin');
     Route::delete('affiliates/{affiliate}', 'AffiliatesController@delete')->middleware('admin');
 
-    Route::post('affiliates/{affiliate}/image', 'AffiliateImagesController@store');
+    Route::post('affiliates/{affiliate}/image', 'AffiliateImagesController@store')->middleware('admin');
 
-    Route::post('published-affiliates', 'PublishedAffiliatesController@store');
-    Route::delete('published-affiliates/{affiliate}', 'PublishedAffiliatesController@destroy');
+    Route::post('published-affiliates', 'PublishedAffiliatesController@store')->middleware('admin');
+    Route::delete('published-affiliates/{affiliate}', 'PublishedAffiliatesController@destroy')->middleware('admin');
 
     Route::get('countries', 'CountriesController@index');
-    Route::post('countries', 'CountriesController@store');
-    Route::post('countries/{country}', 'CountriesController@update');
-    Route::delete('countries/{country}', 'CountriesController@delete');
+    Route::post('countries', 'CountriesController@store')->middleware('admin');
+    Route::post('countries/{country}', 'CountriesController@update')->middleware('admin');
+    Route::delete('countries/{country}', 'CountriesController@delete')->middleware('admin');
 
-    Route::post('countries/{country}/regions', 'RegionsController@store');
-    Route::post('regions/{region}', 'RegionsController@update');
-    Route::delete('regions/{region}', 'RegionsController@delete');
+    Route::post('countries/{country}/regions', 'RegionsController@store')->middleware('admin');
+    Route::post('regions/{region}', 'RegionsController@update')->middleware('admin');
+    Route::delete('regions/{region}', 'RegionsController@delete')->middleware('admin');
 
-    Route::post('regions/{region}/areas', 'AreasController@store');
-    Route::post('areas/{area}', 'AreasController@update');
-    Route::delete('areas/{area}', 'AreasController@delete');
+    Route::post('regions/{region}/areas', 'AreasController@store')->middleware('admin');
+    Route::post('areas/{area}', 'AreasController@update')->middleware('admin');
+    Route::delete('areas/{area}', 'AreasController@delete')->middleware('admin');
 
 
     Route::get('customers', 'CustomersController@index');
-    Route::post('customers', 'CustomersController@store');
+    Route::post('customers', 'CustomersController@store')->middleware('admin');
     Route::get('customers/{customer}', 'CustomersController@show');
-    Route::post('customers/{customer}', 'CustomersController@update');
-    Route::delete('customers/{customer}', 'CustomersController@delete');
+    Route::post('customers/{customer}', 'CustomersController@update')->middleware('admin');
+    Route::delete('customers/{customer}', 'CustomersController@delete')->middleware('admin');
     Route::get('customers/{customer}/courses', 'CustomerCoursesController@index');
-    Route::post('customers/{customer}/courses', 'CustomerCoursesController@store');
+    Route::post('customers/{customer}/courses', 'CustomerCoursesController@store')->middleware('admin');
 
+    Route::get('active-courses', 'ActiveCoursesController@index');
     Route::get('courses/{course}', 'CustomerCoursesController@show');
-    Route::post('courses/{course}', 'CustomerCoursesController@update');
-    Route::post('courses/{course}/lesson-blocks', 'CourseLessonBlocksController@store');
+    Route::post('courses/{course}', 'CustomerCoursesController@update')->middleware('admin');
+    Route::post('courses/{course}/lesson-blocks', 'CourseLessonBlocksController@store')->middleware('admin');
 
-    Route::post('confirmed-courses', 'ConfirmedCoursesController@store');
+    Route::post('confirmed-courses', 'ConfirmedCoursesController@store')->middleware('admin');
 
-    Route::post('courses/{course}/location', 'CourseLocationController@store');
-    Route::post('courses/{course}/teacher', 'CourseTeacherController@store');
-    Route::delete('courses/{course}/teacher', 'CourseTeacherController@destroy');
+    Route::post('courses/{course}/location', 'CourseLocationController@store')->middleware('admin');
+    Route::post('courses/{course}/teacher', 'CourseTeacherController@store')->middleware('admin');
+    Route::delete('courses/{course}/teacher', 'CourseTeacherController@destroy')->middleware('admin');
 
-    Route::post('available-teachers', 'AvailableTeachersController@show');
+    Route::post('available-teachers', 'AvailableTeachersController@show')->middleware('admin');
+
+    Route::get('logged-lessons', 'LoggedLessonsController@index')->middleware('admin');
+    Route::get('due-logging-lessons', 'DueLoggingLessonsController@index')->middleware('admin');
+
+    Route::post('lessons/{lesson}/log', 'LessonsLogController@store');
 });
 
 Route::get('admin/dashboard', 'Admin\Pages\DashboardController')->middleware('auth');

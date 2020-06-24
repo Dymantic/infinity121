@@ -13,13 +13,16 @@
                 prepared to begin lessons, you may confirm and get the ball
                 rolling.
             </p>
+            <p class="my-6 text-sm" v-if="course.status === 'complete'">
+                This course has has all its lessons logged and is now complete.
+            </p>
             <p class="my-6 text-sm" v-if="course.status === 'confirmed'">
                 This course has been confirmed and lessons should begin after
                 <span class="font-bold">{{ course.starts_from_pretty }}</span>
             </p>
             <p class="my-6 text-sm" v-if="course.status === 'ongoing'">
                 This course is currently underway, and so far
-                <span class="font-bold">{{ course.lessons.length }}</span> of
+                <span class="font-bold">{{ completed_lessons_count }}</span> of
                 <strong>{{ course.total_lessons }}</strong> lessons have been
                 completed.
             </p>
@@ -34,6 +37,12 @@ export default {
 
     components: {
         CourseStatusBadge
+    },
+
+    computed: {
+        completed_lessons_count() {
+            return this.course.lessons.filter(l => l.complete).length;
+        }
     }
 };
 </script>

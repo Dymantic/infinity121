@@ -41,26 +41,27 @@ class FetchTeachersAvailablePeriodsTest extends TestCase
         ]));
 
         $expected = [
-            [
-                "day" => 1,
+            Carbon::MONDAY => [
                 "periods" => [
                     ["starts" => "10:00", "ends" => "12:00"],
                     ["starts" => "14:00", "ends" => "17:00"],
                 ],
             ],
-            [
-                "day" => 3,
+            Carbon::TUESDAY => ['periods' => []],
+            Carbon::WEDNESDAY => [
                 "periods" => [
                     ["starts" => "14:00", "ends" => "19:30"],
                 ],
             ],
-            [
-                "day" => 5,
+            Carbon::THURSDAY => ['periods' => []],
+            Carbon::FRIDAY => [
                 "periods" => [
                     ["starts" => "9:00", "ends" => "11:30"],
                     ["starts" => "16:00", "ends" => "20:00"],
                 ],
             ],
+            Carbon::SATURDAY => ['periods' => []],
+            Carbon::SUNDAY => ['periods' => []],
         ];
 
         $response = $this->actingAs($teacher->user)->getJson("/admin/api/me/available-periods");

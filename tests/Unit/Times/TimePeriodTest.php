@@ -136,6 +136,16 @@ class TimePeriodTest extends TestCase
         $cases = collect([
             [
                 'periodA'  => new TimePeriod("10:00", "12:00"),
+                'periodB'  => new TimePeriod("10:00", "11:00"),
+                'expected' => new Exclusion(null, new TimePeriod("11:00", "12:00")),
+            ],
+            [
+                'periodA'  => new TimePeriod("8:00", "14:00"),
+                'periodB'  => new TimePeriod("13:00", "14:00"),
+                'expected' => new Exclusion(new TimePeriod("8:00", "13:00"), null),
+            ],
+            [
+                'periodA'  => new TimePeriod("10:00", "12:00"),
                 'periodB'  => new TimePeriod("9:00", "11:00"),
                 'expected' => new Exclusion(null, new TimePeriod("11:00", "12:00")),
             ],

@@ -28,7 +28,7 @@ class SetAvailablePeriodsForDayTest extends TestCase
         $response = $this->actingAs($teacher->user)->postJson("/admin/api/me/available-periods", [
             'day_of_week' => Carbon::MONDAY,
             'periods' => [
-                ["9:00", "12:00"], ["14:00", "19:00"]
+                ["8:00", "12:00"], ["12:00", "14:00"]
             ]
         ]);
         $response->assertSuccessful();
@@ -36,16 +36,16 @@ class SetAvailablePeriodsForDayTest extends TestCase
         $this->assertDatabaseHas('available_periods', [
             'profile_id' => $teacher->id,
             'day_of_week' => Carbon::MONDAY,
-            'starts' => 900,
-            'ends' => 1200,
+            'starts' => 800,
+            'ends' => 1400,
         ]);
 
-        $this->assertDatabaseHas('available_periods', [
-            'profile_id' => $teacher->id,
-            'day_of_week' => Carbon::MONDAY,
-            'starts' => 1400,
-            'ends' => 1900,
-        ]);
+//        $this->assertDatabaseHas('available_periods', [
+//            'profile_id' => $teacher->id,
+//            'day_of_week' => Carbon::MONDAY,
+//            'starts' => 1400,
+//            'ends' => 1900,
+//        ]);
     }
 
     /**

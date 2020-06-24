@@ -9,6 +9,8 @@ import UnavailablePeriods from "../components/Calendar/UnavailablePeriods";
 import CreateUnavailablePeriod from "../components/Calendar/CreateUnavailablePeriod";
 import EditUnavailablePeriod from "../components/Calendar/EditUnavailablePeriod";
 import TeacherLocationsForm from "../components/Locations/TeacherLocationsForm";
+import MySchedule from "../components/Calendar/MySchedule";
+import MyLessons from "../components/Lessons/MyLessons";
 
 export default [
     {
@@ -39,5 +41,7 @@ export default [
     {
         path: "/me/working-areas/edit",
         component: TeacherLocationsForm
-    }
+    },
+    { path: "/me/my-schedule", component: MySchedule },
+    { path: "/me/my-lessons", component: MyLessons }
 ];

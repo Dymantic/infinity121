@@ -14,6 +14,7 @@ import teachers from "./stores/teachers";
 import affiliates from "./stores/affiliates";
 import locations from "./stores/locations";
 import customers from "./stores/customers";
+import courses from "./stores/courses";
 
 const store = new Vuex.Store({
     modules: {
@@ -23,7 +24,8 @@ const store = new Vuex.Store({
         teachers,
         affiliates,
         locations,
-        customers
+        customers,
+        courses
     }
 });
 

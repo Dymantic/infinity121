@@ -162,9 +162,9 @@ class Subject extends Model implements HasMedia
         $lang = app()->getLocale();
 
         return array_merge($this->toArray(), [
-            'title'       => $this->title[$lang] ?? '',
-            'description' => $this->description[$lang] ?? '',
-            'writeup'     => $this->writeup[$lang] ?? '',
+            'title'       => $this->getTranslation('title', app()->getLocale(), 'en'),
+            'description' => $this->getTranslation('description', app()->getLocale(), 'en'),
+            'writeup'     => $this->getTranslation('writeup', app()->getLocale(), 'en'),
         ]);
     }
 }

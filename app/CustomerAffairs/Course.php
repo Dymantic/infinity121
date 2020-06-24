@@ -14,6 +14,7 @@ class Course extends Model
     const STATUS_UNCONFIRMED = 'unconfirmed';
     const STATUS_CONFIRMED = 'confirmed';
     const STATUS_ONGOING = 'ongoing';
+    const STATUS_COMPLETE = 'complete';
 
     protected $fillable = [
         'total_lessons',
@@ -28,7 +29,23 @@ class Course extends Model
 
     protected $casts = ['students' => 'array'];
 
-    protected $dates = ['starts_from', 'confirmed_on'];
+    protected $dates = ['starts_from', 'confirmed_on', 'completed_on'];
+
+    public function scopeConfirmed($query)
+    {
+        $query->whereNotNull('confirmed_on');
+    }
+
+    public function scopeUnconfirmed($query)
+    {
+        $query->whereNull('confirmed_on');
+    }
+
+    public function scopeActive($query)
+    {
+        $query->confirmed()
+            ->whereNull('completed_on');
+    }
 
     public function customer()
     {
@@ -47,10 +64,21 @@ class Course extends Model
 
     public function setLessonBlocks(array $blocks)
     {
+        $teacher = $this->teacher;
+        if ($teacher) {
+            $this->clearTeacher();
+        }
+
         $this->lessonBlocks()->delete();
 
-        return collect($blocks)
+        $blocks = collect($blocks)
             ->map(fn($block) => $this->createBlock($block));
+
+        if ($teacher) {
+            $this->assignTeacher($teacher->id);
+        }
+
+        return $blocks;
     }
 
     private function createBlock(array $block)
@@ -75,14 +103,31 @@ class Course extends Model
 
     public function clearTeacher()
     {
+        $teacher = $this->teacher;
+
         $this->profile_id = null;
         $this->save();
+
+        if ($teacher) {
+            $this->lessonBlocks->each(function ($lessonBlock) {
+                $this->teacher->allocateTimeBlock($lessonBlock->toArray());
+            });
+        }
     }
 
     public function assignTeacher(int $profile_id)
     {
+        $this->clearTeacher();
+
         $this->profile_id = $profile_id;
         $this->save();
+        $this->refresh();
+
+
+        $this->lessonBlocks->each(function ($lessonBlock) {
+            $this->teacher->clearTimeBlock($lessonBlock->toArray());
+        });
+
     }
 
     public function toArray()
@@ -90,6 +135,7 @@ class Course extends Model
         return [
             'id'                   => $this->id,
             'status'               => $this->status(),
+            'is_complete'             => $this->isComplete(),
             'customer_id'          => $this->customer_id,
             'customer'             => $this->customer ? $this->customer->toArray() : null,
             'students'             => $this->students,
@@ -112,7 +158,8 @@ class Course extends Model
             'teacher_name'         => $this->profile_id ? $this->teacher->name : '',
             'teacher_bio'          => $this->teacher ? $this->teacher->bio : ['en' => '', 'zh' => '', 'jp' => ''],
             'teacher_avatar_thumb' => $this->teacher ? $this->teacher->getFirstMediaUrl(Profile::AVATAR, 'thumb') : '',
-            'lessons' => []
+            'lessons'              => $this->lessons->map->toArray()->all(),
+            'next_due_lesson'      => $this->nextLesson() ? $this->nextLesson()->toArray() : null,
         ];
     }
 
@@ -121,6 +168,7 @@ class Course extends Model
         $this->starts_from = $starts_from;
         $this->confirmed_on = Carbon::today();
         $this->save();
+
 
     }
 
@@ -131,7 +179,7 @@ class Course extends Model
 
     public function setNextLesson()
     {
-        if(!$this->starts_from) {
+        if (!$this->starts_from) {
             return;
         }
 
@@ -139,15 +187,29 @@ class Course extends Model
 
         $nextLessonBlock = $this
             ->lessonBlocks
-            ->sort(fn ($a, $b) => $a->asNextDate($after)->unix() - $b->asNextDate($after)->unix())
-        ->first();
-//        dd($nextLessonBlock->asNextDate($after)->weekDay());
+            ->sort(fn($a, $b) => $a->asNextDate($after)->unix() - $b->asNextDate($after)->unix())
+            ->first();
 
         return $this->lessons()->create([
             'lesson_date' => $nextLessonBlock->asNextDate($after),
-            'starts' => $nextLessonBlock->starts,
-            'ends' => $nextLessonBlock->starts,
+            'starts'      => $nextLessonBlock->starts,
+            'ends'        => $nextLessonBlock->ends,
         ]);
+    }
+
+    public function onLessonLogged()
+    {
+        $count = $this->fresh()->lessons->count();
+        if ($count >= $this->total_lessons) {
+            return $this->complete();
+        }
+
+        $this->setNextLesson();
+    }
+
+    public function nextLesson(): ?Lesson
+    {
+        return $this->lessons()->due()->orderBy('lesson_date')->first();
     }
 
     public function isConfirmed()
@@ -157,14 +219,29 @@ class Course extends Model
 
     public function status(): string
     {
+        if ($this->isComplete()) {
+            return static::STATUS_COMPLETE;
+        }
+
         if (!$this->isConfirmed()) {
             return static::STATUS_UNCONFIRMED;
         }
 
-        if($this->starts_from && $this->starts_from->isPast()) {
+        if ($this->starts_from && $this->starts_from->isPast()) {
             return static::STATUS_ONGOING;
         }
 
         return static::STATUS_CONFIRMED;
+    }
+
+    public function complete()
+    {
+        $this->completed_on = Carbon::today();
+        $this->save();
+    }
+
+    public function isComplete()
+    {
+        return !($this->completed_on === null);
     }
 }

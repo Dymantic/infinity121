@@ -6,6 +6,7 @@ namespace Tests\Unit\Times;
 
 use App\Calendar\Day;
 use App\Calendar\TimePeriod;
+use Carbon\Carbon;
 use Tests\TestCase;
 
 class DayTimesTest extends TestCase
@@ -202,6 +203,20 @@ class DayTimesTest extends TestCase
         $this->assertCount(2, $day->periods);
         $this->assertTrue($day->periods->contains($expectedA));
         $this->assertTrue($day->periods->contains($expectedB));
+    }
+
+    /**
+     *@test
+     */
+    public function clear_10_to_12_time_block()
+    {
+        $day = new Day(Carbon::WEDNESDAY, [
+            new TimePeriod("10:00", "12:00")
+        ]);
+        $day = $day->clearPeriod(new TimePeriod("10:00", "11:00"));
+//        dd($day);
+
+        $this->assertTrue($day->periods->contains(new TimePeriod("11:00", "12:00")));
     }
 
     /**

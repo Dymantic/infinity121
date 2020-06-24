@@ -6,7 +6,9 @@ namespace Tests\Unit\Teaching;
 
 use App\Calendar\Day;
 use App\Calendar\TimePeriod;
+use App\CustomerAffairs\Course;
 use App\Profile;
+use App\Teaching\AvailablePeriod;
 use App\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Carbon;
@@ -68,6 +70,47 @@ class PeriodsAvailableTest extends TestCase
         $this->assertCount(2, $currently_available);
 
         $currently_available->each(fn ($period) => $this->assertNotEquals(1400, $period->starts));
+    }
+
+    /**
+     *@test
+     */
+    public function setting_periods_available_will_respect_assigned_times()
+    {
+        $teacher = $this->createTeacher();
+        $teacher->setAvailabilityForDay(new Day(Carbon::WEDNESDAY, [
+            new TimePeriod("8:00", "10:00")
+        ]));
+
+        $course = factory(Course::class)->create();
+        $course->setLessonBlocks([
+            [
+                'day_of_week' => Carbon::WEDNESDAY,
+                'starts' => "10:00",
+                'ends' => '12:00',
+            ]
+        ]);
+
+        $course->assignTeacher($teacher->id);
+
+
+        $teacher->fresh()->setAvailabilityForDay(new Day(Carbon::WEDNESDAY, [
+            new TimePeriod("8:00", "10:00"),
+            new TimePeriod("10:00", "14:00"),
+        ]));
+
+
+        $teacher = $teacher->fresh();
+
+        $this->assertCount(2, $teacher->fresh()->availablePeriods);
+        $this->assertTrue($teacher->availablePeriods->contains(
+            fn (AvailablePeriod $p) => $p->day_of_week === Carbon::WEDNESDAY &&
+                $p->starts === 800 && $p->ends === 1000
+        ));
+        $this->assertTrue($teacher->availablePeriods->contains(
+            fn (AvailablePeriod $p) => $p->day_of_week === Carbon::WEDNESDAY &&
+                $p->starts === 1200 && $p->ends === 1400
+        ));
     }
 
 

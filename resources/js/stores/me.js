@@ -3,6 +3,11 @@ import { notify } from "../components/Messaging/notify";
 import { azByPropetryName } from "../libs/sorting";
 import { Day } from "../libs/Calendar/Day";
 import { TimePeriod } from "../libs/Calendar/TimePeriod";
+import {
+    fetchMyCompletedLessons,
+    fetchMyDueLessons,
+    logLesson
+} from "../api/lessons";
 
 export default {
     namespaced: true,
@@ -36,8 +41,47 @@ export default {
             { code: "de", name: "German" }
         ],
         nationalities: {},
-        available_periods: [],
-        unavailable_periods: []
+        available_periods: {
+            0: { periods: [] },
+            1: { periods: [] },
+            2: { periods: [] },
+            3: { periods: [] },
+            4: { periods: [] },
+            5: { periods: [] },
+            6: { periods: [] }
+        },
+        schedule: {
+            available: {
+                0: { periods: [] },
+                1: { periods: [] },
+                2: { periods: [] },
+                3: { periods: [] },
+                4: { periods: [] },
+                5: { periods: [] },
+                6: { periods: [] }
+            },
+            confirmed: {
+                0: { periods: [] },
+                1: { periods: [] },
+                2: { periods: [] },
+                3: { periods: [] },
+                4: { periods: [] },
+                5: { periods: [] },
+                6: { periods: [] }
+            },
+            unconfirmed: {
+                0: { periods: [] },
+                1: { periods: [] },
+                2: { periods: [] },
+                3: { periods: [] },
+                4: { periods: [] },
+                5: { periods: [] },
+                6: { periods: [] }
+            }
+        },
+        unavailable_periods: [],
+        due_lessons: [],
+        completed_lessons: []
     },
 
     getters: {
@@ -60,39 +104,51 @@ export default {
                 .sort(azByPropetryName("name"));
         },
 
-        availableHoursSummary: state => {
-            return [0, 1, 2, 3, 4, 5, 6].map(day_int => {
-                const day = state.available_periods.find(
-                    day => parseInt(day.day) === day_int
+        currentScheduleSummary: state => {
+            return [0, 1, 2, 3, 4, 5, 6].map(day => {
+                return new Day(
+                    day,
+                    state.schedule.available[day].periods.map(
+                        p => new TimePeriod(p.starts, p.ends)
+                    ),
+                    state.schedule.confirmed[day].periods.map(
+                        p => new TimePeriod(p.starts, p.ends)
+                    ),
+                    state.schedule.unconfirmed[day].periods.map(
+                        p => new TimePeriod(p.starts, p.ends)
+                    )
                 );
-                if (day) {
-                    return new Day(
-                        day_int,
-                        day.periods.map(
-                            period => new TimePeriod(period.starts, period.ends)
-                        )
-                    );
-                }
-                return new Day(day_int, []);
+            });
+        },
+
+        availableHoursSummary: state => {
+            return Object.keys(state.available_periods).map(day => {
+                return new Day(
+                    day,
+                    state.available_periods[day].periods.map(
+                        p => new TimePeriod(p.starts, p.ends)
+                    )
+                );
             });
         },
 
         availablePeriodsForDay: state => day_of_week => {
-            const day = state.available_periods.find(
-                d => parseInt(d.day) === parseInt(day_of_week)
+            return state.available_periods[day_of_week].periods.map(
+                p => new TimePeriod(p.starts, p.ends)
             );
-
-            if (!day) {
-                return [];
-            }
-
-            return day.periods.map(p => new TimePeriod(p.starts, p.ends));
         },
 
         unavailablePeriodById: state => id =>
             state.unavailable_periods.find(p => p.id === parseInt(id)),
 
-        myWorkingAreas: state => state.profile.working_areas
+        myWorkingAreas: state => state.profile.working_areas,
+
+        lessonById: state => id => {
+            return state.due_lessons.find(l => l.id === parseInt(id));
+        },
+
+        loggedLessonById: state => id =>
+            state.completed_lessons.find(l => l.id === parseInt(id))
     },
 
     mutations: {
@@ -117,6 +173,18 @@ export default {
 
         setUnavailablePeriods(state, periods) {
             state.unavailable_periods = periods;
+        },
+
+        setCurrentSchedule(state, schedule) {
+            state.schedule = schedule;
+        },
+
+        setDueLessons(state, lessons) {
+            state.due_lessons = lessons;
+        },
+
+        setCompletedLessons(state, lessons) {
+            state.completed_lessons = lessons;
         }
     },
 
@@ -318,6 +386,38 @@ export default {
                         reject({ message: "Unable to save working locations." })
                     );
             });
+        },
+
+        fetchSchedule({ commit }) {
+            return new Promise((resolve, reject) => {
+                axios
+                    .get("/admin/api/me/current-schedule")
+                    .then(({ data }) => {
+                        commit("setCurrentSchedule", data);
+                        resolve();
+                    })
+                    .catch(() =>
+                        reject({ message: "Unable to fetch schedule" })
+                    );
+            });
+        },
+
+        fetchDueLessons({ commit }) {
+            return fetchMyDueLessons().then(lessons =>
+                commit("setDueLessons", lessons)
+            );
+        },
+
+        fetchCompletedLessons({ commit }) {
+            return fetchMyCompletedLessons().then(lessons =>
+                commit("setCompletedLessons", lessons)
+            );
+        },
+
+        logTeachersLesson({ dispatch }, { lesson_id, formData }) {
+            return logLesson(lesson_id, formData).then(() =>
+                dispatch("fetchDueLessons").catch(notify.error)
+            );
         }
     }
 };

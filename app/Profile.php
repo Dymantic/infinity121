@@ -4,6 +4,7 @@ namespace App;
 
 use App\Calendar\Day;
 use App\Calendar\TimePeriod;
+use App\CustomerAffairs\Course;
 use App\Locations\Area;
 use App\Teaching\AvailablePeriod;
 use App\Teaching\Subject;
@@ -65,18 +66,18 @@ class Profile extends Model implements HasMedia
 
     public function scopeTeachingIn($query, $area_id)
     {
-        return $query->whereHas('workingAreas', fn ($q) => $q->where("areas.id", $area_id));
+        return $query->whereHas('workingAreas', fn($q) => $q->where("areas.id", $area_id));
     }
 
     public function scopeCanTeach($query, $subject_id)
     {
-        return $query->whereHas('subjects', fn ($q) => $q->where('subjects.id', $subject_id));
+        return $query->whereHas('subjects', fn($q) => $q->where('subjects.id', $subject_id));
     }
 
     public function scopeAvailableFor($query, $lessons)
     {
-        foreach($lessons as $lesson) {
-            $query->whereHas('availablePeriods', function($q) use ($lesson) {
+        foreach ($lessons as $lesson) {
+            $query->whereHas('availablePeriods', function ($q) use ($lesson) {
                 $q->where([
                     ['day_of_week', $lesson['day_of_week']],
                     ['starts', '<=', intval($lesson['starts'])],
@@ -143,9 +144,19 @@ class Profile extends Model implements HasMedia
         $this->subjects()->sync($subject_ids);
     }
 
-    public function toArray()
+    public function getAvatar()
     {
         $avatar = $this->getFirstMedia(static::AVATAR);
+
+        return [
+            'original' => $avatar ?  $avatar->getUrl() : self::DEFAULT_AVATAR,
+            'thumb' => $avatar ?  $avatar->getUrl('thumb') : self::DEFAULT_AVATAR,
+        ];
+    }
+
+    public function toArray()
+    {
+        $avatar = $this->getAvatar();
         $this->load('workingAreas.region.country');
 
         return [
@@ -161,8 +172,8 @@ class Profile extends Model implements HasMedia
             'years_experience'      => Carbon::now()->year - $this->teaching_since,
             'chinese_ability'       => $this->chinese_ability,
             'chinese_ability_full'  => $this->ability_scale[$this->chinese_ability] ?? '',
-            'avatar_original'       => $avatar ? $avatar->getUrl() : static::DEFAULT_AVATAR,
-            'avatar_thumb'          => $avatar ? $avatar->getUrl('thumb') : static::DEFAULT_AVATAR,
+            'avatar_original'       => $avatar['original'],
+            'avatar_thumb'          => $avatar['thumb'],
             'is_public'             => $this->is_public,
             'subjects'              => $this->subjects->map->toArray()->all(),
             'spoken_language_codes' => $this->spoken_languages,
@@ -202,14 +213,11 @@ class Profile extends Model implements HasMedia
         ]);
     }
 
-    private function getTranslation($field, $desired_lang, $default)
+
+
+    public function courses()
     {
-        if (($this->{$field}[$desired_lang] ?? '') === '') {
-            return $this->{$field}[$default];
-        }
-
-        return $this->{$field}[$desired_lang];
-
+        return $this->hasMany(Course::class, 'profile_id');
     }
 
     public function availablePeriods()
@@ -221,24 +229,98 @@ class Profile extends Model implements HasMedia
     {
         $this->availablePeriods()->where('day_of_week', $day->week_day)->get()->each->delete();
 
-        $day->periods->each(fn (TimePeriod $p) => $this->availablePeriods()->create([
+        $lessons = $this->courses()
+                        ->with('lessonBlocks')
+                        ->get()
+                        ->flatMap(fn(Course $c) => $c->lessonBlocks->all())
+                        ->reject(fn($l) => $l->day_of_week !== $day->week_day)->all();
+
+        foreach($lessons as $lesson) {
+            $day = $day->clearPeriod(new TimePeriod($lesson->starts, $lesson->ends));
+        }
+
+
+
+        $day->periods->each(fn(TimePeriod $p) => $this->availablePeriods()->create([
             'day_of_week' => $day->week_day,
             'starts'      => $p->startAsInt(),
             'ends'        => $p->endAsInt(),
         ]));
-
     }
 
     public function availablePeriodsSummary()
     {
         return $this
             ->availablePeriods
-            ->groupBy('day_of_week')
-            ->map(fn($daily_periods, $day_of_week) => [
-                'day'     => $day_of_week,
-                'periods' => $daily_periods->map(fn($period) => $period->timeStringTuple())->all()
-            ]
-            )->values()->all();
+            ->reduce(function ($carry, $period) {
+                $carry[$period->day_of_week]['periods'][] = $period->timeStringTuple();
+
+                return $carry;
+            }, [
+                Carbon::MONDAY    => ['periods' => []],
+                Carbon::TUESDAY   => ['periods' => []],
+                Carbon::WEDNESDAY => ['periods' => []],
+                Carbon::THURSDAY  => ['periods' => []],
+                Carbon::FRIDAY    => ['periods' => []],
+                Carbon::SATURDAY  => ['periods' => []],
+                Carbon::SUNDAY    => ['periods' => []],
+            ]);
+
+    }
+
+    public function currentSchedule()
+    {
+        $available = $this->availablePeriodsSummary();
+
+        $confirmed = $this
+            ->courses()
+            ->confirmed()
+            ->with('lessonBlocks')
+            ->get()
+            ->reduce(function ($carry, $course) {
+                foreach ($course->lessonBlocks as $block) {
+                    $carry[$block->day_of_week]['periods'][] = $block->toTimeTuple();
+                }
+
+                return $carry;
+            }, [
+                Carbon::MONDAY    => ['periods' => []],
+                Carbon::TUESDAY   => ['periods' => []],
+                Carbon::WEDNESDAY => ['periods' => []],
+                Carbon::THURSDAY  => ['periods' => []],
+                Carbon::FRIDAY    => ['periods' => []],
+                Carbon::SATURDAY  => ['periods' => []],
+                Carbon::SUNDAY    => ['periods' => []],
+            ]);
+
+        $unconfirmed = $this
+            ->courses()
+            ->unconfirmed()
+            ->with('lessonBlocks')
+            ->get()
+            ->reduce(function ($carry, $course) {
+                foreach ($course->lessonBlocks as $block) {
+                    $carry[$block->day_of_week]['periods'][] = $block->toTimeTuple();
+                }
+
+                return $carry;
+            }, [
+                Carbon::MONDAY    => ['periods' => []],
+                Carbon::TUESDAY   => ['periods' => []],
+                Carbon::WEDNESDAY => ['periods' => []],
+                Carbon::THURSDAY  => ['periods' => []],
+                Carbon::FRIDAY    => ['periods' => []],
+                Carbon::SATURDAY  => ['periods' => []],
+                Carbon::SUNDAY    => ['periods' => []],
+            ]);
+
+//        dd($available);
+
+        return [
+            'available'   => $available,
+            'confirmed'   => $confirmed,
+            'unconfirmed' => $unconfirmed,
+        ];
     }
 
     public function unavailablePeriods()
@@ -248,16 +330,35 @@ class Profile extends Model implements HasMedia
 
     public function clearTimeBlock(array $timeBlock)
     {
-        $periods = $this->availablePeriods()->where('day_of_week', $timeBlock['day_of_week'])->get();
-        $day = new Day($timeBlock['day_of_week']);
-        foreach ($periods as $period) {
-            $day = $day->addPeriod($period->timePeriod());
-        }
+        $day = $this->getDay($timeBlock['day_of_week']);
 
         $day = $day->clearPeriod(new TimePeriod($timeBlock['starts'], $timeBlock['ends']));
 
         $this->setAvailabilityForDay($day);
 
+    }
+
+    public function allocateTimeBlock(array $timeBlock)
+    {
+        $day = $this->getDay($timeBlock['day_of_week']);
+
+        $day = $day->addPeriod(new TimePeriod($timeBlock['starts'], $timeBlock['ends']));
+
+        $this->setAvailabilityForDay($day);
+    }
+
+    public function getDay(int $day_of_week): Day
+    {
+        $periods = $this->availablePeriods()
+                        ->where('day_of_week', $day_of_week)
+                        ->get();
+
+        $day = new Day($day_of_week);
+        foreach ($periods as $period) {
+            $day = $day->addPeriod($period->timePeriod());
+        }
+
+        return $day;
     }
 
     public function setUnavailablePeriod($from, $to)

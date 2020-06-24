@@ -75,7 +75,7 @@ class TimePeriod
         }
 
 
-        if ($this->start->isSameOrBefore($period->start)) {
+        if ($this->start->isSameOrBefore($period->start) && $period->end->isSameOrAfter($this->end)) {
             return new Exclusion(
                 new TimePeriod($this->start->timeString, $period->start->timeString), null
             );

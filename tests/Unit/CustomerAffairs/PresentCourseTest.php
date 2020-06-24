@@ -4,14 +4,16 @@
 namespace Tests\Unit\CustomerAffairs;
 
 
+use App\Calendar\DateFormatter;
 use App\CustomerAffairs\Course;
 use App\CustomerAffairs\Customer;
+use App\CustomerAffairs\Lesson;
 use App\Locations\Area;
 use App\Profile;
 use App\Teaching\Subject;
 use App\User;
-use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Carbon;
 use Tests\TestCase;
 
 class PresentCourseTest extends TestCase
@@ -46,18 +48,24 @@ class PresentCourseTest extends TestCase
             'area_id'        => $area->id,
             'map_link'       => 'link.to.map',
             'address'        => 'test address',
-            'location_notes' => 'test notes'
+            'location_notes' => 'test notes',
         ]);
         $course->setLessonBlocks([
             ['day_of_week' => 2, 'starts' => '17:00', 'ends' => '19:00'],
             ['day_of_week' => 5, 'starts' => '18:00', 'ends' => '19:30'],
         ]);
         $course->assignTeacher($teacher->id);
+        $should_start = Carbon::today()->addWeek()->startOfWeek();
+        $course->confirm($should_start);
+        $course->setNextLesson();
+
+        $lesson = Lesson::where('course_id', $course->id)->first();
 
 
         $expected = [
             'id'                   => $course->id,
-            'status'               => Course::STATUS_UNCONFIRMED,
+            'status'               => Course::STATUS_CONFIRMED,
+            'is_complete'          => false,
             'customer_id'          => $customer->id,
             'customer'             => [
                 'id'    => $customer->id,
@@ -70,8 +78,8 @@ class PresentCourseTest extends TestCase
                 ['name' => 'Student B', 'age' => 'college'],
             ],
             'total_lessons'        => $course->total_lessons,
-            'starts_from'          => $course->starts_from->format('Y-m-d'),
-            'starts_from_pretty'   => $course->starts_from->format('jS M, Y'),
+            'starts_from'          => $should_start->format(DateFormatter::STANDARD),
+            'starts_from_pretty'   => $should_start->format(DateFormatter::PRETTY),
             'subject_id'           => $subject->id,
             'subject_title'        => $subject->title,
             'lesson_blocks'        => [
@@ -94,7 +102,8 @@ class PresentCourseTest extends TestCase
             'teacher_name'         => $teacher->name,
             'teacher_bio'          => $teacher->bio,
             'teacher_avatar_thumb' => $teacher->getFirstMediaUrl(Profile::AVATAR, 'thumb'),
-            'lessons' => [],
+            'lessons'              => [$lesson->toArray()],
+            'next_due_lesson'      => $lesson->toArray()
         ];
 
         $this->assertEquals($expected, $course->toArray());

@@ -45,4 +45,13 @@ trait Translatable
         $this->update($translated);
 
     }
+
+    private function getTranslation($field, $desired_lang, $default)
+    {
+        if (($this->{$field}[$desired_lang] ?? '') === '') {
+            return $this->{$field}[$default];
+        }
+
+        return $this->{$field}[$desired_lang];
+    }
 }

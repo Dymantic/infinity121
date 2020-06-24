@@ -9,7 +9,7 @@
         <meta name="csrf-token" content="{{ csrf_token() }}">
         <link href="https://fonts.googleapis.com/css?family=Noto+Sans:400,400i,700&display=swap" rel="stylesheet">
 
-        <link rel="alternate" hreflang="{{ app()->getLocale() === 'en' ? 'zh' : 'en' }}" href="{{ url(transUrl(Request::path())) }}">
+        <x-alt-lang-links></x-alt-lang-links>
 
         <link rel="stylesheet" href="{{ mix('css/front.css') }}">
 

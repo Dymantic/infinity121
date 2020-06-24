@@ -109,7 +109,6 @@
         </div>
         <div class="my-8 flex justify-end">
             <button @click="save" class="btn btn-navy mr-4">Save</button>
-            <button @click="proceed" class="btn">Next</button>
         </div>
     </div>
 </template>

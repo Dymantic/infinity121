@@ -1,7 +1,10 @@
 <template>
     <page v-if="course">
         <page-header :title="`Course #${course.id}`">
-            <router-link class="btn mr-4" :to="`/courses/${course.id}/edit`"
+            <router-link
+                v-if="!course.is_complete"
+                class="btn mr-4"
+                :to="`/courses/${course.id}/edit`"
                 >Edit</router-link
             >
             <confirm-course
@@ -10,7 +13,9 @@
                 @updated="fetchCourse"
             ></confirm-course>
         </page-header>
-
+        <p class="text-lg mb-6 -mt-10 font-bold">
+            {{ course.total_lessons }} Lessons
+        </p>
         <div class="flex justify-between">
             <div class="flex-1 mr-6">
                 <div>
@@ -97,6 +102,57 @@
             </div>
             <div class="w-64 ml-6">
                 <course-status-card :course="course"></course-status-card>
+
+                <div class="my-12 shadow p-6" v-if="course.next_due_lesson">
+                    <p class="uppercase text-xs">Next Lesson</p>
+                    <p class="font-bold text-lg">
+                        {{ course.next_due_lesson.lesson_date_pretty }}
+                    </p>
+                    <p class="uppercase text-lg">
+                        {{ course.next_due_lesson.lesson_day }}
+                    </p>
+                    <p>
+                        {{ course.next_due_lesson.starts }} -
+                        {{ course.next_due_lesson.ends }}
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div>
+            <p class="font-bold text-lg">Completed Lessons</p>
+            <p class="my-6" v-if="completed_lessons.length === 0">
+                No lessons have been logged for this course yet.
+            </p>
+            <div
+                v-for="lesson in completed_lessons"
+                :key="lesson.id"
+                class="flex my-4 shadow"
+            >
+                <div class="w-1/4 p-3">
+                    <p class="font-bold">{{ lesson.completed_on_pretty }}</p>
+                    <p class="text-sm">
+                        {{ lesson.actual_start }} - {{ lesson.actual_end }}
+                    </p>
+                    <div class="flex mt-2">
+                        <img
+                            :src="lesson.teacher_avatar"
+                            class="w-6 h-6 rounded-full mr-4"
+                        />
+                        <p>{{ lesson.teacher_name }}</p>
+                    </div>
+                </div>
+                <div class="w-1/4 p-3">
+                    <p class="text-xs uppercase">Materials</p>
+                    <p class="text-sm">{{ lesson.material_taught }}</p>
+                </div>
+                <div class="w-1/4 p-3">
+                    <p class="text-xs uppercase">Student Report</p>
+                    <p>{{ lesson.student_report }}</p>
+                </div>
+                <div class="w-1/4 p-3">
+                    <p class="text-xs uppercase">Teacher Notes</p>
+                    <p class="text-sm">{{ lesson.teacher_log }}</p>
+                </div>
             </div>
         </div>
     </page>
@@ -121,6 +177,12 @@ export default {
         return {
             course: null
         };
+    },
+
+    computed: {
+        completed_lessons() {
+            return this.course.lessons.filter(l => l.complete);
+        }
     },
 
     watch: {

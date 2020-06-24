@@ -37,6 +37,7 @@ class ClearTeacherTimesTest extends TestCase
             'ends' => '12:30',
         ]);
 
+
         $this->assertTrue(
             $teacher
                 ->fresh()

@@ -8,7 +8,7 @@ return [
     'supportedLocales'        => [
 
         'en' => ['name' => 'English', 'script' => 'Latn', 'native' => 'English', 'regional' => 'en_GB'],
-        'ja' => ['name' => 'Japanese', 'script' => 'Jpan', 'native' => '日本語', 'regional' => 'ja_JP'],
+        'jp' => ['name' => 'Japanese', 'script' => 'Jpan', 'native' => '日本語', 'regional' => 'ja_JP'],
         'zh' => ['name' => 'Chinese (Traditional)', 'script' => 'Hant', 'native' => '繁體中文', 'regional' => 'zh_CN'],
 
     ],

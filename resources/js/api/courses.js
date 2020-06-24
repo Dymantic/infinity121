@@ -1,5 +1,9 @@
 import { get, post } from "./http";
 
+function fetchActiveCourses() {
+    return get("/admin/api/active-courses");
+}
+
 function fetchCourse(id) {
     return new Promise((resolve, reject) => {
         axios
@@ -81,6 +85,7 @@ function confirmCourse(course_id, starts_from) {
 
 export {
     fetchCourse,
+    fetchActiveCourses,
     fetchCustomerCourses,
     updateCourseBasicInfo,
     updateCourseTimeInfo,

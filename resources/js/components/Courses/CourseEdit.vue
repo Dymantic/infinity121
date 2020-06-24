@@ -1,6 +1,10 @@
 <template>
     <page v-if="course">
-        <page-header title="Edit course"></page-header>
+        <page-header title="Edit course">
+            <router-link :to="`/courses/${course.id}`" class="btn btn-navy"
+                >See Course</router-link
+            >
+        </page-header>
         <course-manager
             :customer="course.customer"
             :course="course"

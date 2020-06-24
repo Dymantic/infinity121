@@ -28,3 +28,9 @@ $factory->state(Course::class, 'confirmed', [
     'starts_from' => Carbon::yesterday(),
     'confirmed_on' => Carbon::yesterday(),
 ]);
+
+$factory->state(Course::class, 'ongoing', [
+    'starts_from' => Carbon::yesterday(),
+    'confirmed_on' => Carbon::yesterday(),
+    'completed_on' => null,
+]);

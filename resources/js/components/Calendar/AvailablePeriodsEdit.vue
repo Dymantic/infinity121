@@ -21,38 +21,38 @@
                         @time-selected="addPeriod"
                     ></time-period-input>
                 </div>
-
-                <div>
-                    <p class="mb-6 font-bold text-gray-600">
-                        Available periods for this day:
-                    </p>
-                    <p class="mb-8 max-w-2xl" v-if="periods.length === 0">
-                        You currently have no periods allocated on
-                        {{ dayName }}.
-                    </p>
-                    <div
-                        v-for="(period, index) in ordered_periods"
-                        :key="index"
-                        class="mb-4 w-64 py-2 pl-2 flex justify-between items-center"
-                        :class="{
-                            'bg-shady-blue': period.isValid(),
-                            'bg-red-100': !period.isValid()
-                        }"
-                    >
-                        <p class="font-bold">{{ period.asString() }}</p>
-                        <button
-                            class="w-6 h-6 rounded-full text-red-500 bg-white flex items-center justify-center cursor-pointer hover:bg-red-100 mr-2"
-                            @click="removePeriod(index)"
-                        >
-                            &times;
-                        </button>
-                    </div>
-                </div>
             </div>
 
             <div>
-                <daily-hours :day="currentDay" class="border"></daily-hours>
+                <p class="mb-6 font-bold text-gray-600">
+                    Available periods for this day:
+                </p>
+                <p class="mb-8 max-w-2xl" v-if="periods.length === 0">
+                    You currently have no periods allocated on
+                    {{ dayName }}.
+                </p>
+                <div
+                    v-for="(period, index) in ordered_periods"
+                    :key="index"
+                    class="mb-4 w-64 py-2 pl-2 flex justify-between items-center"
+                    :class="{
+                        'bg-shady-blue': period.isValid(),
+                        'bg-red-100': !period.isValid()
+                    }"
+                >
+                    <p class="font-bold">{{ period.asString() }}</p>
+                    <button
+                        class="w-6 h-6 rounded-full text-red-500 bg-white flex items-center justify-center cursor-pointer hover:bg-red-100 mr-2"
+                        @click="removePeriod(index)"
+                    >
+                        &times;
+                    </button>
+                </div>
             </div>
+        </div>
+
+        <div>
+            <daily-hours :day="currentDay" class="border"></daily-hours>
         </div>
     </div>
 </template>

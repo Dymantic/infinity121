@@ -109,6 +109,14 @@ export default {
         }
     },
 
+    watch: {
+        course(to) {
+            if (to) {
+                this.queryTeachers();
+            }
+        }
+    },
+
     methods: {
         queryTeachers() {
             this.$store

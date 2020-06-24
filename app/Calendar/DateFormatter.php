@@ -30,4 +30,13 @@ class DateFormatter
 
         return $date->format(DateFormatter::PRETTY);
     }
+
+    public static function dayOfWeek($date): ?string
+    {
+        if(!$date) {
+            return null;
+        }
+
+        return $date->format('l');
+    }
 }
