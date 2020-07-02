@@ -8,7 +8,10 @@
             >
         </page-header>
         <p class="mb-6 max-w-xl text-gray-600">
-            These are the periods when you will not be available to teach.
+            These are the periods when you will not be available to teach. This
+            is just to inform Infinity so that they do not assign you to classes
+            you cannot take. Note that this does <strong>NOT</strong> excuse you
+            from already arranged lessons.
         </p>
         <div class="my-12">
             <div

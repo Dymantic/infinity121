@@ -6,8 +6,8 @@
             >
         </page-header>
         <p class="mb-8 max-w-2xl text-sm">
-            These are the times you are general availability throughout the
-            week. You will still be able to
+            These are the times you are generally available throughout the week.
+            You will still be able to
             <router-link
                 class="text-blue-600 hover:underline"
                 to="/me/unavailable-periods"

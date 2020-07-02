@@ -106,6 +106,7 @@ export default {
 
     created() {
         this.teacher_id = this.$route.params.id;
+        this.$store.dispatch("teachers/fetchTeachers").catch(notify.error);
     },
 
     watch: {
