@@ -7,7 +7,7 @@ return [
     ],
 
     'banner' => [
-        'heading' => 'Tomorrow\'s training, today.',
+        'heading' => '未来の成功、今日始まります。',
         'text' => 'プロフェッショナルな講師陣があなたのニーズに応えます。',
         'button' => 'お問合せ &gt;'
     ],

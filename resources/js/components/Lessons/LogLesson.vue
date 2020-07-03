@@ -173,7 +173,7 @@
                         >Teacher's log</label
                     >
                     <p class="text-sm">
-                        How did the lesson do for you? Please take note of
+                        How did the lesson go for you? Please take note of
                         anything that may need to be remembered or explained at
                         a later stage.
                     </p>
