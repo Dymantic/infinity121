@@ -72,7 +72,7 @@ export default {
 
     computed: {
         form_heading() {
-            return !this.area ? "Add an Area" : `Update ${this.area.name}`;
+            return !this.area ? "Add an Area" : `Update ${this.area.area_name}`;
         },
 
         form_text() {
@@ -86,7 +86,7 @@ export default {
 
     mounted() {
         if (this.area) {
-            this.formData = { name: this.area.name };
+            this.formData = { name: this.area.area_name };
         }
     },
 
