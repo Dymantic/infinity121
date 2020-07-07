@@ -20,10 +20,15 @@ function logLesson(lesson_id, formData) {
     return post(`/admin/api/lessons/${lesson_id}/log`, formData);
 }
 
+function cancelLesson(lesson_id, reason) {
+    return post("/admin/api/cancelled-lessons", { lesson_id, reason });
+}
+
 export {
     fetchLogged,
     fetchDueLogging,
     fetchMyDueLessons,
     fetchMyCompletedLessons,
-    logLesson
+    logLesson,
+    cancelLesson
 };

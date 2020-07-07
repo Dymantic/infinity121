@@ -1,6 +1,12 @@
 <template>
     <page v-if="lesson && ready">
-        <page-header title="Lesson Log"></page-header>
+        <page-header title="Lesson Log">
+            <router-link
+                class="btn btn-red"
+                :to="`/lessons/${lesson.id}/cancel`"
+                >Cancel Lesson</router-link
+            >
+        </page-header>
         <div class="p-4 shadow">
             <p class="uppercase text-sm mb-4">Scheduled Lesson</p>
             <div class="flex justify-between">
@@ -38,7 +44,7 @@
         </div>
 
         <form @submit.prevent="submit">
-            <div class="my-12 max-w-md">
+            <div class="my-12 max-w-lg">
                 <p class="font-bold text-xl">Lesson date and times:</p>
                 <p class="text-sm my-4">
                     Please enter the actual date and times the lesson was
@@ -107,7 +113,7 @@
                     </div>
                 </div>
             </div>
-            <div class="my-12 max-w-md">
+            <div class="my-12 max-w-xl">
                 <p class="font-bold text-xl">Teacher's notes and logs</p>
                 <p class="text-sm my-4">
                     Please take note of any significant events, what material
@@ -120,11 +126,12 @@
                         'border-b border-red-400': formErrors.material_taught
                     }"
                 >
-                    <label class="form-label" for="material_taught"
-                        >Material covered</label
+                    <label class="font-bold" for="material_taught"
+                        >Material covered and Homework</label
                     >
                     <p class="text-sm">
-                        Briefly describe the material covered in the lesson
+                        Briefly describe the material covered in the lesson, and
+                        outline the homework you set for the student
                     </p>
                     <span
                         class="text-xs text-red-400"
@@ -144,38 +151,29 @@
                         'border-b border-red-400': formErrors.student_report
                     }"
                 >
-                    <label class="form-label" for="student_report"
-                        >Student Report</label
-                    >
+                    <span class="font-bold">Student Report</span>
                     <p class="text-sm">
                         What was the student's participation and attitude
                         towards the lesson like?
                     </p>
-                    <span
-                        class="text-xs text-red-400"
-                        v-show="formErrors.student_report"
-                        >{{ formErrors.student_report }}</span
-                    >
-                    <textarea
-                        name="student_report"
+                    <student-report
                         v-model="formData.student_report"
-                        class="input-text h-32"
-                        id="student_report"
-                    ></textarea>
+                    ></student-report>
                 </div>
+
                 <div
                     class="my-4"
                     :class="{
                         'border-b border-red-400': formErrors.teacher_log
                     }"
                 >
-                    <label class="form-label" for="teacher_log"
+                    <label class="font-bold" for="teacher_log"
                         >Teacher's log</label
                     >
                     <p class="text-sm">
                         How did the lesson go for you? Please take note of
                         anything that may need to be remembered or explained at
-                        a later stage.
+                        a later stage. <strong>Min 20 words</strong>
                     </p>
                     <span
                         class="text-xs text-red-400"
@@ -185,9 +183,15 @@
                     <textarea
                         name="teacher_log"
                         v-model="formData.teacher_log"
-                        class="input-text h-32"
+                        class="input-text h-32 mb-1"
                         id="teacher_log"
                     ></textarea>
+                    <span
+                        class="px-2 py-1 text-sm rounded-lg mt-1 border"
+                        :class="word_count_colours"
+                    >
+                        {{ log_word_count }} words
+                    </span>
                 </div>
             </div>
             <div class="flex max-w-lg justify-end my-12">
@@ -207,6 +211,7 @@
 <script type="text/babel">
 import Page from "../UI/Page";
 import PageHeader from "../UI/PageHeader";
+import StudentReport from "./StudentReport";
 import Datepicker from "vuejs-datepicker";
 import { notify } from "../Messaging/notify";
 import { showValidationErrors } from "../../libs/forms";
@@ -214,7 +219,8 @@ export default {
     components: {
         Page,
         PageHeader,
-        Datepicker
+        Datepicker,
+        StudentReport
     },
 
     data() {
@@ -225,7 +231,12 @@ export default {
                 actual_start: "",
                 actual_end: "",
                 teacher_log: "",
-                student_report: "",
+                student_report: {
+                    interaction: "",
+                    confidence: "",
+                    comprehension: "",
+                    output: ""
+                },
                 material_taught: ""
             },
             formErrors: {
@@ -242,6 +253,17 @@ export default {
     computed: {
         lesson() {
             return this.$store.getters["me/lessonById"](this.$route.params.id);
+        },
+
+        log_word_count() {
+            const matches = this.formData.teacher_log.match(/[\w\d’'-]+/gi);
+            return matches ? matches.length : 0;
+        },
+
+        word_count_colours() {
+            return this.log_word_count < 20
+                ? "bg-red-200 border-red-500 text-red-700"
+                : "bg-green-200 border-green-500 text-green-700";
         }
     },
 
@@ -265,17 +287,47 @@ export default {
                 actual_start: starts,
                 actual_end: ends,
                 teacher_log: "",
-                student_report: "",
+                student_report: {
+                    interaction: "",
+                    confidence: "",
+                    comprehension: "",
+                    output: ""
+                },
                 material_taught: ""
             };
             this.ready = true;
         },
 
         submit() {
+            if (!this.studentReportIsValid()) {
+                notify.warn({ message: "Please complete the student report" });
+                return;
+            }
+
+            if (this.log_word_count < 20) {
+                notify.warn({
+                    message:
+                        "Please fully complete the teacher log. You need more than 20 words."
+                });
+                return;
+            }
+
+            const fd = {
+                completed_on: this.formData.completed_on,
+                actual_start: this.formData.actual_start,
+                actual_end: this.formData.actual_end,
+                teacher_log: this.formData.teacher_log,
+                material_taught: this.formData.material_taught,
+                student_interaction: this.formData.student_report.interaction,
+                student_comprehension: this.formData.student_report
+                    .comprehension,
+                student_confidence: this.formData.student_report.confidence,
+                student_output: this.formData.student_report.output
+            };
             this.$store
                 .dispatch("me/logTeachersLesson", {
                     lesson_id: this.lesson.id,
-                    formData: this.formData
+                    formData: fd
                 })
                 .then(() => {
                     notify.success({
@@ -294,6 +346,17 @@ export default {
                 ));
             }
             notify.error({ message: "Unable to log lesson." });
+        },
+
+        studentReportIsValid() {
+            const accepted = ["poor", "okay", "good", "excellent"];
+
+            return (
+                accepted.includes(this.formData.student_report.interaction) &&
+                accepted.includes(this.formData.student_report.comprehension) &&
+                accepted.includes(this.formData.student_report.confidence) &&
+                accepted.includes(this.formData.student_report.output)
+            );
         }
     }
 };

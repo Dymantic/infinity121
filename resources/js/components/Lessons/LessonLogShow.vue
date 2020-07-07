@@ -25,7 +25,15 @@
             <p class="font-bold text-lg mb-2">
                 Student participation and attitude
             </p>
-            <p>{{ lesson.student_report }}</p>
+            <p>
+                <strong>Interaction: </strong>{{ lesson.student_interaction }}
+            </p>
+            <p>
+                <strong>Comprehension: </strong
+                >{{ lesson.student_comprehension }}
+            </p>
+            <p><strong>Confidence: </strong>{{ lesson.student_confidence }}</p>
+            <p><strong>Output: </strong>{{ lesson.student_output }}</p>
         </div>
 
         <div class="my-12">

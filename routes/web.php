@@ -166,6 +166,7 @@ Route::group(['prefix' => 'admin/api', 'middleware' => ['auth'], 'namespace' => 
     Route::get('due-logging-lessons', 'DueLoggingLessonsController@index')->middleware('admin');
 
     Route::post('lessons/{lesson}/log', 'LessonsLogController@store');
+    Route::post('cancelled-lessons', 'CancelledLessonsController@store');
 });
 
 Route::get('admin/dashboard', 'Admin\Pages\DashboardController')->middleware('auth');

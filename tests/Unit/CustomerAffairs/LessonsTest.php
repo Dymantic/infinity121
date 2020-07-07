@@ -7,6 +7,7 @@ namespace Tests\Unit\CustomerAffairs;
 use App\Calendar\DateFormatter;
 use App\CustomerAffairs\Course;
 use App\CustomerAffairs\Lesson;
+use App\CustomerAffairs\LessonLog;
 use App\Locations\Area;
 use App\Profile;
 use App\User;
@@ -19,7 +20,7 @@ class LessonsTest extends TestCase
     use RefreshDatabase;
 
     /**
-     *@test
+     * @test
      */
     public function can_scope_upcoming_to_profile()
     {
@@ -31,16 +32,16 @@ class LessonsTest extends TestCase
         $courseA->setLessonBlocks([
             [
                 'day_of_week' => 3,
-                'starts' => '10:00',
-                'ends' => '11:00',
+                'starts'      => '10:00',
+                'ends'        => '11:00',
             ]
         ]);
 
         $courseB->setLessonBlocks([
             [
                 'day_of_week' => 2,
-                'starts' => '10:00',
-                'ends' => '11:00',
+                'starts'      => '10:00',
+                'ends'        => '11:00',
             ]
         ]);
         $courseA->assignTeacher($teacher->id);
@@ -67,7 +68,7 @@ class LessonsTest extends TestCase
     }
 
     /**
-     *@test
+     * @test
      */
     public function can_be_scoped_to_completed_by_teacher()
     {
@@ -78,8 +79,8 @@ class LessonsTest extends TestCase
         $course->setLessonBlocks([
             [
                 'day_of_week' => 3,
-                'starts' => '10:00',
-                'ends' => '11:00',
+                'starts'      => '10:00',
+                'ends'        => '11:00',
             ]
         ]);
         $course->assignTeacher($teacher->id);
@@ -134,16 +135,7 @@ class LessonsTest extends TestCase
             'user_id' => factory(User::class)->state('teacher-only')
         ]);
 
-        $log_data = [
-            'completed_on'     => Carbon::today()->format(DateFormatter::STANDARD),
-            'actual_start'     => '11:00',
-            'actual_end'       => '12:00',
-            'material_taught' => 'test material',
-            'teacher_log'      => 'test log',
-            'student_report'   => 'test report',
-        ];
-
-        $lesson->log($teacher, $log_data);
+        $lesson->log($teacher, $this->validLessonLog());
         $lesson->refresh();
 
         $this->assertEquals($teacher->id, $lesson->profile_id);
@@ -154,12 +146,15 @@ class LessonsTest extends TestCase
         $this->assertEquals("12:00", $lesson->actual_end);
         $this->assertEquals("test material", $lesson->material_taught);
         $this->assertEquals("test log", $lesson->teacher_log);
-        $this->assertEquals("test report", $lesson->student_report);
+        $this->assertEquals("poor", $lesson->student_interaction);
+        $this->assertEquals("okay", $lesson->student_comprehension);
+        $this->assertEquals("good", $lesson->student_confidence);
+        $this->assertEquals("excellent", $lesson->student_output);
 
     }
 
     /**
-     *@test
+     * @test
      */
     public function logging_a_lesson_sets_the_next_lesson()
     {
@@ -167,8 +162,8 @@ class LessonsTest extends TestCase
         $course->setLessonBlocks([
             [
                 'day_of_week' => 1,
-                'starts' => "10:00",
-                'ends' => "11:00",
+                'starts'      => "10:00",
+                'ends'        => "11:00",
             ]
         ]);
         $teacher = factory(Profile::class)->create([
@@ -179,24 +174,17 @@ class LessonsTest extends TestCase
         $course->confirm(Carbon::today());
         $first_lesson = $course->setNextLesson();
 
-        $first_lesson->log($teacher, [
-            'completed_on' => Carbon::today()->format(DateFormatter::STANDARD),
-            'actual_start' => '10:00',
-            'actual_end' => '11:00',
-            'teacher_log' => 'test log',
-            'student_report' => 'test report',
-            'material_taught' => 'test material'
-        ]);
+        $first_lesson->log($teacher, $this->validLessonLog());
 
         $this->assertCount(2, $course->lessons);
-        $new_lesson = $course->lessons->first(fn ($l) => $l->id !== $first_lesson->id);
+        $new_lesson = $course->lessons->first(fn($l) => $l->id !== $first_lesson->id);
 
         $this->assertNull($new_lesson->profile_id);
         $this->assertFalse($new_lesson->complete);
     }
 
     /**
-     *@test
+     * @test
      */
     public function can_scoped_to_logged_lessons()
     {
@@ -213,7 +201,7 @@ class LessonsTest extends TestCase
     }
 
     /**
-     *@test
+     * @test
      */
     public function can_be_scoped_to_require_logging()
     {
@@ -229,5 +217,51 @@ class LessonsTest extends TestCase
 
         $this->assertCount(1, $scoped);
         $this->assertTrue($scoped->contains($requires));
+    }
+
+    /**
+     *@test
+     */
+    public function can_cancel_a_lesson()
+    {
+        $lesson = factory(Lesson::class)->state('due')->create();
+        $teacher = factory(Profile::class)->create([
+            'user_id' => factory(User::class)->state('teacher-only')
+        ]);
+
+        $original_date = $lesson->lesson_date;
+        $original_start = $lesson->starts;
+        $original_end = $lesson->ends;
+
+        $lesson->cancel($teacher, 'test reason');
+
+        $lesson->refresh();
+
+        $this->assertTrue($lesson->complete);
+        $this->assertEquals(Lesson::STATUS_CANCELLED, $lesson->status);
+        $this->assertEquals('test reason', $lesson->teacher_log);
+        $this->assertNull($lesson->material_taught);
+        $this->assertNull($lesson->student_interaction);
+        $this->assertNull($lesson->student_comprehension);
+        $this->assertNull($lesson->student_confidence);
+        $this->assertNull($lesson->student_output);
+        $this->assertTrue($original_date->eq($lesson->completed_on));
+        $this->assertEquals($original_start, $lesson->actual_start);
+        $this->assertEquals($original_end, $lesson->actual_end);
+    }
+
+    private function validLessonLog(): LessonLog
+    {
+        return new LessonLog([
+            'completed_on'          => Carbon::today()->format(DateFormatter::STANDARD),
+            'actual_start'          => '11:00',
+            'actual_end'            => '12:00',
+            'material_taught'       => 'test material',
+            'teacher_log'           => 'test log',
+            'student_interaction'   => 'poor',
+            'student_comprehension' => 'okay',
+            'student_confidence'    => 'good',
+            'student_output'        => 'excellent',
+        ]);
     }
 }

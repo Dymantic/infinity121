@@ -11,6 +11,7 @@ class Lesson extends Model
 {
 
     const STATUS_DONE = 'done';
+    const STATUS_CANCELLED = 'cancelled';
 
     protected $fillable = ['lesson_date', 'starts', 'ends'];
 
@@ -57,17 +58,39 @@ class Lesson extends Model
         return $this->belongsTo(Course::class);
     }
 
-    public function log(Profile $teacher, array $log_data)
+    public function log(Profile $teacher, LessonLog $log)
     {
         $this->profile_id = $teacher->id;
         $this->status = static::STATUS_DONE;
         $this->complete = true;
-        $this->completed_on = Carbon::parse($log_data['completed_on']);
-        $this->actual_start = $log_data['actual_start'];
-        $this->actual_end = $log_data['actual_end'];
-        $this->material_taught = $log_data['material_taught'];
-        $this->student_report = $log_data['student_report'];
-        $this->teacher_log = $log_data['teacher_log'];
+        $this->completed_on = $log->completed_on;
+        $this->actual_start = $log->start->timeString;
+        $this->actual_end = $log->end->timeString;
+        $this->material_taught = $log->material_taught;
+        $this->student_interaction = $log->student_interaction;
+        $this->student_comprehension = $log->student_comprehension;
+        $this->student_confidence = $log->student_confidence;
+        $this->student_output = $log->student_output;
+        $this->teacher_log = $log->teacher_log;
+        $this->save();
+
+        $this->course->onLessonLogged();
+    }
+
+    public function cancel(Profile $teacher, $reason)
+    {
+        $this->profile_id = $teacher->id;
+        $this->status = static::STATUS_CANCELLED;
+        $this->complete = true;
+        $this->completed_on = $this->lesson_date;
+        $this->actual_start = $this->starts;
+        $this->actual_end = $this->ends;
+        $this->material_taught = null;
+        $this->student_interaction = null;
+        $this->student_comprehension = null;
+        $this->student_confidence = null;
+        $this->student_output = null;
+        $this->teacher_log = $reason;
         $this->save();
 
         $this->course->onLessonLogged();
@@ -76,25 +99,28 @@ class Lesson extends Model
     public function toArray()
     {
         return [
-            'id'                  => $this->id,
-            'status'              => $this->status,
-            'complete'            => $this->complete,
-            'lesson_date'         => DateFormatter::standard($this->lesson_date),
-            'lesson_day'          => DateFormatter::dayOfWeek($this->lesson_date),
-            'lesson_date_pretty'  => DateFormatter::pretty($this->lesson_date),
-            'starts'              => $this->starts,
-            'ends'                => $this->ends,
-            'actual_start'        => $this->actual_start,
-            'actual_end'          => $this->actual_end,
-            'completed_on'        => DateFormatter::standard($this->completed_on),
-            'completed_on_pretty' => DateFormatter::pretty($this->completed_on),
-            'material_taught'     => $this->material_taught,
-            'student_report'      => $this->student_report,
-            'teacher_log'         => $this->teacher_log,
-            'profile_id'          => $this->profile_id,
-            'teacher_name'        => $this->teacher() ? $this->teacher()->name : '',
-            'teacher_avatar'      => $this->teacher() ? $this->teacher()->getAvatar()['thumb'] : Profile::DEFAULT_AVATAR,
-            'teacher_id' => $this->teacher()->id,
+            'id'                    => $this->id,
+            'status'                => $this->status,
+            'complete'              => $this->complete,
+            'lesson_date'           => DateFormatter::standard($this->lesson_date),
+            'lesson_day'            => DateFormatter::dayOfWeek($this->lesson_date),
+            'lesson_date_pretty'    => DateFormatter::pretty($this->lesson_date),
+            'starts'                => $this->starts,
+            'ends'                  => $this->ends,
+            'actual_start'          => $this->actual_start,
+            'actual_end'            => $this->actual_end,
+            'completed_on'          => DateFormatter::standard($this->completed_on),
+            'completed_on_pretty'   => DateFormatter::pretty($this->completed_on),
+            'material_taught'       => $this->material_taught,
+            'student_interaction'   => $this->student_interaction,
+            'student_comprehension' => $this->student_comprehension,
+            'student_confidence'    => $this->student_confidence,
+            'student_output'        => $this->student_output,
+            'teacher_log'           => $this->teacher_log,
+            'profile_id'            => $this->profile_id,
+            'teacher_name'          => $this->teacher() ? $this->teacher()->name : '',
+            'teacher_avatar'        => $this->teacher() ? $this->teacher()->getAvatar()['thumb'] : Profile::DEFAULT_AVATAR,
+            'teacher_id'            => $this->teacher()->id,
         ];
     }
 

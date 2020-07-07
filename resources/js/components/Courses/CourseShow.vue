@@ -123,37 +123,48 @@
             <p class="my-6" v-if="completed_lessons.length === 0">
                 No lessons have been logged for this course yet.
             </p>
-            <div
+            <router-link
                 v-for="lesson in completed_lessons"
                 :key="lesson.id"
-                class="flex my-4 shadow"
+                :to="`/logged-lessons/${lesson.id}`"
             >
-                <div class="w-1/4 p-3">
-                    <p class="font-bold">{{ lesson.completed_on_pretty }}</p>
-                    <p class="text-sm">
-                        {{ lesson.actual_start }} - {{ lesson.actual_end }}
-                    </p>
-                    <div class="flex mt-2">
-                        <img
-                            :src="lesson.teacher_avatar"
-                            class="w-6 h-6 rounded-full mr-4"
-                        />
-                        <p>{{ lesson.teacher_name }}</p>
+                <div class="flex my-4 shadow">
+                    <div class="w-1/4 p-3">
+                        <p class="font-bold">
+                            <span
+                                class="inline-block mr-2 w-4 h-4 rounded-full"
+                                :class="{
+                                    'bg-red-300': lesson.status === 'cancelled',
+                                    'bg-green-300': lesson.status === 'done'
+                                }"
+                            ></span>
+                            <span>{{ lesson.completed_on_pretty }}</span>
+                        </p>
+                        <p class="text-sm">
+                            {{ lesson.actual_start }} - {{ lesson.actual_end }}
+                        </p>
+                        <div class="flex mt-2">
+                            <img
+                                :src="lesson.teacher_avatar"
+                                class="w-6 h-6 rounded-full mr-4"
+                            />
+                            <p>{{ lesson.teacher_name }}</p>
+                        </div>
+                    </div>
+                    <div class="w-1/4 p-3">
+                        <p class="text-xs uppercase">Materials</p>
+                        <p class="text-sm">{{ lesson.material_taught }}</p>
+                    </div>
+                    <div class="w-1/4 p-3">
+                        <p class="text-xs uppercase">Student Report</p>
+                        <p>{{ lesson.student_report }}</p>
+                    </div>
+                    <div class="w-1/4 p-3">
+                        <p class="text-xs uppercase">Teacher Notes</p>
+                        <p class="text-sm">{{ lesson.teacher_log }}</p>
                     </div>
                 </div>
-                <div class="w-1/4 p-3">
-                    <p class="text-xs uppercase">Materials</p>
-                    <p class="text-sm">{{ lesson.material_taught }}</p>
-                </div>
-                <div class="w-1/4 p-3">
-                    <p class="text-xs uppercase">Student Report</p>
-                    <p>{{ lesson.student_report }}</p>
-                </div>
-                <div class="w-1/4 p-3">
-                    <p class="text-xs uppercase">Teacher Notes</p>
-                    <p class="text-sm">{{ lesson.teacher_log }}</p>
-                </div>
-            </div>
+            </router-link>
         </div>
     </page>
 </template>

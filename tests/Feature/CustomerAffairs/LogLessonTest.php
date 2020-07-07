@@ -36,27 +36,33 @@ class LogLessonTest extends TestCase
             'actual_start'    => '11:00',
             'actual_end'      => '12:00',
             'teacher_log'     => 'test log',
-            'student_report'  => 'test report',
+            'student_interaction'   => 'poor',
+            'student_comprehension'   => 'okay',
+            'student_confidence'   => 'good',
+            'student_output'   => 'excellent',
             'material_taught' => 'test material'
         ]);
         $response->assertSuccessful();
 
         $this->assertDatabaseHas('lessons', [
-            'id'              => $lesson->id,
-            'complete'        => true,
-            'status'          => Lesson::STATUS_DONE,
-            'completed_on'    => Carbon::yesterday(),
-            'actual_start'    => '11:00',
-            'actual_end'      => '12:00',
-            'teacher_log'     => 'test log',
-            'student_report'  => 'test report',
-            'material_taught' => 'test material',
-            'profile_id'      => $teacher->id,
+            'id'                    => $lesson->id,
+            'complete'              => true,
+            'status'                => Lesson::STATUS_DONE,
+            'completed_on'          => Carbon::yesterday(),
+            'actual_start'          => '11:00',
+            'actual_end'            => '12:00',
+            'teacher_log'           => 'test log',
+            'material_taught'       => 'test material',
+            'student_interaction'   => 'poor',
+            'student_comprehension' => 'okay',
+            'student_confidence'    => 'good',
+            'student_output'        => 'excellent',
+            'profile_id'            => $teacher->id,
         ]);
     }
 
     /**
-     *@test
+     * @test
      */
     public function the_completed_on_date_is_required()
     {
@@ -64,7 +70,7 @@ class LogLessonTest extends TestCase
     }
 
     /**
-     *@test
+     * @test
      */
     public function the_completed_on_must_be_a_valid_date()
     {
@@ -72,7 +78,7 @@ class LogLessonTest extends TestCase
     }
 
     /**
-     *@test
+     * @test
      */
     public function the_actual_start_is_required()
     {
@@ -80,7 +86,7 @@ class LogLessonTest extends TestCase
     }
 
     /**
-     *@test
+     * @test
      */
     public function the_actual_start_must_be_a_valid_time()
     {
@@ -88,7 +94,7 @@ class LogLessonTest extends TestCase
     }
 
     /**
-     *@test
+     * @test
      */
     public function the_actual_end_is_required()
     {
@@ -98,13 +104,40 @@ class LogLessonTest extends TestCase
     /**
      *@test
      */
+    public function the_material_taught_is_required()
+    {
+        $this->assertFieldIsInvalid(['material_taught' => null]);
+    }
+
+    /**
+     *@test
+     */
+    public function the_teacher_log_is_required()
+    {
+        $this->assertFieldIsInvalid(['teacher_log' => null]);
+    }
+
+    /**
+     *@test
+     */
+    public function student_fields_must_be_in_good_okay_poor_excellent()
+    {
+        $this->assertFieldIsInvalid(['student_interaction' => 'not-valid']);
+        $this->assertFieldIsInvalid(['student_comprehension' => 'not-valid']);
+        $this->assertFieldIsInvalid(['student_confidence' => 'not-valid']);
+        $this->assertFieldIsInvalid(['student_output' => 'not-valid']);
+    }
+
+    /**
+     * @test
+     */
     public function the_actual_end_must_be_a_real_time()
     {
         $this->assertFieldIsInvalid(['actual_end' => 'not-a-real-time']);
     }
 
     /**
-     *@test
+     * @test
      */
     public function the_end_time_must_come_after_the_start()
     {
@@ -125,8 +158,11 @@ class LogLessonTest extends TestCase
             'actual_start'    => '11:00',
             'actual_end'      => '12:00',
             'teacher_log'     => 'test log',
-            'student_report'  => 'test report',
-            'material_taught' => 'test material'
+            'material_taught' => 'test material',
+            'student_interaction'   => 'poor',
+            'student_comprehension'   => 'okay',
+            'student_confidence'   => 'good',
+            'student_output'   => 'excellent',
         ];
 
         $response = $this

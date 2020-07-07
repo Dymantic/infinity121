@@ -4,6 +4,7 @@ import { azByPropetryName } from "../libs/sorting";
 import { Day } from "../libs/Calendar/Day";
 import { TimePeriod } from "../libs/Calendar/TimePeriod";
 import {
+    cancelLesson,
     fetchMyCompletedLessons,
     fetchMyDueLessons,
     logLesson
@@ -416,6 +417,12 @@ export default {
 
         logTeachersLesson({ dispatch }, { lesson_id, formData }) {
             return logLesson(lesson_id, formData).then(() =>
+                dispatch("fetchDueLessons").catch(notify.error)
+            );
+        },
+
+        cancelTeacherLesson({ dispatch }, { lesson_id, reason }) {
+            return cancelLesson(lesson_id, reason).then(() =>
                 dispatch("fetchDueLessons").catch(notify.error)
             );
         }

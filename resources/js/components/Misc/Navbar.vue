@@ -18,41 +18,41 @@
         </div>
 
         <div class="flex justify-end items-center">
-            <!--            <router-link-->
-            <!--                v-if="is_teacher"-->
-            <!--                to="/me/my-lessons"-->
-            <!--                class="text-white hover:text-mustard font-bold px-4 mr-4 no-underline hover:underline"-->
-            <!--                >My Lessons</router-link-->
-            <!--            >-->
-            <!--            <dropdown-->
-            <!--                v-cloak-->
-            <!--                v-if="is_teacher"-->
-            <!--                name="My Availability"-->
-            <!--                class="text-white font-bold hover:text-mustard h-12 flex items-center h-16 px-4"-->
-            <!--            >-->
-            <!--                <div slot="dropdown_content" class="py-3">-->
-            <!--                    <router-link-->
-            <!--                        to="/me/my-schedule"-->
-            <!--                        class="text-hms-navy hover:text-mustard font-bold px-4 mr-4 no-underline hover:underline"-->
-            <!--                        >Schedule</router-link-->
-            <!--                    >-->
-            <!--                    <router-link-->
-            <!--                        to="/me/available-periods"-->
-            <!--                        class="text-hms-navy hover:text-mustard font-bold px-4 mr-4 no-underline hover:underline"-->
-            <!--                        >Available Hours</router-link-->
-            <!--                    >-->
-            <!--                    <router-link-->
-            <!--                        to="/me/unavailable-periods"-->
-            <!--                        class="text-hms-navy hover:text-mustard font-bold px-4 mr-4 no-underline hover:underline"-->
-            <!--                        >Unavailable Times</router-link-->
-            <!--                    >-->
-            <!--                    <router-link-->
-            <!--                        to="/me/working-areas/edit"-->
-            <!--                        class="text-hms-navy hover:text-mustard font-bold px-4 mr-4 no-underline hover:underline"-->
-            <!--                        >Working Locations</router-link-->
-            <!--                    >-->
-            <!--                </div>-->
-            <!--            </dropdown>-->
+            <router-link
+                v-if="is_teacher"
+                to="/me/my-lessons"
+                class="text-white hover:text-mustard font-bold px-4 mr-4 no-underline hover:underline"
+                >My Lessons</router-link
+            >
+            <dropdown
+                v-cloak
+                v-if="is_teacher"
+                name="My Availability"
+                class="text-white font-bold hover:text-mustard h-12 flex items-center h-16 px-4"
+            >
+                <div slot="dropdown_content" class="py-3">
+                    <router-link
+                        to="/me/my-schedule"
+                        class="text-hms-navy hover:text-mustard font-bold px-4 mr-4 no-underline hover:underline"
+                        >Schedule</router-link
+                    >
+                    <router-link
+                        to="/me/available-periods"
+                        class="text-hms-navy hover:text-mustard font-bold px-4 mr-4 no-underline hover:underline"
+                        >Available Hours</router-link
+                    >
+                    <router-link
+                        to="/me/unavailable-periods"
+                        class="text-hms-navy hover:text-mustard font-bold px-4 mr-4 no-underline hover:underline"
+                        >Unavailable Times</router-link
+                    >
+                    <router-link
+                        to="/me/working-areas/edit"
+                        class="text-hms-navy hover:text-mustard font-bold px-4 mr-4 no-underline hover:underline"
+                        >Working Locations</router-link
+                    >
+                </div>
+            </dropdown>
 
             <dropdown
                 v-cloak

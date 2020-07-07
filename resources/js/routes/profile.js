@@ -11,6 +11,7 @@ import EditUnavailablePeriod from "../components/Calendar/EditUnavailablePeriod"
 import TeacherLocationsForm from "../components/Locations/TeacherLocationsForm";
 import MySchedule from "../components/Calendar/MySchedule";
 import MyLessons from "../components/Lessons/MyLessons";
+import HelpPage from "../components/Misc/HelpPage";
 
 export default [
     {
@@ -43,5 +44,6 @@ export default [
         component: TeacherLocationsForm
     },
     { path: "/me/my-schedule", component: MySchedule },
-    { path: "/me/my-lessons", component: MyLessons }
+    { path: "/me/my-lessons", component: MyLessons },
+    { path: "/help-me", component: HelpPage }
 ];

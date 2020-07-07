@@ -6,9 +6,14 @@
             <p class="uppercase text-sm">{{ lesson.lesson_day }}</p>
         </div>
         <div class="ml-4 p-4">
-            <p class="font-bold text-hms-navy">
-                {{ studentNames(lesson.students) }}
+            <p class="" v-for="student in lesson.students">
+                <span class="font-bold text-hms-navy mr-4">{{
+                    student.name
+                }}</span>
+                <span class="text-gray-600">({{ student.age }})</span>
             </p>
+        </div>
+        <div class="p-4 ml-4">
             <p class="text-sm">
                 {{ lesson.location_address }}
                 <span v-if="lesson.location_map">
@@ -23,6 +28,7 @@
             <p class="uppercase text-xs">
                 {{ lesson.location_area }}
             </p>
+            <p class="text-sm">{{ lesson.location_notes }}</p>
         </div>
         <div class="p-4 ml-4">
             <p>
