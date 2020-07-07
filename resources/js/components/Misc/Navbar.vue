@@ -149,10 +149,15 @@
                     <button
                         @click="logout"
                         type="button"
-                        class="text-black hover:text-mustard"
+                        class="text-black hover:text-mustard pb-3"
                     >
                         Logout
                     </button>
+                    <router-link
+                        to="/help-me"
+                        class="text-black no-underline hover:text-mustard pb-3 block"
+                        >Help</router-link
+                    >
                 </div>
             </dropdown>
         </div>
