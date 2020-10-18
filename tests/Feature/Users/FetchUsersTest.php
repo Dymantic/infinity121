@@ -26,13 +26,12 @@ class FetchUsersTest extends TestCase
         $response = $this->actingAs($mike)->getJson("/admin/api/users");
         $response->assertStatus(200);
 
-        $fetched_users = $response->decodeResponseJson();
+        $fetched_users = $response->json();
 
         $this->assertCount(3, $fetched_users);
 
-        $this->assertContains(array_merge($bob->toArray(), ['profile' => null]), $fetched_users);
-        $this->assertContains(array_merge($alice->toArray(), ['profile' => null]), $fetched_users);
-        $this->assertContains(array_merge($mike->toArray(), ['profile' => null]), $fetched_users);
+        $this->assertEquals(collect($fetched_users)->pluck('id')->values()->all(), [$bob->id, $alice->id, $mike->id]);
+
     }
 
     /**

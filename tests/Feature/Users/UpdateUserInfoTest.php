@@ -30,7 +30,7 @@ class UpdateUserInfoTest extends TestCase
         ]);
         $response->assertStatus(200);
 
-        $response_data = $response->decodeResponseJson();
+        $response_data = $response->json();
 
         $this->assertEquals($user->id, $response_data['id']);
         $this->assertEquals('new name', $response_data['name']);

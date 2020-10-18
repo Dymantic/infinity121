@@ -24,7 +24,7 @@ class FetchAffiliatesTest extends TestCase
         $response = $this->asAdmin()->getJson("/admin/api/affiliates");
         $response->assertStatus(200);
 
-        $fetched_affiliates = $response->decodeResponseJson();
+        $fetched_affiliates = $response->json();
 
         $this->assertCount(10, $fetched_affiliates);
 

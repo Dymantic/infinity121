@@ -67,6 +67,6 @@ class FetchTeachersAvailablePeriodsTest extends TestCase
         $response = $this->actingAs($teacher->user)->getJson("/admin/api/me/available-periods");
         $response->assertSuccessful();
 
-        $this->assertEquals($expected, $response->decodeResponseJson());
+        $this->assertEquals($expected, $response->json());
     }
 }

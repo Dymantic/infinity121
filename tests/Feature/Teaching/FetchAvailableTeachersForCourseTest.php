@@ -143,7 +143,7 @@ class FetchAvailableTeachersForCourseTest extends TestCase
 
         $response->assertSuccessful();
 
-        $fetched_teachers = $response->decodeResponseJson();
+        $fetched_teachers = $response->json();
 
         $this->assertCount(2, $fetched_teachers);
         $this->assertTrue(collect($fetched_teachers)->pluck('id')->contains($availableA->id));

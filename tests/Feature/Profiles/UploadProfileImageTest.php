@@ -34,7 +34,7 @@ class UploadProfileImageTest extends TestCase
 
         $this->assertCount(1, $profile->getMedia(Profile::AVATAR));
 
-        $this->assertEquals($profile->getFirstMedia(Profile::AVATAR)->getUrl('thumb'), $response->decodeResponseJson('image_src'));
+        $this->assertEquals($profile->getFirstMedia(Profile::AVATAR)->getUrl('thumb'), $response->json('image_src'));
     }
 
     /**

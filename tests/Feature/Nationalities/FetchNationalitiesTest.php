@@ -21,7 +21,7 @@ class FetchNationalitiesTest extends TestCase
         $response = $this->asAdmin()->getJson("/admin/api/nationalities");
         $response->assertStatus(200);
 
-        $fetched_nationalities = $response->decodeResponseJson();
+        $fetched_nationalities = $response->json();
 
         $this->assertArrayHasKey("zaf", $fetched_nationalities);
     }

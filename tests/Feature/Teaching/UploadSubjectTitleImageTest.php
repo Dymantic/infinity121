@@ -32,7 +32,7 @@ class UploadSubjectTitleImageTest extends TestCase
 
         $this->assertCount(1, $subject->getMedia(Subject::TITLE_IMAGES));
         $title_image = $subject->fresh()->getFirstMedia(Subject::TITLE_IMAGES);
-        $this->assertEquals($title_image->getUrl('thumb'), $response->decodeResponseJson('image_src'));
+        $this->assertEquals($title_image->getUrl('thumb'), $response->json('image_src'));
     }
 
     /**

@@ -33,7 +33,7 @@ class FetchTeacherProfilesTest extends TestCase
         $response = $this->asAdmin()->getJson("/admin/api/profiles");
         $response->assertStatus(200);
 
-        $fetched_profiles = $response->decodeResponseJson();
+        $fetched_profiles = $response->json();
 
         $this->assertCount(3, $fetched_profiles);
 

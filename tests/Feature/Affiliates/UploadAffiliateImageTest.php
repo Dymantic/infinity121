@@ -32,7 +32,7 @@ class UploadAffiliateImageTest extends TestCase
         $this->assertCount(1, $affiliate->getMedia(Affiliate::LOGO));
 
         $affiliate_image = $affiliate->fresh()->getFirstMedia(Affiliate::LOGO);
-        $this->assertEquals($affiliate_image->getUrl('thumb'), $response->decodeResponseJson('image_src'));
+        $this->assertEquals($affiliate_image->getUrl('thumb'), $response->json('image_src'));
     }
 
     /**

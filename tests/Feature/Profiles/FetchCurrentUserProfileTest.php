@@ -23,7 +23,7 @@ class FetchCurrentUserProfileTest extends TestCase
         $response = $this->actingAs($teacher)->getJson("/admin/api/me/profile");
         $response->assertStatus(200);
 
-        $fetched_profile = $response->decodeResponseJson();
+        $fetched_profile = $response->json();
 
         $this->assertEquals($teacher->fresh()->profile->toArray(), $fetched_profile);
     }
