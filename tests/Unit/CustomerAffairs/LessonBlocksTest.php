@@ -28,7 +28,7 @@ class LessonBlocksTest extends TestCase
 
         $this->assertTrue(
             Carbon::today()
-                  ->startOfWeek()
+//                  ->startOfWeek()
                   ->next('Friday')
                   ->setHour(17)
                   ->setMinutes(30)

@@ -19,7 +19,7 @@ class UploadSubjectTitleImageTest extends TestCase
      */
     public function upload_title_image_for_subject()
     {
-        Storage::fake('media');
+        Storage::fake('media', config('filesystems.disks.media'));
 
         $this->withoutExceptionHandling();
 
@@ -40,7 +40,7 @@ class UploadSubjectTitleImageTest extends TestCase
      */
     public function the_image_is_required()
     {
-        Storage::fake('media');
+        Storage::fake('media', config('filesystems.disks.media'));
 
         $subject = factory(Subject::class)->create();
 
@@ -56,7 +56,7 @@ class UploadSubjectTitleImageTest extends TestCase
      */
     public function the_image_must_be_a_valid_image_file()
     {
-        Storage::fake('media');
+        Storage::fake('media', config('filesystems.disks.media'));
 
         $subject = factory(Subject::class)->create();
 

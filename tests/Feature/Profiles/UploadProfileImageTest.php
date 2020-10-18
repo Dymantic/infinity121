@@ -18,7 +18,7 @@ class UploadProfileImageTest extends TestCase
      */
     public function upload_profile_image()
     {
-        Storage::fake('media');
+        Storage::fake('media', config('filesystems.disks.media'));
 
         $this->withoutExceptionHandling();
 
@@ -42,7 +42,7 @@ class UploadProfileImageTest extends TestCase
      */
     public function the_image_must_be_a_valid_format()
     {
-        Storage::fake('media');
+        Storage::fake('media', config('filesystems.disks.media'));
 
         $teacher = factory(User::class)->state('teacher-only')->create();
         $teacher->makeProfile();

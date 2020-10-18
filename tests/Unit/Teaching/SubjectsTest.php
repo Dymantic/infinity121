@@ -71,7 +71,7 @@ class SubjectsTest extends TestCase
      */
     public function to_array_has_correct_attributes()
     {
-        Storage::fake('media');
+        Storage::fake('media', config('filesystems.disks.media'));
 
         $subject = factory(Subject::class)->state('public')->create([
             'title'       => ['en' => 'test title', 'zh' => 'zh test title'],

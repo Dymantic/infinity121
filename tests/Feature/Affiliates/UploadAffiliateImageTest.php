@@ -19,7 +19,7 @@ class UploadAffiliateImageTest extends TestCase
      */
     public function upload_affiliate_image()
     {
-        Storage::fake('media');
+        Storage::fake('media', config('filesystems.disks.media'));
         $this->withoutExceptionHandling();
 
         $affiliate = factory(Affiliate::class)->create();

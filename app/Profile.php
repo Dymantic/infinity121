@@ -13,13 +13,13 @@ use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
 use Spatie\Image\Manipulations;
-use Spatie\MediaLibrary\HasMedia\HasMedia;
-use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
-use Spatie\MediaLibrary\Models\Media;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class Profile extends Model implements HasMedia
 {
-    use Translatable, HasMediaTrait, Sluggable;
+    use Translatable, InteractsWithMedia, Sluggable;
 
     const AVATAR = 'avatar';
     const DEFAULT_AVATAR = '/images/default_user.svg';
@@ -113,7 +113,7 @@ class Profile extends Model implements HasMedia
                     ->toMediaCollection(static::AVATAR);
     }
 
-    public function registerMediaConversions(Media $media = null)
+    public function registerMediaConversions(Media $media = null): void
     {
         $this->addMediaConversion('thumb')
              ->fit(Manipulations::FIT_CROP, 400, 400)

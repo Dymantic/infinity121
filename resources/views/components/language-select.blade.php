@@ -3,7 +3,7 @@
         <button
             class="hidden lg:flex items-center type-a1 tracking-wide ml-4 mr-6 focus:outline-none dropdown-btn capitalize">
             @include('svg.icons.globe', ['classes' => $icon_colour . ' fill-current h-6 mr-2'])
-            <span class="mr-2">{{ $current['name'] }}</span>
+            <span class="mr-2">{{ $current()['name'] }}</span>
 
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 11.92" class="w-3 ml-1 inline">
                 <path class="stroke-current" fill="none" stroke-linecap="round" stroke-linejoin="round"

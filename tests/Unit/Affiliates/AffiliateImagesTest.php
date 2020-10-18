@@ -8,7 +8,7 @@ use App\Affiliates\Affiliate;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
-use Spatie\MediaLibrary\Models\Media;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Tests\AssertsMediaModels;
 use Tests\TestCase;
 
@@ -21,7 +21,7 @@ class AffiliateImagesTest extends TestCase
      */
     public function add_image_to_affiliate()
     {
-        Storage::fake('media');
+        Storage::fake('media', config('filesystems.disks.media'));
 
         $affiliate = factory(Affiliate::class)->create();
 
@@ -37,7 +37,7 @@ class AffiliateImagesTest extends TestCase
      */
     public function adding_image_overwrites_previous_one()
     {
-        Storage::fake('media');
+        Storage::fake('media', config('filesystems.disks.media'));
 
         $affiliate = factory(Affiliate::class)->create();
         $image = $affiliate->addImage(UploadedFile::fake()->image('testpic.png'));
@@ -52,7 +52,7 @@ class AffiliateImagesTest extends TestCase
      */
     public function images_are_saved_into_logos_media_collection()
     {
-        Storage::fake('media');
+        Storage::fake('media', config('filesystems.disks.media'));
 
         $affiliate = factory(Affiliate::class)->create();
 
@@ -68,7 +68,7 @@ class AffiliateImagesTest extends TestCase
      */
     public function a_thumb_image_is_converted()
     {
-        Storage::fake('media');
+        Storage::fake('media', config('filesystems.disks.media'));
 
         $affiliate = factory(Affiliate::class)->create();
 

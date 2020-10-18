@@ -21,7 +21,7 @@ class SubjectTitleImageTest extends TestCase
      */
     public function set_title_image()
     {
-        Storage::fake('media');
+        Storage::fake('media', config('filesystems.disks.media'));
 
         $subject = factory(Subject::class)->create();
         $this->assertCount(0, $subject->getMedia(Subject::TITLE_IMAGES));
@@ -38,7 +38,7 @@ class SubjectTitleImageTest extends TestCase
      */
     public function create_thumb_and_web_conversions()
     {
-        Storage::fake('media');
+        Storage::fake('media', config('filesystems.disks.media'));
 
         $subject = factory(Subject::class)->create();
 
@@ -57,7 +57,7 @@ class SubjectTitleImageTest extends TestCase
      */
     public function get_title_image_urls()
     {
-        Storage::fake('media');
+        Storage::fake('media', config('filesystems.disks.media'));
 
         $has_image = factory(Subject::class)->create();
         $no_image = factory(Subject::class)->create();
@@ -78,7 +78,7 @@ class SubjectTitleImageTest extends TestCase
      */
     public function setting_a_title_image_overwrites_any_previous_one()
     {
-        Storage::fake('media');
+        Storage::fake('media', config('filesystems.disks.media'));
 
         $subject = factory(Subject::class)->create();
 

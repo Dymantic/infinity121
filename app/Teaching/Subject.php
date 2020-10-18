@@ -7,14 +7,14 @@ use App\Translatable;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Image\Manipulations;
-use Spatie\MediaLibrary\HasMedia\HasMedia;
-use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
-use Spatie\MediaLibrary\Models\Media;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class Subject extends Model implements HasMedia
 {
 
-    use Sluggable, Translatable, HasMediaTrait;
+    use Sluggable, Translatable, InteractsWithMedia;
 
     const TITLE_IMAGES = 'title-images';
 
@@ -124,7 +124,7 @@ class Subject extends Model implements HasMedia
         return $title_image->getUrl($conversion);
     }
 
-    public function registerMediaConversions(Media $media = null)
+    public function registerMediaConversions(Media $media = null): void
     {
         $this->addMediaConversion('thumb')
              ->fit(Manipulations::FIT_CROP, 400, 300)

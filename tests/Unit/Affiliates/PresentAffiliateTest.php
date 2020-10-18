@@ -19,7 +19,7 @@ class PresentAffiliateTest extends TestCase
      */
     public function presents_as_array_correctly()
     {
-        Storage::fake('media');
+        Storage::fake('media', config('filesystems.disks.media'));
 
         $affiliate = factory(Affiliate::class)
             ->state('public')
@@ -56,7 +56,7 @@ class PresentAffiliateTest extends TestCase
      */
     public function presents_for_given_language()
     {
-        Storage::fake('media');
+        Storage::fake('media', config('filesystems.disks.media'));
 
         $affiliate = factory(Affiliate::class)
             ->state('public')

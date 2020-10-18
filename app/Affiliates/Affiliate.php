@@ -5,13 +5,13 @@ namespace App\Affiliates;
 use App\Translatable;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Image\Manipulations;
-use Spatie\MediaLibrary\HasMedia\HasMedia;
-use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
-use Spatie\MediaLibrary\Models\Media;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class Affiliate extends Model implements HasMedia
 {
-    use Translatable, HasMediaTrait;
+    use Translatable, InteractsWithMedia;
 
     const LOGO = 'logos';
     const DEFAULT_IMG = '/images/default_3x2.svg';
@@ -63,7 +63,7 @@ class Affiliate extends Model implements HasMedia
         $this->clearMediaCollection(static::LOGO);
     }
 
-    public function registerMediaConversions(Media $media = null)
+    public function registerMediaConversions(Media $media = null): void
     {
         $this->addMediaConversion('thumb')
              ->fit(Manipulations::FIT_CROP, 600, 400)

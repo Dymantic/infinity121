@@ -19,7 +19,7 @@ class ProfileImageTest extends TestCase
      */
     public function set_profile_image()
     {
-        Storage::fake('media');
+        Storage::fake('media', config('filesystems.disks.media'));
 
         $profile = $this->makeProfile();
 
@@ -35,7 +35,7 @@ class ProfileImageTest extends TestCase
      */
     public function it_makes_thumb_conversions()
     {
-        Storage::fake('media');
+        Storage::fake('media', config('filesystems.disks.media'));
 
         $profile = $this->makeProfile();
 
@@ -53,7 +53,7 @@ class ProfileImageTest extends TestCase
      */
     public function uploading_a_second_image_overwrites_the_first()
     {
-        Storage::fake('media');
+        Storage::fake('media', config('filesystems.disks.media'));
 
         $profile = $this->makeProfile();
 
