@@ -37,7 +37,7 @@ class Profile extends Model implements HasMedia
         4 => 'very good',
     ];
 
-    public function sluggable()
+    public function sluggable(): array
     {
         return [
             'slug' => [
