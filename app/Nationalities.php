@@ -13,6 +13,7 @@ class Nationalities
         'uk' => ['en' => 'British', 'zh' => '台灣', 'jp' => '台湾人'],
         'aus' => ['en' => 'Australian', 'zh' => '台灣', 'jp' => '台湾人'],
         'bur' => ['en' => 'Burmese', 'zh' => '台灣', 'jp' => '台湾人'],
+        'can' => ['en' => 'Canadian', 'zh' => '加拿大', 'jp' => 'カナダ'],
     ];
 
     public static function all()
