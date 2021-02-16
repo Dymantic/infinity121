@@ -4,7 +4,7 @@
                     @include('svg.icons.telephone')
                 </span>
         <span class="type-b1">
-                    098 1234 567
+                    0983 644 123
                 </span>
     </div>
     <div class="flex justify-center items-center max-w-xs mx-auto">
