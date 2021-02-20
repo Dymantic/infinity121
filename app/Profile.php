@@ -119,6 +119,7 @@ class Profile extends Model implements HasMedia
              ->fit(Manipulations::FIT_CROP, 400, 400)
              ->keepOriginalImageFormat()
              ->optimize()
+             ->nonQueued()
              ->performOnCollections(static::AVATAR);
     }
 
@@ -149,8 +150,8 @@ class Profile extends Model implements HasMedia
         $avatar = $this->getFirstMedia(static::AVATAR);
 
         return [
-            'original' => $avatar ?  $avatar->getUrl() : self::DEFAULT_AVATAR,
-            'thumb' => $avatar ?  $avatar->getUrl('thumb') : self::DEFAULT_AVATAR,
+            'original' => $avatar ? $avatar->getUrl() : self::DEFAULT_AVATAR,
+            'thumb'    => $avatar ? $avatar->getUrl('thumb') : self::DEFAULT_AVATAR,
         ];
     }
 
@@ -214,7 +215,6 @@ class Profile extends Model implements HasMedia
     }
 
 
-
     public function courses()
     {
         return $this->hasMany(Course::class, 'profile_id');
@@ -235,10 +235,9 @@ class Profile extends Model implements HasMedia
                         ->flatMap(fn(Course $c) => $c->lessonBlocks->all())
                         ->reject(fn($l) => $l->day_of_week !== $day->week_day)->all();
 
-        foreach($lessons as $lesson) {
+        foreach ($lessons as $lesson) {
             $day = $day->clearPeriod(new TimePeriod($lesson->starts, $lesson->ends));
         }
-
 
 
         $day->periods->each(fn(TimePeriod $p) => $this->availablePeriods()->create([
